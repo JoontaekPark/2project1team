@@ -5,6 +5,7 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="openjdk-21" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -14,18 +15,20 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/src/main/java/org/green/projectgenesis/backend" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend" />
+        <option name="gradleJvm" value="openjdk-21" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/src/main/java/org/green/projectgenesis/backend" />
+            <option value="$PROJECT_DIR$/backend" />
           </set>
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/src/main/java/org/green/projectgenesis/frontend" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/frontend" />
+        <option name="gradleJvm" value="openjdk-21" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/src/main/java/org/green/projectgenesis/frontend" />
+            <option value="$PROJECT_DIR$/frontend" />
           </set>
         </option>
       </GradleProjectSettings>
