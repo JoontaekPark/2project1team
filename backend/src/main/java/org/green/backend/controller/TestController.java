@@ -19,13 +19,13 @@ public class TestController {
 
     @GetMapping("/api/v1/test")
     public List<String> apiTest() throws Exception {
-        throw new Exception("테스트에러");
+//        throw new Exception("테스트에러");
 //
-//        List<String> list = new ArrayList<String>();
-//        list.add("1");
-//        list.add("2");
-//        list.add("3");
-//        return list;
+        List<String> list = new ArrayList<String>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        return list;
     }
 
 
