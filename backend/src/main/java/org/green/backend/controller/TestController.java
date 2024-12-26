@@ -25,6 +25,7 @@ public class TestController {
         list.add("1");
         list.add("2");
         list.add("3");
+        System.out.println("test1");
         return list;
     }
 
