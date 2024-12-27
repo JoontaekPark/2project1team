@@ -10,7 +10,8 @@
 }
 
 main{
-    height: calc(100vh - 250px);
+    min-height: calc(100vh - 250px);
+    padding: 50px 0 50px 0;
     width: 100%;
 }
 
