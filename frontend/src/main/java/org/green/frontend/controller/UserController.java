@@ -6,6 +6,7 @@ import org.green.frontend.service.common.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -28,13 +29,13 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/sign-up-check")
+    @GetMapping("/sign-up")
     public String signUpCheck() {
         return "sign_up/sign_up_check";
     }
 
-    @GetMapping("/sign-up")
-    public String signUp(String userGbnCd, Model model) throws Exception {
+    @GetMapping("/sign-up/{userGbnCd}")
+    public String signUp(@PathVariable("userGbnCd") String userGbnCd, Model model) throws Exception {
 
         List<CodeInfoDto> genders = userService.genderInfo();
 

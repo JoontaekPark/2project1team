@@ -30,11 +30,39 @@
 }
 
 .sign-up .image-placeholder {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: 150px;
+    height: 300px;
     border: 1px solid #FF0083;
     margin-bottom: 20px;
     border-radius: 20px;
+}
+
+.sign-up .image-placeholder span{
+    display: none;
+    color: red;
+    font-size: 1.5rem;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.sign-up .image-placeholder span.on{
+    display: block;
+}
+
+.sign-up .image-placeholder .image {
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
 }
 
 .sign-up .input-group {
@@ -85,7 +113,7 @@ input[type="password"]:not(:placeholder-shown) {
     background-color: #FF0083;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     padding: 0 10px;
 }
@@ -102,10 +130,20 @@ input[type="password"]:not(:placeholder-shown) {
     margin-bottom: 7px;
 }
 
-.sign-up .err-msg{
-    color: red;
+.sign-up .msg-label{
     font-weight: bold;
     padding-top: 5px;
+    display: none;
+}
+
+.sign-up .msg-label.bad{
+    color: red;
+    display: block;
+}
+
+.sign-up .msg-label.good{
+    color: blue;
+    display: block;
 }
 
 .sign-up .gender-selection {
@@ -125,7 +163,7 @@ input[type="password"]:not(:placeholder-shown) {
     background-color: #FF0083;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -134,6 +172,6 @@ input[type="password"]:not(:placeholder-shown) {
     height: 40px;
     background-color: #ccc;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
 }

@@ -1,10 +1,11 @@
 package org.green.backend.controller.common;
 
 import lombok.RequiredArgsConstructor;
+import org.green.backend.dto.common.UserDto;
 import org.green.backend.service.common.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 /**
  * 패키지명        : org.green.backend.controller.common
@@ -27,6 +28,11 @@ public class UserController {
     @GetMapping("/api/v1/check/{id}")
     public int checkId(@PathVariable String id) {
         return userService.checkId(id);
+    }
+
+    @PostMapping("/api/v1/sign-up")
+    public int signUp(@ModelAttribute UserDto user) throws IOException {
+        return userService.save(user);
     }
 
 }

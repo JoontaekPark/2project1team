@@ -1,6 +1,9 @@
 package org.green.backend.service.common;
 
+import org.green.backend.dto.common.UserDto;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 /**
  * 패키지명        : org.green.backend.service.common
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 public interface UserService {
 
-    public int checkId(String id);
+    int checkId(String id);
+
+    int save(UserDto user) throws IOException;
 
 }
