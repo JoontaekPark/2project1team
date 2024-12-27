@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'org.green.projectgenesis'
+group = 'org.green.project1team'
 version = '1.0.0'
 
 repositories {
