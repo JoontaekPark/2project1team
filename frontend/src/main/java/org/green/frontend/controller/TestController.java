@@ -16,7 +16,7 @@ public class TestController {
     public String index() {
 
         System.out.println(testService.test());
-
+        System.out.println("zzzzzzzzzzzzzzzzzz");
         return "main";
     }
 

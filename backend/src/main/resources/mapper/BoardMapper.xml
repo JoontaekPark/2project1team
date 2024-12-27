@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="org.green.backend.repository.dao.TestDao">
-
+<mapper namespace="org.green.backend.repository.dao.BoardDao">
+    <insert id="insertBoard">
+        INSERT INTO tbl_board(board_target, board_title, board_content, board_gbn_cd, board_status_cd, inst_id)
+        VALUES(#{boardTarget}, #{boardTitle}, #{boardContent}, #{boardGbnCd}, boardStatusCd, instId)
+    </insert>
 </mapper>
