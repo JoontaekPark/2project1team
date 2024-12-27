@@ -20,4 +20,15 @@ public class TestController {
         return "main";
     }
 
+    @GetMapping("/test1")
+    public String test1() {
+        return "example_no_aside";
+    }
+
+    @GetMapping("/test2")
+    public String test2() {
+        return "example_with_aside";
+    }
+
+
 }

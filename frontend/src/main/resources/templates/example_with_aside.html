@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_with_aside}">
+    <head>
+        <title>Example with Aside</title>
+    </head>
+    <body>
+        <aside layout:fragment="sidebar" th:replace="~{fragment/aside :: asideUser}"></aside>
+        <main layout:fragment="content">
+            <h1>Page with Aside</h1>
+            <p>이 페이지는 aside가 포함된 레이아웃을 사용합니다.</p>
+        </main>
+    </body>
+</html>
