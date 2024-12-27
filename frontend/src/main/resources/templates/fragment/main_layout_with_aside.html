@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Layout with Aside</title>
+        <link rel="stylesheet" href="/static/css/layout.css">
+    </head>
+    <body>
+        <!-- Header -->
+        <header th:replace="~{fragment/header :: userHeader}"></header>
+
+        <!-- Layout -->
+        <div class="layout">
+            <aside layout:fragment="sidebar">
+                <!-- 사이드바가 렌더링될 위치 -->
+            </aside>
+            <main layout:fragment="content">
+                <!-- 메인 콘텐츠 -->
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer th:replace="~{fragment/footer :: footer}"></footer>
+    </body>
+</html>
