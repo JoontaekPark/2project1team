@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>이력서 작성 폼</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h1>이력서 작성 폼</h1>
+
+<h4>이력서 기본내용</h4>
+<form id="resumeForm">
+  <input type="text" name="resumeTitle" placeholder="이력서 제목"><br>
+  <input type="text" name="resumeArea" placeholder="희망 근무 지역"><br>
+  <input type="text" name="resumeMainYn" placeholder="대표 이력서 여부 (Y/N)"><br>
+  <input type="text" name="resumeMemo" placeholder="이력서 메모"><br>
+  <input type="text" name="instId" placeholder="작성자 ID"><br>
+  <input type="date" name="instDt" placeholder="작성 일시"><br>
+  <hr>
+  <h4>이력서 활동내용</h4>
+  <input type="text" name="resumeActiveDetail" placeholder="활동 내용"><br>
+  <input type="date" name="resumeActiveStrDate" placeholder="활동 시작일"><br>
+  <input type="date" name="resumeActiveEndDate" placeholder="활동 종료일"><br>
+  <hr>
+  <h4>이력서 경력내용</h4>
+  <input type="text" name="resumeCareerCompanyNm" placeholder="회사명"><br>
+  <input type="date" name="resumeCareerJoinDt" placeholder="입사연월"><br>
+  <input type="date" name="resumeCareerOutDt" placeholder="퇴사연월"><br>
+  <input type="text" name="resumeCareerDmpt" placeholder="부서명"><br>
+  <input type="text" name="resumeCareerPstn" placeholder="직책"><br>
+  <input type="text" name="resumeCareerDuties" placeholder="담당업무"><br>
+  <hr>
+  <h4>이력서 자격증내용</h4>
+  <input type="date" name="resumeCertsDt" placeholder="자격증 취득일"><br>
+  <input type="text" name="resumeCertsNm" placeholder="자격증 명"><br>
+  <input type="text" name="resumeCertsPlace" placeholder="자격증 발급기관"><br>
+  <input type="text" name="resumeCertsGbnCd" placeholder="자격증 합격여부"><br>
+  <hr>
+  <h4>이력서 학력내용</h4>
+  <input type="text" name="resumeEducationGbnCd" placeholder="학력구분"><br>
+  <input type="text" name="resumeEducationSchoolNm" placeholder="학교이름"><br>
+  <input type="text" name="resumeEducationMajor" placeholder="전공"><br>
+  <input type="text" name="resumeEducationScore" placeholder="성적"><br>
+  <input type="date" name="resumeEducationIndt" placeholder="입학날짜"><br>
+  <input type="date" name="resumeEducationOutdt" placeholder="졸업날짜"><br>
+  <input type="text" name="resumeEducationTransferYn" placeholder="편입여부"><br>
+  <input type="text" name="resumeEducationResion" placeholder="지역"><br>
+  <hr>
+  <h4>이력서 자기소개 내용</h4>
+  <input type="text" name="resumeIntroduceTitle" placeholder="자기소개 제목"><br>
+  <input type="text" name="resumeIntroduceContent" placeholder="자기소개 내용"><br>
+  <hr>
+  <h4>이력서 우대사항 내용</h4>
+  <input type="text" name="resumeLoyaltyDetail" placeholder="우대사항 내용"><br>
+  <hr>
+  <h4>이력서 병역내용</h4>
+  <input type="date" name="resumeMilitaryStrDate" placeholder="병역 시작일자"><br>
+  <input type="date" name="resumeMilitaryEndDate" placeholder="병역 종료일자"><br>
+  <input type="text" name="resumeMilitaryGbnCd" placeholder="병역구분"><br>
+  <input type="text" name="resumeMilitaryRankGbnCd" placeholder="계급"><br>
+  <input type="text" name="resumeMilitaryTypeGbnCd" placeholder="군별 육,해,공"><br>
+  <input type="text" name="resumeMilitaryFinishGbnCd" placeholder="전역구분(의가사 등등)"><br>
+  <hr>
+  <h4>이력서 포트폴리오 내용</h4>
+  <input type="date" name="resumePrtfStrDate" placeholder="작업시작날짜"><br>
+  <input type="date" name="resumePrtfEndDate" placeholder="작업종료날짜"><br>
+  <input type="text" name="resumePrtfUrl" placeholder="URL"> <br>
+  <input type="text" name="resumePrtfCnt" placeholder="작업인원수"> <br>
+  <input type="text" name="resumePrtfContent" placeholder="작업내용"> <br>
+  <hr>
+  <h4>이력서 기술스택내용</h4>
+  <input type="text" name="stackCd" placeholder="기술스택번호"><br>
+
+
+
+  <button type="button" id="submitBtn">작성하기</button>
+</form>
+
+
+<script>
+  document.getElementById('submitBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+
+    // 폼 데이터를 읽어옴
+    const form = document.getElementById('resumeForm');
+    const formData = new FormData(form);
+
+
+    // FormData를 JSON 형태로 변환
+    const resumeData = {};
+    formData.forEach((value, key) => {
+      resumeData[key] = value;
+    });
+
+    // Axios로 POST 요청 보내기
+    axios.post('http://localhost:8080/resume/regProc', resumeData)
+            .then(response => {
+              console.log('성공:', response.data); // 서버로부터 받은 데이터 출력
+              alert('이력서가 성공적으로 저장되었습니다!');
+            })
+            .catch(error => {
+              console.error('에러:', error); // 에러 처리
+              alert('이력서 저장에 실패했습니다.');
+            });
+  });
+</script>
+
+</body>
+</html>

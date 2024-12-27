@@ -5,5 +5,6 @@ import org.green.frontend.global.common.ApiResponse;
 public interface TestService {
 
     ApiResponse<Object> test();
+    
 
 }
