@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>회원가입</title>
+        <title>Example without Aside</title>
         <link rel="stylesheet" href="/static/css/sign_up/sign_up_check.css">
-
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     </head>
     <body>
-        <div class="sign-up-check">
-            <div class="title">회원가입</div>
-            <div class="buttons">
-                <div class="button" data-user_gbn_cd="10">구직자 <br/>회원가입</div>
-                <div class="button" data-user_gbn_cd="20">기업 <br/>회원가입</div>
+        <main layout:fragment="content">
+            <div class="sign-up-check">
+                <div class="title">회원가입</div>
+                <div class="buttons">
+                    <div class="button" data-user_gbn_cd="10">구직자 <br />회원가입</div>
+                    <div class="button" data-user_gbn_cd="20">기업 <br />회원가입</div>
+                </div>
+                <div class="login">아이디가 있으신가요? 로그인</div>
             </div>
-            <div class="login">아이디가 있으신가요? 로그인</div>
-        </div>
+        </main>
     </body>
 </html>
 
