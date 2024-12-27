@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>기업/구직자 회원가입</title>
+        <link rel="stylesheet" href="/static/css/sign_up/sign_up.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    </head>
+    <body>
+        <div class="sign-up">
+            <div class="title"><span th:text="${userGbnCd == '20' ? '기업' : '구직자'}"></span> 회원가입</div>
+            <div class="form-container">
+                <form class="form">
+                    <!-- Image Placeholder -->
+                    <div class="image-placeholder">
+
+                    </div>
+
+                    <!-- Input Fields -->
+                    <div class="input-group">
+                        <label for="id">아이디</label>
+                        <div class="input-with-button">
+                            <input type="text" id="id" name="id" placeholder="아이디를 입력하세요.">
+                            <button type="button" class="check-button" id="check-button">중복체크</button>
+                        </div>
+                        <label class="err-msg">오류입니다잉</label>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="pw">비밀번호</label>
+                        <input type="password" id="pw" placeholder="비밀번호를 입력하세요.">
+                        <label class="err-msg">오류입니다잉</label>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="confirm-pw">비밀번호 확인</label>
+                        <input type="password" id="confirm-pw" placeholder="비밀번호를 다시 입력하세요.">
+                        <label class="err-msg">오류입니다잉</label>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="name"><span th:text="${userGbnCd == '20' ? '회사명' : '이름'}"></span></label>
+                        <input type="text" id="name" name="name"
+                               th:placeholder="${userGbnCd == '20' ? '회사명' : '이름'} + '을 입력하세요.'">
+                        <label class="err-msg">오류입니다잉</label>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="birth"><span th:text="${userGbnCd == '20' ? '설립일' : '생년월일'}"></span></label>
+                        <input type="date" id="birth" name="name"
+                               th:placeholder="${userGbnCd == '20' ? '설립일' : '생년월일'} + '을 입력하세요.'">
+                        <label class="err-msg">오류입니다잉</label>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="zipCd">주소</label>
+                        <input type="text" id="zipCd" name="zipCd" placeholder="우편번호를 입력하세요.">
+                        <button type="button" class="find-address">우편번호 찾기</button>
+                        <input type="text" id="addr" name="addr" placeholder="주소를 입력하세요.">
+                        <input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소를 입력하세요.">
+                        <label class="err-msg">오류입니다잉</label>
+                    </div>
+
+                    <!-- Gender Selection -->
+                    <div class="input-group" th:if="${userGbnCd == '20'}">
+                        <label>성별</label>
+                        <div class="gender-selection">
+                            <th:block th:each="gender : ${genders}">
+                                <label><input type="radio" name="genderCd" th:value="${gender.cd}" th:text="${gender.cdNm}"></label>
+                            </th:block>
+                        </div>
+                        <label class="err-msg">오류입니다잉</label>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="buttons">
+                        <button type="submit" class="submit-button">회원가입</button>
+                        <button type="reset" class="cancel-button">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script type="module" src="/static/js/sign_up/sign_up.js"></script>
