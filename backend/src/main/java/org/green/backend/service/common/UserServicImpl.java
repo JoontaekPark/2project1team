@@ -1,8 +1,15 @@
 package org.green.backend.service.common;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.green.backend.dto.common.FileDto;
+import org.green.backend.dto.common.UserDto;
 import org.green.backend.repository.dao.common.UserDao;
+import org.green.backend.utils.FileUploadUtil;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 /**
  * 패키지명        : org.green.backend.service.common
@@ -20,10 +27,29 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServicImpl implements UserService {
 
+    private final FileService fileService;
+    private final FileUploadUtil fileUploadUtil;
     private final UserDao userDao;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public int checkId(String id) {
         return userDao.checkId(id);
+    }
+
+    @Override
+    @Transactional
+    public int save(UserDto user) throws IOException {
+
+        user.setPw(bCryptPasswordEncoder.encode(user.getPw()));
+        user.setUseYn("Y");
+
+        int result = userDao.save(user);
+
+        if (user.getProfile() != null && !user.getProfile().isEmpty()) {
+            fileService.saveFile(user.getProfile(), user.getUserGbnCd(), user.getId(), user.getId());
+        }
+
+        return result;
     }
 }

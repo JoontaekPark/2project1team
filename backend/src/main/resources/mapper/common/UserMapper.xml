@@ -13,4 +13,32 @@
 
     </select>
 
+    <insert id="save">
+
+        INSERT INTO tbl_user (
+            id,
+            pw,
+            name,
+            birth,
+            gender_cd,
+            zip_cd,
+            addr,
+            addr_detail,
+            use_yn,
+            user_gbn_cd
+        ) VALUES (
+            #{user.id},
+            #{user.pw},
+            #{user.name},
+            #{user.birth},
+            #{user.genderCd},
+            #{user.zipCd},
+            #{user.addr},
+            #{user.addrDetail},
+            #{user.useYn},
+            #{user.userGbnCd}
+        )
+
+    </insert>
+
 </mapper>
