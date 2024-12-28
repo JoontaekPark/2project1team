@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
+    <head>
+        <title>Example without Aside</title>
+    </head>
+    <body>
+        <main layout:fragment="content">
+            <h1>Page without Aside</h1>
+            <p>이 페이지는 aside가 없는 레이아웃을 사용합니다.</p>
+        </main>
+    </body>
+</html>
