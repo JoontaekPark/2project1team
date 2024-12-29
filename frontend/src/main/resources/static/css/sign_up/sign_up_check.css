@@ -44,14 +44,17 @@
     border-bottom-right-radius: 20px;
 }
 
-.sign-up-check .login {
+.sign-up-check .login a{
     margin: 0 0 0 222px;
     font-size: 14px;
     color: #777;
     cursor: pointer;
-
 }
 
 .sign-up-check .login:hover {
     text-decoration: underline;
+}
+
+.sign-up-check b {
+    color: #FF0083;
 }
