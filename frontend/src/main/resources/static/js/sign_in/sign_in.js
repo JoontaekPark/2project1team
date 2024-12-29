@@ -1,4 +1,4 @@
-import {common} from "/static/js/common/module/common.js";
+import {api, sessionStorage, utills} from '/static/js/common/module/common_module.js';
 
 $(function () {
 
@@ -8,7 +8,7 @@ $(function () {
 
         func.msg("", false);
 
-        let input = common.utills.input.getByName();
+        let input = utills.input.getByName();
 
         if (!input.result) {
             func.msg(input.error);
@@ -16,14 +16,16 @@ $(function () {
             return;
         }
 
-        common.api.post("/sign-in", input.data)
+        api.post("/sign-in", input.data)
             .then(data => {
-                console.log(data);
+                if (data.status === "SUCCESS") {
+                    sessionStorage.set("user", data.body);
+                    location.href = "/job-seeker"
+                }
+
             })
             .catch(error => {
-                if (error.response.data.status) {
-                    func.msg("아이디 및 비밀번호를 확인해주세요.");
-                }
+                if (error.response.data.status) func.msg("아이디 및 비밀번호를 확인해주세요.");
             });
 
     });

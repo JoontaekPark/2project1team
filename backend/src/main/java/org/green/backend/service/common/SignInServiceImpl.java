@@ -11,6 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 패키지명        : org.green.backend.service.common
  * 파일명          : SignInServiceImpl
@@ -51,6 +54,23 @@ public class SignInServiceImpl implements SignInService {
         );
 
         return token;
+    }
+
+    @Override
+    public Map<String, String> loginInfo(String token) {
+
+        String name = jwtUtil.getName(token);
+        String userGbnCd = jwtUtil.getUserGbnCd(token);
+        String useYn = jwtUtil.getUseYn(token);
+        String id = jwtUtil.getId(token);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("name", name);
+        map.put("userGbnCd", userGbnCd);
+        map.put("useYn", useYn);
+
+        return map;
     }
 
 }

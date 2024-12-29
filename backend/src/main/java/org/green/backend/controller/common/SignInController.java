@@ -2,6 +2,7 @@ package org.green.backend.controller.common;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.green.backend.dto.common.SecurityUserDto;
 import org.green.backend.dto.common.SignInDto;
 import org.green.backend.service.common.SignInService;
 import org.green.backend.utils.CookieUtil;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.backend.controller.common
@@ -29,16 +32,17 @@ public class SignInController {
     private final SignInService signInService;
     private final CookieUtil cookieUtil;
 
+
     @PostMapping("/sign-in")
-    public void signIn(@RequestBody SignInDto dto,
-                         HttpServletResponse response) {
+    public Map<String, String> signIn(@RequestBody SignInDto dto,
+                                      HttpServletResponse response) {
 
         String token = signInService.signIn(dto);
-
         ResponseCookie cookie = cookieUtil.createCookie("token", token);
 
         response.addHeader("Set-Cookie", cookie.toString());
 
+        return signInService.loginInfo(token);
     }
 
 }

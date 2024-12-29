@@ -3,6 +3,8 @@ package org.green.backend.service.common;
 import org.green.backend.dto.common.SecurityUserDto;
 import org.green.backend.dto.common.SignInDto;
 
+import java.util.Map;
+
 /**
  * 패키지명        : org.green.backend.service.common
  * 파일명          : SignInService
@@ -18,5 +20,7 @@ import org.green.backend.dto.common.SignInDto;
 public interface SignInService {
 
     public String signIn(SignInDto dto);
+
+    public Map<String, String> loginInfo(String token);
 
 }

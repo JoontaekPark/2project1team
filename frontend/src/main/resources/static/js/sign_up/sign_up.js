@@ -1,4 +1,4 @@
-import {common} from "/static/js/common/module/common.js";
+import { api, utills } from '/static/js/common/module/common_module.js';
 
 $(function () {
 
@@ -15,7 +15,7 @@ $(function () {
             func.msg(id, "아이디를 입력하세요.", "bad");
             return;
         }
-        common.api.get("/api/v1/check/" + id.value)
+        api.get("/api/v1/check/" + id.value)
             .then(data => {
                 let cnt = data.body;
 
@@ -112,16 +112,15 @@ $(function () {
             label.innerText = "";
         }
 
-        let data = common.utills.input.getByName("required", true);
+        let data = utills.input.getByName("required", true);
 
         if (!data.result) {
             data.element.focus();
             func.msg(data.element, data.error, "bad");
             return;
         }
-        console.log(data);
 
-        common.api.post("/api/v1/sign-up", data.formData, {"Content-Type": "multipart/form-data"})
+        api.post("/api/v1/sign-up", data.formData, {"Content-Type": "multipart/form-data"})
             .then(data => {
                 if (data.status === "SUCCESS") {
                     location.href = "/sign-in";
