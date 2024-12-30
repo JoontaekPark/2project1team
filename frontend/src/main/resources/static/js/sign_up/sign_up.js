@@ -119,6 +119,7 @@ $(function () {
             func.msg(data.element, data.error, "bad");
             return;
         }
+        console.log(data);
 
         api.post("/api/v1/sign-up", data.formData, {"Content-Type": "multipart/form-data"})
             .then(data => {

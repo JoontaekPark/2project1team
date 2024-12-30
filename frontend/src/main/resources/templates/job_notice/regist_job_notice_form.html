@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <style>
+        main {
+            display: flex;
+            justify-content: center; /* 수평 중앙 정렬 */
+            align-items: center; /* 수직 중앙 정렬 */
+            min-height: 100vh; /* 화면 전체 높이를 차지 */
+            margin: 0; /* 기본 여백 제거 */
+        }
+
+        .main-container {
+            width: 980px;
+            /*margin: 0 auto;*/
+            padding: 10px;
+            /*border: 1px solid black;*/
+        }
+
+        .red-point {
+            color: red;
+        }
+
+        main p {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .form {
+            margin: 30px;
+        }
+
+        input, select, textarea {
+            box-sizing: border-box;
+            height: 3rem; /* 48px */
+            border-radius: 15px; /* 8px */
+            margin: 0.5rem; /* 8px */
+            padding-left: 0.5rem; /* 8px */
+            font-weight: 500;
+            font-size: 1rem; /* 16px */
+        }
+
+        input, select, textarea {
+            border: 1px solid #D4D4D4;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, .stack-btn:hover, #welfare:hover, textarea:focus {
+            outline: none;
+            border: 1px solid #FF0083;
+        }
+
+        h2 {
+            margin-left: 40px;
+        }
+
+        #jobNoticeTitle, #jobNoticeArea {
+            width: 900px;
+        }
+
+        .double-form {
+            display: flex;
+            padding: 0;
+        }
+
+        #jobNoticeCareerGbnCd, #jobNoticeEducationGbnCd {
+            width: 250px;
+            color: gray;
+        }
+
+        #jobNoticeWorktime, #jobNoticeWorkGbnCd {
+            width: 410px;
+        }
+
+        #jobNoticeStrDate, #jobNoticeEndDate {
+            width: 240px;
+            color: gray;
+        }
+
+        .upload-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #file-names{
+            width: 750px;
+        }
+
+        /* 실제 file input 숨기기 */
+        .file-upload {
+            display: none;
+        }
+
+        /* 커스터마이징된 버튼 */
+        .custom-file-upload, #welfare-btn, #jobNoticeStep-btn, #regist-btn, .addStep, .addedWelfare {
+            margin: 5px;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            background-color: #FF0083;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .stack-btn, #temp-btn {
+            margin: 5px;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #000000;
+            background-color: #ffffff;
+            border: 1px solid #FF0083;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .stack-btn.active {
+            margin: 5px;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: white;
+            background-color: #FF0083;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-file-upload:hover, #welfare-btn:hover, #jobNoticeStep-btn:hover {
+            background-color: #ff4d94;
+        }
+
+        #step-form {
+            width: 850px;
+            margin: 10px;
+            padding: 20px;
+            background-color: #D4D4D4;
+        }
+
+        .text-form {
+            width: 850px;
+            height: 350px;
+            margin: 10px;
+            padding: 20px;
+            background-color: #D4D4D4;
+        }
+
+        .text-form p {
+            margin: 10px 20px;
+        }
+
+        textarea {
+            width: 830px;
+            height: 290px;
+            margin: 10px;
+            padding: 20px;
+            resize: none;
+        }
+
+        .stack-container {
+            display: flex; /* 수평 정렬 */
+            flex-wrap: wrap; /* 요소가 화면에 넘칠 경우 줄바꿈 */
+            margin-top: 1rem; /* 상단 여백 */
+            width: 50rem;
+            /*gap: 3px;*/
+        }
+
+        #btn-form {
+            text-align: right; /* 버튼들을 왼쪽으로 정렬 */
+        }
+
+        #temp-btn, #regist-btn {
+            width: 250px;
+
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="~{fragment/header :: userHeader}"></div>
+<main>
+    <div class="main-container">
+        <h2>채용공고 작성 </h2>
+
+        <div class="form">
+            <p><span class="red-point">* </span> 제목</p>
+            <input type="text" id="jobNoticeTitle" placeholder="공고 제목을 입력하세요">
+        </div>
+
+        <div class="form">
+            <p><span class="red-point">* </span> 근무지역</p>
+            <input type="text" id="jobNoticeArea" placeholder="근무 지역을 입력하세요">
+        </div>
+
+        <div class="double-form">
+            <div class="form">
+                <p><span class="red-point">* </span> 경력</p>
+                <select id="jobNoticeCareerGbnCd">
+                    <option selected>경력 선택</option>
+                    <th:block th:each="career : ${jobNoticeCareerGbnCdList}">
+                        <option th:value="${career.cd}" th:text="${career.cdNm}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="form">
+                <p><span class="red-point">* </span> 학력</p>
+                <select id="jobNoticeEducationGbnCd">
+                    <option selected>학력 선택</option>
+                    <th:block th:each="education : ${jobNoticeEducationGbnCdList}">
+                        <option th:value="${education.cd}" th:text="${education.cdNm}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+
+        <div class="double-form">
+            <div class="form">
+                <p><span class="red-point">* </span> 근무일</p>
+                <input type="text" id="jobNoticeWorktime" placeholder="근무일을 입력하세요">
+            </div>
+
+            <div class="form">
+                <p><span class="red-point">* </span> 근무형태</p>
+                <input type="text" id="jobNoticeWorkGbnCd" placeholder="근무형태를 입력하세요">
+            </div>
+        </div>
+
+        <div class="double-form">
+            <div class="form">
+                <p><span class="red-point">* </span> 모집 시작일시</p>
+                <input type="date" id="jobNoticeStrDate" placeholder="날짜">
+            </div>
+
+            <div class="form">
+                <p><span class="red-point">* </span> 모집 마감일시</p>
+                <input type="date" id="jobNoticeEndDate" placeholder="날짜">
+            </div>
+        </div>
+
+        <div class="form">
+            <p>이미지 업로드</p>
+            <div class="upload-container">
+                <input type="text" id="file-names" name="fileNewName" placeholder="선택된 파일이 없습니다." readonly />
+                <input type="file" class="file-upload" id="file-upload" multiple>
+                <label for="file-upload" class="custom-file-upload" onchange="updateFileList()">파일 업로드..</label>
+            </div>
+        </div>
+
+        <div class="form">
+            <div class="text-form">
+                <p>모집공고 및 상세내용</p>
+                <!--    사진파일 업로드 잠시 보류-->
+                <textarea id="jobNoticeDetail" placeholder="내용을 입력하세요"></textarea>
+            </div>
+        </div>
+
+        <div class="form">
+            <div class="text-form">
+                <p>근무조건</p>
+                <!--    사진파일 업로드 잠시 보류-->
+                <textarea id="jobNoticeWorkJogun" placeholder="내용을 입력하세요"></textarea>
+            </div>
+        </div>
+
+        <div class="form">
+            <div id="step-form">
+                <p>채용절차</p>
+                <!--    사진파일 업로드 잠시 보류-->
+                <input type="text" id="jobNoticeStep" placeholder="절차를 입력하세요">
+                <button onclick="addStep()" id="jobNoticeStep-btn">추가하기</button>
+                <div id="new-jobNoticeStep">
+
+                </div>
+                <!--        text 부분 생략 결정-->
+            </div>
+        </div>
+
+        <div class="form">
+            <div class="text-form">
+                <p>접수기간 및 방법</p>
+                <!--    사진파일 업로드 잠시 보류-->
+                <textarea id="jobNoticeWay" placeholder="내용을 입력하세요"></textarea>
+            </div>
+        </div>
+
+        <div class="form">
+            <div class="text-form">
+                <p>유의사항</p>
+                <!--    사진파일 업로드 잠시 보류-->
+                <textarea id="jobNoticeCaution" placeholder="내용을 입력하세요"></textarea>
+            </div>
+        </div>
+
+        <div class="form">
+            <p>복리후생</p>
+            <input type="text" id="welfare" placeholder="복리후생을 입력하세요">
+            <button onclick="addWelfare()" id="welfare-btn"><i class="bi bi-plus"></i></button>
+            <div id="new-welfare">
+
+            </div>
+        </div>
+
+        <div class="form">
+            <p>기술 스택</p>
+            <div class="stack-container">
+                <th:block th:each="stack : ${jobNoticeStackGbnCdList}">
+                    <button class="stack-btn" th:value="${stack.cd}" th:text="${stack.cdNm}">
+                    </button>
+                </th:block>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="form" id="btn-form">
+            <button onclick="" id="temp-btn">임시저장</button>
+            <button onclick="regist()" id="regist-btn">작성하기</button>
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragment/footer :: footer}"></div>
+</body>
+<script>
+
+
+    // <!--채용절차 추가-->
+    function addStep() {
+        const jobNoticeStep = $('#jobNoticeStep');
+        const newJobNoticeStep = $('#new-jobNoticeStep');
+        const jobNoticeStepVal = jobNoticeStep.val().trim();
+        if (jobNoticeStepVal === '') {
+            jobNoticeStep.val('');
+            return;
+        }
+        jobNoticeStep.val('');
+        newJobNoticeStep.append('<button onclick="$(this).remove()" value="' + jobNoticeStepVal + '" class="addStep"> x ' + jobNoticeStepVal + '</button>')
+    }
+
+    // <!--복리후생 추가-->
+    function addWelfare() {
+        const welfare = $('#welfare');
+        const newWelfare = $('#new-welfare');
+        const welfareVal = welfare.val().trim();
+        if (welfareVal === '') {
+            welfare.val('');
+            return;
+        }
+        welfare.val('');
+        newWelfare.append('<button onclick="$(this).remove()" value="' + welfareVal + '" class="addedWelfare"> x ' + welfareVal + '</button>')
+    }
+
+    // <!--기술스택-->
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.stack-btn').forEach(tag => {
+            tag.addEventListener('click', () => {
+                tag.classList.toggle('active'); // active 클래스 토글
+            });
+        });
+    });
+
+    // 파일목록 업데이트
+    function updateFileList() {
+        const fileInput = document.getElementById('file-upload');
+        const fileNamesField = document.getElementById('file-names');
+
+        if (fileInput.files.length > 3) {
+            alert("최대 3개의 파일만 선택할 수 있습니다.");
+            fileInput.value = "";
+            fileNamesField.value = "선택된 파일이 없습니다.";
+            return;
+        }
+
+        const fileNames = Array.from(fileInput.files).map(file => file.name).join(', ');
+        fileNamesField.value = fileNames || "선택된 파일이 없습니다.";
+    }
+
+    //<!--등록-->
+
+
+</script>
+</html>

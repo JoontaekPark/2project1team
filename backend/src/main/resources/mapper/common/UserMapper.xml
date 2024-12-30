@@ -30,7 +30,7 @@
         WHERE id = #{id}
         AND use_yn = 'Y'
     </select>
-    
+
     <select id="checkId">
         SELECT COUNT(*)
         FROM tbl_user
