@@ -47,5 +47,10 @@
         WHERE job_notice_num = #{jobNoticeNum}
     </select>
 
+    <insert id="getJobNotice" >
+        INSERT INTO tbl_job_notice ()
+        VALUES ();
+    </insert>
+
 
 </mapper>

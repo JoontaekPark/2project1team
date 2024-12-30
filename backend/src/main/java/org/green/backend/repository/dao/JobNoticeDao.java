@@ -2,6 +2,7 @@ package org.green.backend.repository.dao;
 
 
 import org.apache.ibatis.annotations.Mapper;
+import org.green.backend.dto.JobNotice.JobNoticeRequestDto;
 import org.green.backend.dto.JobNotice.JobNoticeResponseDto;
 
 /**
@@ -12,4 +13,7 @@ public interface JobNoticeDao {
 
     //    채용공고 상세정보 조회
     public JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum);
+
+    // 등록
+    public JobNoticeRequestDto getJobNotice(JobNoticeRequestDto dto);
 }
