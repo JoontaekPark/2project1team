@@ -22,6 +22,7 @@ public class BoardService {
     private final BoardDao boardDao;
 
     public void registerBoard(BoardDto boardDto) {
+        System.out.println("ServiceBoardDto" + boardDto);
         boardDao.insertBoard(boardDto);
     }
 }

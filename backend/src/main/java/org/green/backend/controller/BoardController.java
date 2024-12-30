@@ -1,14 +1,14 @@
 package org.green.backend.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.green.backend.dto.BoardDto;
 import org.green.backend.service.BoardService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * packageName : org.green.backend.controller
@@ -30,12 +30,18 @@ public class BoardController {
 
     //1:1문의 등록
     @PostMapping("/regist")
-    public ResponseEntity<String> registerBoard(
-            @RequestBody BoardDto boardDto
+    public String registerBoard(
+            @Valid @RequestBody BoardDto boardDto,
+            BindingResult bindingResult,
+            Model model
     ) {
-
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "/board/boardForm";
+        }
+        System.out.println("boardDto 잘 들어왔니?" + boardDto);
         boardService.registerBoard(boardDto);
 
-        return ResponseEntity.ok("문의 등록 완료");
+        return "redirect:/board/list";
     }
 }

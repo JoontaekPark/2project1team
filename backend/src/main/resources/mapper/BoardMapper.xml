@@ -6,6 +6,6 @@
 <mapper namespace="org.green.backend.repository.dao.BoardDao">
     <insert id="insertBoard">
         INSERT INTO tbl_board(board_target, board_title, board_content, board_gbn_cd, board_status_cd, inst_id)
-        VALUES(#{boardTarget}, #{boardTitle}, #{boardContent}, #{boardGbnCd}, boardStatusCd, instId)
+        VALUES(#{boardDto.boardTarget}, #{boardDto.boardTitle}, #{boardDto.boardContent}, #{boardDto.boardGbnCd}, #{boardDto.boardStatusCd}, #{boardDto.instId})
     </insert>
 </mapper>
