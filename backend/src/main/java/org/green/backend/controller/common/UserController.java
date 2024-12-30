@@ -1,8 +1,11 @@
 package org.green.backend.controller.common;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.green.backend.dto.common.SignInDto;
 import org.green.backend.dto.common.UserDto;
 import org.green.backend.service.common.UserService;
+import org.green.backend.utils.CookieUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -24,6 +27,7 @@ import java.io.IOException;
 public class UserController {
 
     private final UserService userService;
+    private final CookieUtil cookieUtil;
 
     @GetMapping("/api/v1/check/{id}")
     public int checkId(@PathVariable String id) {
@@ -33,6 +37,20 @@ public class UserController {
     @PostMapping("/api/v1/sign-up")
     public int signUp(@ModelAttribute UserDto user) throws IOException {
         return userService.save(user);
+    }
+
+    @PostMapping("/api/v1/user-info/check")
+    public int userInfoCheck(@RequestBody SignInDto user,
+                             HttpServletRequest request){
+        String token = cookieUtil.getCookie(request, "Authorization");
+        return userService.checkPw(token, user.getPw());
+    }
+
+    @GetMapping("/api/v1/user-info")
+    public UserDto userInfo(HttpServletRequest request) throws Exception {
+
+        String token = request.getHeader("Authorization");
+        return userService.userInfo(token);
     }
 
 }

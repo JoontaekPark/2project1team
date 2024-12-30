@@ -6,8 +6,17 @@
 <mapper namespace="org.green.backend.repository.dao.common.UserDao">
 
     <select id="findById" resultType="org.green.backend.dto.common.UserDto">
-        SELECT *
-        FROM tbl_user
+        SELECT  id,
+                pw,
+                name,
+                birth,
+                gender_cd,
+                zip_cd,
+                addr,
+                addr_detail,
+                use_yn,
+                user_gbn_cd
+        FROM tbl_user a
         WHERE id = #{id}
     </select>
 
@@ -24,6 +33,12 @@
     
     <select id="checkId">
         SELECT COUNT(*)
+        FROM tbl_user
+        WHERE id = #{id}
+    </select>
+
+    <select id="checkPw">
+        SELECT pw
         FROM tbl_user
         WHERE id = #{id}
     </select>
