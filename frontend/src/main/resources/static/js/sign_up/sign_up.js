@@ -3,7 +3,7 @@ import { api, utills } from '/static/js/common/module/common_module.js';
 $(function () {
 
     let chk = {
-        id: false,
+        id: document.querySelector("input[name=idChk]"),
         pw: false
     }
 
@@ -22,19 +22,19 @@ $(function () {
                 if (cnt > 0) {
                     id.focus();
                     func.msg(id, "중복되는 아이디 입니다.", "bad");
-                    chk.id = false;
+                    chk.id.value = false;
                     return false;
                 }
 
                 func.msg(id, "사용가능한 아이디 입니다.", "good");
-                chk.id = true;
+                chk.id.value = true;
             })
             .catch(error => console.error(error));
 
     });
 
     $(document).on("keyup", "#id", function () {
-        chk.id = false;
+        chk.id.value = false;
         func.msg(id, "아이디 중복체크를 해주세요", "bad");
     });
 
@@ -95,7 +95,7 @@ $(function () {
 
     $(document).on("click", ".submit-button", function () {
 
-        if (!chk.id) {
+        if (!chk.id.value) {
             func.msg(document.querySelector("#id"), "중복체크를 진행하세요.", "bad");
             return;
         }

@@ -31,14 +31,23 @@ public class JWTFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        String authorization = cookieUtil.getCookie(request, "token");
-        System.out.println("토큰은 !!!!!: " + authorization);
+        String authorization = request.getHeader("Authorization");
+        String token;
+
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
+            authorization = cookieUtil.getCookie(request, "token");
+            if (authorization == null) {
+                filterChain.doFilter(request, response);
+                return;
+            }else{
+                token = authorization;
+            }
+        }else{
+            token = authorization.split(" ")[1];
         }
 
-        String token = authorization.split(" ")[1];
+        System.out.println("토큰은 !!!!!: " + authorization);
+
 
         if (jwtUtil.isExpired(token)) {
             filterChain.doFilter(request, response);

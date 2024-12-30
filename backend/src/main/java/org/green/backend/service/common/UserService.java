@@ -23,4 +23,8 @@ public interface UserService {
 
     int save(UserDto user) throws IOException;
 
+    int checkPw(String token, String password);
+
+    UserDto userInfo(String id) throws Exception;
+
 }

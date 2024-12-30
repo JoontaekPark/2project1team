@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_with_aside}">
+    <head>
+        <title>비밀번호 확인</title>
+        <link rel="stylesheet" href="/static/css/sign_in/sign_in.css">
+    </head>
+    <body>
+        <main layout:fragment="content">
+            <h1 class="login-title">비밀번호 확인</h1>
+            <div class="login-container">
+            <form class="login-form" action="/login" method="POST">
+                <div class="form-group">
+                    <label for="pw" class="form-label">비밀번호</label>
+                    <input type="password" id="pw" name="pw" placeholder="비밀번호를 입력해주세요." class="form-input required">
+                </div>
+                <p class="error-message">아이디 및 비밀번호 오류 입니다.</p>
+                <button type="submit" class="login-button">확인</button>
+            </form>
+            </div>
+        </main>
+    </body>
+</html>
+
+<script type="module" src="/static/js/user_info/user_info_check.js"></script>

@@ -38,6 +38,8 @@ public class UserServicImpl implements UserService {
     private final FileUploadUtil fileUploadUtil;
     private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JWTUtil jwtUtil;
+
 
     @Override
     public int checkId(String id) {
@@ -59,4 +61,34 @@ public class UserServicImpl implements UserService {
 
         return result;
     }
+
+    @Override
+    public int checkPw(String token, String pw){
+
+        String id = jwtUtil.getId(token);
+        String resultPw = userDao.checkPw(id);
+
+        if (pw == null || resultPw == null) {
+            throw new IllegalArgumentException("PW를 입력해주세요.");
+        }
+
+        if (!bCryptPasswordEncoder.matches(pw, resultPw)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        return 1;
+    }
+
+    @Override
+    public UserDto userInfo(String token) throws Exception {
+
+        if (token == null || token.isEmpty()) {
+            throw new Exception("토큰이 빈값입니다.");
+        }
+
+        String id = jwtUtil.getId(token);
+
+        return userDao.findById(id);
+    }
+
 }

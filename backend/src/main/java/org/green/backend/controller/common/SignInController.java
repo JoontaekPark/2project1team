@@ -38,7 +38,7 @@ public class SignInController {
                                       HttpServletResponse response) {
 
         String token = signInService.signIn(dto);
-        ResponseCookie cookie = cookieUtil.createCookie("token", token);
+        ResponseCookie cookie = cookieUtil.createCookie("Authorization", token);
 
         response.addHeader("Set-Cookie", cookie.toString());
 

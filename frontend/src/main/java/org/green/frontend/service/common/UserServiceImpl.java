@@ -2,7 +2,9 @@ package org.green.frontend.service.common;
 
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.common.UserDto;
 import org.green.frontend.global.common.ApiResponse;
+import org.green.frontend.utils.WebClientUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -26,24 +28,17 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final WebClient webClient;
+    private final WebClientUtil webClientUtil;
 
     @Override
     public List<CodeInfoDto> genderInfo() throws Exception {
+        ApiResponse<List> response = webClientUtil.getApi("/api/v1/code-Infos?upCd=gender_cd", List.class);
+        return response.getBody();     }
 
-        ApiResponse result = webClient.get()
-                .uri("/api/v1/code-Infos?upCd=gender_cd")
-                .retrieve()
-                .bodyToMono(ApiResponse.class)
-                .onErrorResume(ex -> {
-                    // 기본 응답이나 오류 반환
-                    return Mono.just(new ApiResponse<>(ApiResponse.ApiStatus.ERROR, ex.getMessage()));
-                })
-                .block();
+    @Override
+    public UserDto userInfo() throws Exception {
 
-        if (result.getStatus().equals(ApiResponse.ApiStatus.ERROR)) {
-            throw new Exception("오류발생!!");
-        }
-
-        return (List<CodeInfoDto>) result.getBody();
+        ApiResponse<UserDto> result = webClientUtil.getApi("/api/v1/user-info", UserDto.class);
+        return result.getBody();
     }
 }

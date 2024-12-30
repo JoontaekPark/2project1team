@@ -2,12 +2,15 @@ package org.green.frontend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.common.UserDto;
 import org.green.frontend.service.common.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -34,12 +37,36 @@ public class UserController {
     }
 
     @GetMapping("/sign-up/{userGbnCd}")
-    public String signUp(@PathVariable("userGbnCd") String userGbnCd, Model model) throws Exception {
+    public String signUp(@PathVariable("userGbnCd") String userGbnCd,
+                         Model model) throws Exception {
 
         List<CodeInfoDto> genders = userService.genderInfo();
 
         model.addAttribute("userGbnCd", userGbnCd);
+        model.addAttribute("mode", "insert");
         model.addAttribute("genders", genders);
+
+        return "sign_up/sign_up";
+    }
+
+    @GetMapping("/user-info")
+    public String userInfo(@RequestParam(value = "data", required = false) String result,
+                           Model model) throws Exception {
+        if (result == null || result.isEmpty()) {
+            return "user_info/user_info_check";
+        }
+
+        String check = new String(Base64.getDecoder().decode(result));
+        if (!check.equals("true")) {
+            return "user_info/user_info_check";
+        }
+
+        List<CodeInfoDto> genders = userService.genderInfo();
+        UserDto userInfo = userService.userInfo();
+        System.out.println(userInfo);
+        model.addAttribute("genders", genders);
+        model.addAttribute("mode", "edit");
+        model.addAttribute("userInfo", userInfo);
 
         return "sign_up/sign_up";
     }

@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/fragment/main_layout_no_aside}">
+      layout:decorate="~{/fragment/main_layout_no_aside}"
+>
     <head>
-        <title>Example without Aside</title>
+        <title th:text="${mode == 'edit' ? '내 정보' : '회원가입'}"></title>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <link rel="stylesheet" href="/static/css/sign_up/sign_up.css">
     </head>
     <body>
         <main layout:fragment="content">
+            <th:block th:if="${mode == 'edit'}">
+            <aside layout:fragment="sidebar" th:replace="~{fragment/aside :: asideUser}"></aside>
+            </th:block>
             <div class="sign-up">
                 <input type="hidden" name="userGbnCd" id="userGbnCd" th:value="${userGbnCd}">
-                <div class="title"><span th:text="${userGbnCd == '20' ? '기업' : '구직자'}"></span> 회원가입</div>
+                <div class="title"><span th:text="${userGbnCd == '20' ? '기업' : '구직자'}"></span> <span th:text="${mode == 'edit' ? '정보' : '회원가입'}"></span></div>
                 <div class="form-container">
                     <form class="form">
                         <!-- Image Placeholder -->
@@ -26,7 +30,8 @@
                             <label for="id">아이디<span class="required-icon">*</span></label>
                             <div class="input-with-button">
                                 <input class="required" type="text" id="id" name="id" placeholder="아이디를 입력하세요."
-                                       maxlength="20">
+                                       maxlength="20" th:value="${userInfo?.id}">
+                                <input type="hidden" name="idChk" th:value="true">
                                 <button type="button" class="check-button" id="check-button">중복체크</button>
                             </div>
                             <label class="msg-label"></label>
@@ -49,25 +54,26 @@
                             <label for="name"><span th:text="${userGbnCd == '20' ? '회사명' : '이름'}"></span><span class="required-icon">*</span></label>
                             <input class="required" type="text" id="name" name="name"
                                    th:placeholder="${userGbnCd == '20' ? '회사명' : '이름'} + '을 입력하세요.'"
-                                   maxlength="20">
+                                   maxlength="20" th:value="${userInfo?.name}">
                             <label class="msg-label"></label>
                         </div>
 
                         <div class="input-group">
                             <label for="birth"><span th:text="${userGbnCd == '20' ? '설립일' : '생년월일'}"></span><span class="required-icon">*</span></label>
                             <input class="required" type="date" id="birth" name="birth"
-                                   th:placeholder="${userGbnCd == '20' ? '설립일' : '생년월일'} + '을 입력하세요.'">
+                                   th:placeholder="${userGbnCd == '20' ? '설립일' : '생년월일'} + '을 입력하세요.'"
+                                   th:value="${userInfo?.birth}">
                             <label class="msg-label"></label>
                         </div>
 
                         <div class="input-group">
                             <label for="zipCd">주소<span class="required-icon">*</span></label>
                             <input class="required" type="text" id="zipCd" name="zipCd" placeholder="우편번호를 입력하세요."
-                                   readonly>
+                                   readonly th:value="${userInfo?.zipCd}">
                             <button type="button" class="find-address">우편번호 찾기</button>
-                            <input class="required" type="text" id="addr" name="addr" placeholder="주소를 입력하세요." readonly>
+                            <input class="required" type="text" id="addr" name="addr" placeholder="주소를 입력하세요." readonly th:value="${userInfo?.addr}">
                             <input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소를 입력하세요."
-                                   maxlength="100">
+                                   maxlength="100" th:value="${userInfo?.addrDetail}">
                             <label class="msg-label"></label>
                         </div>
 
@@ -79,7 +85,7 @@
                                     <label>
                                         <input th:class="${userGbnCd == '10' ? 'required' : ''}" type="radio"
                                                name="genderCd" th:value="${gender.cd}" th:text="${gender.cdNm}"
-                                               placeholder="성별을 입력하세요">
+                                               placeholder="성별을 입력하세요" th:checked="${userInfo.genderCd == gender.cd}">
                                     </label>
                                 </th:block>
                             </div>
@@ -88,7 +94,8 @@
 
                         <!-- Buttons -->
                         <div class="buttons">
-                            <button type="button" class="submit-button">회원가입</button>
+                            <button type="button" class="submit-button" th:if="${mode != 'edit'}">회원가입</button>
+                            <button type="button" class="edit-button" th:if="${mode == 'edit'}">수정</button>
                             <button type="reset" class="cancel-button">취소</button>
                         </div>
                     </form>
