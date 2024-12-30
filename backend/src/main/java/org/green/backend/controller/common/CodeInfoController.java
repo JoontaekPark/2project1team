@@ -38,4 +38,9 @@ public class CodeInfoController {
         return codeInfoService.getCodeInfo(cd, upCd);
     }
 
+    @GetMapping("/code-infos/subcode")
+    public List<CodeInfoDto> codeInfosBySubCode(String upCd) {
+        return codeInfoService.getCodeInfosBySubCode(upCd);
+    }
+
 }

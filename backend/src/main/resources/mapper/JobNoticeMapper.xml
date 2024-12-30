@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.green.backend.dao">
+    <select id="getJobNoticeDetails" resultType="org.green.backend.dto.JobNotice.JobNoticeResponseDto">
+        SELECT
+        <!--        기본 채용공고 정보-->
+        jn.job_notice_num,
+        c.name AS company_name <!-- 기업 이름-->
+        jn.job_notice_title,
+        jn.job_notice_area,
+        jn.job_notice_worktime,
+        jn.job_notice_pay,
+        jn.job_notice_detail,
+        jn.job_notice_work_jogun,
+        jn.job_notice_way,
+        jn.job_notice_caution,
+        jn.job_notice_str_date,
+        jn.job_notice_end_date,
+        jn.v_cnt,
+        jn.inst_id,
+        jn.inst_dt,
+        work_type.name AS work_type_name,
+        career.name AS career_name,
+        education.name AS education_name
+
+        FROM tbl_job_notice jn
+        <!-- 근무 형태-->
+        LEFT JOIN tbl_codeinfo work_type
+        ON jn.job_notice_work_gbn_cd = work_type.cd
+        AND work_type.up_cd='job_notice_work_gbn_cd'
+
+        <!-- 경력 구분-->
+        LEFT JOIN tbl_codeinfo career
+        ON jn.job_notice_career_gbn_cd = career.cd
+        AND career.up_cd='job_notice_career_gbn_cd'
+
+        <!-- 학력 구분-->
+        LEFT JOIN tbl_codeinfo education
+        ON jn.job_notice_education_gbn_cd = education.cd
+        AND education.up_cd='job_notice_education_gbn_cd'
+
+<!--        기업 이름 가져오기-->
+        JOIN tbl_user c
+        ON jn.inst_id = c.id
+        WHERE job_notice_num = #{jobNoticeNum}
+    </select>
+
+    <insert id="getJobNotice" >
+        INSERT INTO tbl_job_notice ()
+        VALUES ();
+    </insert>
+
+
+</mapper>

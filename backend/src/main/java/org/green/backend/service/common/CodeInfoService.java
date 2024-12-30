@@ -22,4 +22,7 @@ public interface CodeInfoService {
 
     CodeInfoDto getCodeInfo(String cd, String upCd);
 
+    List<CodeInfoDto> getCodeInfosBySubCode(String upCd);
+
+
 }

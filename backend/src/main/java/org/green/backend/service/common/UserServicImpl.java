@@ -39,7 +39,6 @@ public class UserServicImpl implements UserService {
     private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     @Override
     public int checkId(String id) {
         return userDao.checkId(id);
@@ -60,5 +59,4 @@ public class UserServicImpl implements UserService {
 
         return result;
     }
-
 }
