@@ -27,6 +27,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux:3.4.0'
 
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.0'
+
     implementation 'org.springframework.boot:spring-boot-devtools'
 
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

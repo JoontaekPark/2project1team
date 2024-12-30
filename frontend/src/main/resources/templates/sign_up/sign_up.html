@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
+    <head>
+        <title>Example without Aside</title>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <link rel="stylesheet" href="/static/css/sign_up/sign_up.css">
+    </head>
+    <body>
+        <main layout:fragment="content">
+            <div class="sign-up">
+                <input type="hidden" name="userGbnCd" id="userGbnCd" th:value="${userGbnCd}">
+                <div class="title"><span th:text="${userGbnCd == '20' ? '기업' : '구직자'}"></span> 회원가입</div>
+                <div class="form-container">
+                    <form class="form">
+                        <!-- Image Placeholder -->
+                        <div class="image-placeholder">
+                            <span class="del-img">X</span>
+                            <img class="image">
+                            <input type="file" name="profile" id="profile" style="display: none" accept="image/*">
+                        </div>
+
+                        <!-- Input Fields -->
+                        <div class="input-group">
+                            <label for="id">아이디<span class="required-icon">*</span></label>
+                            <div class="input-with-button">
+                                <input class="required" type="text" id="id" name="id" placeholder="아이디를 입력하세요."
+                                       maxlength="20">
+                                <button type="button" class="check-button" id="check-button">중복체크</button>
+                            </div>
+                            <label class="msg-label"></label>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="pw">비밀번호 (8자 이상 + 소문자 + 숫자)<span class="required-icon">*</span></label>
+                            <input class="required" name="pw" type="password" id="pw" placeholder="비밀번호를 입력하세요.">
+                            <label class="msg-label"></label>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="confirmPw">비밀번호 확인<span class="required-icon">*</span></label>
+                            <input class="required" name="confirmPw" type="password" id="confirmPw"
+                                   placeholder="비밀번호를 다시 입력하세요.">
+                            <label class="msg-label"></label>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="name"><span th:text="${userGbnCd == '20' ? '회사명' : '이름'}"></span><span class="required-icon">*</span></label>
+                            <input class="required" type="text" id="name" name="name"
+                                   th:placeholder="${userGbnCd == '20' ? '회사명' : '이름'} + '을 입력하세요.'"
+                                   maxlength="20">
+                            <label class="msg-label"></label>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birth"><span th:text="${userGbnCd == '20' ? '설립일' : '생년월일'}"></span><span class="required-icon">*</span></label>
+                            <input class="required" type="date" id="birth" name="birth"
+                                   th:placeholder="${userGbnCd == '20' ? '설립일' : '생년월일'} + '을 입력하세요.'">
+                            <label class="msg-label"></label>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="zipCd">주소<span class="required-icon">*</span></label>
+                            <input class="required" type="text" id="zipCd" name="zipCd" placeholder="우편번호를 입력하세요."
+                                   readonly>
+                            <button type="button" class="find-address">우편번호 찾기</button>
+                            <input class="required" type="text" id="addr" name="addr" placeholder="주소를 입력하세요." readonly>
+                            <input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소를 입력하세요."
+                                   maxlength="100">
+                            <label class="msg-label"></label>
+                        </div>
+
+                        <!-- Gender Selection -->
+                        <div class="input-group" th:if="${userGbnCd == '10'}">
+                            <label>성별<span class="required-icon">*</span></label>
+                            <div class="gender-selection">
+                                <th:block th:each="gender : ${genders}">
+                                    <label>
+                                        <input th:class="${userGbnCd == '10' ? 'required' : ''}" type="radio"
+                                               name="genderCd" th:value="${gender.cd}" th:text="${gender.cdNm}"
+                                               placeholder="성별을 입력하세요">
+                                    </label>
+                                </th:block>
+                            </div>
+                            <label class="msg-label"></label>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="buttons">
+                            <button type="button" class="submit-button">회원가입</button>
+                            <button type="reset" class="cancel-button">취소</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
+
+<script type="module" src="/static/js/sign_up/sign_up.js"></script>
