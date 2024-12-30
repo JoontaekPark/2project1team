@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: userHeader}"></div>
+<main>
+    <h2>채용공고 작성 </h2>
+
+    <div class="form">
+        <p><span class="red-point">* </span> 제목</p>
+        <input type="text" name="jobNoticeTitle" placeholder="공고 제목을 입력하세요">
+    </div>
+
+    <div class="form">
+        <p><span class="red-point">* </span> 근무지역</p>
+        <input type="text" name="jobNoticeArea" placeholder="근무 지역을 입력하세요">
+    </div>
+
+    <div id="select-form">
+        <div class="form">
+            <p><span class="red-point">* </span> 경력</p>
+            <select id="jobNoticeCareerGbnCd">
+                    <option selected>경력 선택</option>
+                <th:block th:each="career : ${jobNoticeCareerGbnCdList}">
+                    <option th:value="${career.cd}" th:text="${career.cdNm}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <div class="form">
+            <p><span class="red-point">* </span> 학력</p>
+            <select id="jobNoticeEducationGbnCd">
+                <option selected>학력 선택</option>
+                <th:block th:each="education : ${jobNoticeEducationGbnCdList}">
+                    <option th:value="${education.cd}" th:text="${education.cdNm}"></option>
+                </th:block>
+            </select>
+        </div>
+    </div>
+
+    <div id="double-form">
+        <div class="form">
+            <p><span class="red-point">* </span> 근무일</p>
+            <input type="text" name="jobNoticeWorktime" placeholder="근무일을 입력하세요">
+        </div>
+
+        <div class="form">
+            <p><span class="red-point">* </span> 근무형태</p>
+            <input type="text" name="jobNoticeWorkGbnCd" placeholder="근무형태를 입력하세요">
+        </div>
+    </div>
+
+    <div class="double-form">
+        <div class="form">
+            <p><span class="red-point">* </span> 모집 시작일시</p>
+            <input type="date" name="jobNoticeStrDate" placeholder="날짜">
+        </div>
+
+        <div class="form">
+            <p><span class="red-point">* </span> 모집 마감일시</p>
+            <input type="date" name="jobNoticeEndDate" placeholder="날짜">
+        </div>
+    </div>
+
+    <div class="form">
+        <p>이미지 파일</p>
+        <input type="file">
+        <!--   보류-->
+    </div>
+
+    <div class="form">
+        <div class="text-form">
+            <p>모집공고 및 상세내용</p>
+            <!--    사진파일 업로드 잠시 보류-->
+            <textarea name="jobNoticeDetail" placeholder="내용을 입력하세요"></textarea>
+        </div>
+    </div>
+
+    <div class="form">
+        <div class="text-form">
+            <p>근무조건</p>
+            <!--    사진파일 업로드 잠시 보류-->
+            <textarea name="jobNoticeWorkJogun" placeholder="내용을 입력하세요"></textarea>
+        </div>
+    </div>
+
+    <div class="form">
+        <div class="text-form">
+            <p>채용절차</p>
+            <!--    사진파일 업로드 잠시 보류-->
+
+            <!--        text 부분 생략 결정-->
+        </div>
+    </div>
+
+    <div class="form">
+        <div class="text-form">
+            <p>접수기간 및 방법</p>
+            <!--    사진파일 업로드 잠시 보류-->
+            <textarea name="jobNoticeWay" placeholder="내용을 입력하세요"></textarea>
+        </div>
+    </div>
+
+    <div class="form">
+        <div class="text-form">
+            <p>유의사항</p>
+            <!--    사진파일 업로드 잠시 보류-->
+            <textarea name="jobNoticeCaution" placeholder="내용을 입력하세요"></textarea>
+        </div>
+    </div>
+
+    <div class="form">
+        <p>복리후생</p>
+
+    </div>
+
+    <div class="form">
+        <p>기술 스택</p>
+
+    </div>
+
+    <div class="form">
+        <button onclick="" id="temp-btn">임시저장</button>
+        <button  onclick="" id="regist-btn">작성하기</button>
+    </div>
+
+</main>
+<div th:replace="~{fragment/footer :: footer}"></div>
+
+</body>
+<script>
+
+</script>
+</html>

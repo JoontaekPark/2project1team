@@ -96,7 +96,7 @@ aside a {
     display: flex;
 ;
 }
-.footer-content a{
+.footer-content li{
     text-decoration: none;
     color: white;
 }
