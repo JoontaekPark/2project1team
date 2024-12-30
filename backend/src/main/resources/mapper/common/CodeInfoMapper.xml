@@ -13,4 +13,13 @@
         WHERE up_cd = #{upCd}
     </select>
 
+    <select id="getCodeInfosBySubCode" resultType="org.green.backend.dto.common.CodeInfoDto">
+        SELECT cd,
+        cd_nm,
+        up_cd
+        FROM tbl_codeinfo
+        WHERE up_cd
+        IN (SELECT cd FROM tbl_codeinfo WHERE up_cd = #{upCd});
+    </select>
+
 </mapper>

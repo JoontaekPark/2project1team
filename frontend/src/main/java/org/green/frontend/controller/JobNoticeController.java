@@ -23,9 +23,11 @@ public class JobNoticeController {
 
         List<CodeInfoDto> jobNoticeEducationGbnCdList = jobNoticeService.educationInfo();
         List<CodeInfoDto> jobNoticeCareerGbnCdList = jobNoticeService.careerInfo();
+        List<CodeInfoDto> jobNoticeStackGbnCdList = jobNoticeService.stackInfo();
 
         model.addAttribute("jobNoticeEducationGbnCdList", jobNoticeEducationGbnCdList);
         model.addAttribute("jobNoticeCareerGbnCdList", jobNoticeCareerGbnCdList);
+        model.addAttribute("jobNoticeStackGbnCdList", jobNoticeStackGbnCdList);
 
         return "job_notice/regist_job_notice_form";
     }

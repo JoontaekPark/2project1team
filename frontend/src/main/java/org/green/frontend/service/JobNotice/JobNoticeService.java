@@ -13,4 +13,7 @@ public interface JobNoticeService {
 
     List<CodeInfoDto> educationInfo() throws Exception;
 
+    List<CodeInfoDto> stackInfo() throws Exception;
+
+
 }

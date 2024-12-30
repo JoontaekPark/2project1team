@@ -34,13 +34,8 @@ public class JobNoticeImpl implements JobNoticeService {
                 .block();
 
         return (List<CodeInfoDto>) result.getBody();
-//        List<CodeInfoDto> result = webClient.get()
-//                .uri("/api/v1/code-Infos?upCd=job_notice_career_gbn_cd")
-//                .retrieve()
-//                .bodyToMono(new ParameterizedTypeReference<List<CodeInfoDto>>(){})
-//                .block();
-//
-//        return result;
+
+
     }
 
     @Override
@@ -59,17 +54,24 @@ public class JobNoticeImpl implements JobNoticeService {
 
         return (List<CodeInfoDto>) result.getBody();
 
-//        List<CodeInfoDto> result = webClient.get()
-//                .uri("/api/v1/code-Infos?upCd=job_notice_education_gbn_cd")
-//                .retrieve()
-//                .bodyToMono(new ParameterizedTypeReference<List<CodeInfoDto>>(){})
-////                .onErrorResume(ex -> {
-////                    // 기본 응답이나 오류 반환
-////                    return Mono.just(new ApiResponse<>(ApiResponse.ApiStatus.ERROR, ex.getMessage()));
-////                })
-//                .block();
-//
-//        return result;
+
+    }
+
+    @Override
+    public List<CodeInfoDto> stackInfo() throws Exception {
+
+        ApiResponse result = webClient.get()
+                .uri("/api/v1/code-infos/subcode?upCd=stack_cd")
+                .retrieve()
+                .bodyToMono(ApiResponse.class)
+                .onErrorResume(ex -> {
+                    // 기본 응답이나 오류 반환
+                    return Mono.just(new ApiResponse<>(ApiResponse.ApiStatus.ERROR, ex.getMessage()));
+                })
+                .block();
+        System.out.println("API Response: " + result);
+
+        return (List<CodeInfoDto>) result.getBody();
 
     }
 
