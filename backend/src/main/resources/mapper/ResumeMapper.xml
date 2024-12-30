@@ -3,10 +3,75 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.green.backend.repository.dao.ResumeDao">
-    <insert id="insertResumeMain">
-        insert into tbl_resume value
-        (null,'#{resume.resumeTitle}','#{resume.resumeArea}',
-        '#{resume.resumeMainYn}','#{resume.resumeMemo}','#{resume.instId}',now())
+<mapper namespace="org.green.backend.repository.dao.resume.ResumeDao">
+    <insert id="insertResumeBase">
+        insert into tbl_resume (resume_id,resume_title,resume_area,resume_main_yn,resume_memo,inst_id,inst_dt) value
+        (null,#{resume.resumeTitle},#{resume.resumeArea},
+        #{resume.resumeMainYn},#{resume.resumeMemo},#{resume.instId},now())
     </insert>
+
+
+    <select id="getResumeId" resultType="_int">
+        select max(resume_id) from tbl_resume
+    </select>
+
+
+    <insert id="insertResumeActive">
+        insert into tbl_resume_active
+        (resume_active_num,resume_id,resume_active_detail,resume_active_str_date,resume_active_end_date) value
+        (null,#{resumeId},#{resume.resumeActiveDetail},#{resume.resumeActiveStrDate},#{resume.resumeActiveEndDate})
+    </insert>
+
+    <insert id="insertResumeCareer">
+        insert into tbl_resume_career
+        (resume_career_num,resume_id,resume_career_company_nm,resume_career_join_dt,resume_career_out_dt,resume_career_dmpt,resume_career_pstn,resume_career_duties)
+        values
+        (null,#{resumeId},#{resume.resumeCareerCompanyNm},#{resume.resumeCareerJoinDt},#{resume.resumeCareerOutDt},#{resume.resumeCareerDmpt},#{resume.resumeCareerPstn},#{resume.resumeCareerDuties})
+    </insert>
+
+    <insert id="insertResumeCerts">
+        insert into tbl_resume_certs
+        (resume_certs_num,resume_id,resume_certs_dt,resume_certs_nm,resume_certs_place,resume_certs_gbn_cd)
+        values
+        (null,#{resumeId},#{resume.resumeCertsDt},#{resume.resumeCertsNm},#{resume.resumeCertsPlace},#{resume.resumeCertsGbnCd})
+    </insert>
+
+    <insert id="insertResumeEducation">
+        insert into tbl_resume_education
+        (resume_education_num,resume_id,resume_education_gbn_cd,resume_education_school_nm,resume_education_major,resume_education_score,resume_education_indt,resume_education_outdt,resume_education_transfer_yn,resume_education_resion)
+        values
+        (null,#{resumeId},#{resume.resumeEducationGbnCd},#{resume.resumeEducationSchoolNm},#{resume.resumeEducationMajor},#{resume.resumeEducationScore},#{resume.resumeEducationIndt},#{resume.resumeEducationOutdt},#{resume.resumeEducationTransferYn},#{resume.resumeEducationResion})
+    </insert>
+
+    <insert id="insertResumeIntroduce">
+        insert into tbl_resume_introduce
+        (resume_introduce_num,resume_Id,resume_introduce_title,resume_introduce_content) values
+        (null,#{resumeId},#{resume.resumeIntroduceTitle},#{resume.resumeIntroduceContent})
+    </insert>
+
+    <insert id="insertResumeLoyalty">
+        insert into tbl_resume_loyalty
+        (resume_loyalty_num,resume_Id,resume_loyalty_detail) values
+        (null,#{resumeId},#{resume.resumeLoyaltyDetail})
+    </insert>
+
+    <insert id="insertResumeMilitary">
+        insert into tbl_resume_military
+        (resume_military_num,resume_id,resume_military_str_date,resume_military_end_date,resume_military_gbn_cd,resume_military_rank_gbn_cd,resume_military_type_gbn_cd,resume_military_finish_gbn_cd)
+        values (null,#{resumeId},#{resume.resumeMilitaryStrDate},#{resume.resumeMilitaryEndDate},#{resume.resumeMilitaryGbnCd},#{resume.resumeMilitaryRankGbnCd},#{resume.resumeMilitaryTypeGbnCd},#{resume.resumeMilitaryFinishGbnCd})
+    </insert>
+
+    <insert id="insertResumePrtf">
+        insert into tbl_resume_prtf
+        (resume_prtf_num,resume_id,resume_prtf_str_date,resume_prtf_end_date,resume_prtf_url,resume_prtf_cnt,resume_prtf_content) values
+        (null,#{resumeId},#{resume.resumePrtfStrDate},#{resume.resumePrtfEndDate},#{resume.resumePrtfUrl},#{resume.resumePrtfCnt},#{resume.resumePrtfContent})
+    </insert>
+
+    <insert id="insertResumeStack">
+        insert into tbl_resume_stack
+        (resume_stack_num,resume_id,stack_cd) VALUES
+        (null,#{resumeId},#{resume.stackCd})
+    </insert>
+
+
 </mapper>

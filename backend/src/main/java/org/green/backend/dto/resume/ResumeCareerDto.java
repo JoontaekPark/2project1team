@@ -16,7 +16,7 @@ import java.time.LocalDate;
  * 2024-12-27        박준택       최초 생성
  */
 @Data
-public class ResumeCarrerDto {
+public class ResumeCareerDto {
     // 이력서 경력 번호
     private Long resumeCareerNum;
     // 이력서 번호
