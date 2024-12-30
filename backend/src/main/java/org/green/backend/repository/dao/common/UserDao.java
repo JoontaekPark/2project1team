@@ -2,6 +2,7 @@ package org.green.backend.repository.dao.common;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.green.backend.dto.common.SecurityUserDto;
 import org.green.backend.dto.common.UserDto;
 
 /**
@@ -18,6 +19,10 @@ import org.green.backend.dto.common.UserDto;
 
 @Mapper
 public interface UserDao {
+
+    public UserDto findById(String id);
+
+    public SecurityUserDto findByIdSecurity(String id);
 
     public int checkId(String id);
 

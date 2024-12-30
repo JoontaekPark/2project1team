@@ -5,12 +5,27 @@
   
 <mapper namespace="org.green.backend.repository.dao.common.UserDao">
 
-    <select id="checkId">
+    <select id="findById" resultType="org.green.backend.dto.common.UserDto">
+        SELECT *
+        FROM tbl_user
+        WHERE id = #{id}
+    </select>
 
+    <select id="findByIdSecurity" resultType="org.green.backend.dto.common.SecurityUserDto">
+        SELECT id,
+               pw,
+               name,
+               use_yn,
+               user_gbn_cd
+        FROM tbl_user
+        WHERE id = #{id}
+        AND use_yn = 'Y'
+    </select>
+
+    <select id="checkId">
         SELECT COUNT(*)
         FROM tbl_user
         WHERE id = #{id}
-
     </select>
 
     <insert id="save">

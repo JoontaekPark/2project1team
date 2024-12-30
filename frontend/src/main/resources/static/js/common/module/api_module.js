@@ -39,6 +39,7 @@ class Api {
         this.client = axios.create({
             baseURL,
             timeout,
+            withCredentials: true, // 쿠키 포함
             headers: {
                 'Content-Type': 'application/json',
             },

@@ -3,9 +3,16 @@ package org.green.backend.service.common;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.common.FileDto;
+import org.green.backend.dto.common.SignInDto;
 import org.green.backend.dto.common.UserDto;
 import org.green.backend.repository.dao.common.UserDao;
+import org.green.backend.security.CustomUserDetails;
 import org.green.backend.utils.FileUploadUtil;
+import org.green.backend.utils.JWTUtil;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
