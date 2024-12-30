@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 패키지명        : org.green.backend.service.common
@@ -40,9 +41,26 @@ public class FileServiceImpl implements FileService {
         try {
             fileDao.save(fileDto);
         }catch (Exception e) {
-            fileUploadUtil.deleteFile(fileDto.getFileUrl());
+            fileUploadUtil.deleteFile(fileDto.getFileUrl() + "/" + fileDto.getFileNewName());
             throw e;
         }
+    }
+
+    @Override
+    public void deleteFile(String fileNo) {
+
+    }
+
+    @Override
+    public void deleteAllFiles(String fileGbnCd, String fileRefId) {
+
+        List<FileDto> fileList = fileDao.findAllFileByFileGbnCdAndFileRefId(fileGbnCd, fileRefId);
+
+        for (FileDto fileDto : fileList) {
+            fileUploadUtil.deleteFile(fileDto.getFileUrl() + "/" + fileDto.getFileNewName());
+        }
+
+        fileDao.deleteAllFileByFileGbnCdAndFileRefId(fileGbnCd, fileRefId);
     }
 
 }

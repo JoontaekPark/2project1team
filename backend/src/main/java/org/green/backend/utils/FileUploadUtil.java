@@ -25,7 +25,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
 @Component
 public class FileUploadUtil {
@@ -56,7 +55,6 @@ public class FileUploadUtil {
      * @return 저장된 파일 경로
      * @throws IOException 파일 저장 중 오류
      */
-
     public FileDto saveFile(MultipartFile file,
                             String fileGbnCd,
                             String fileRefId,
@@ -69,13 +67,16 @@ public class FileUploadUtil {
         String originalFilename = file.getOriginalFilename();
         String fileExt = getFileExtension(originalFilename);
         Long fileSize = file.getSize();
-        String newFileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        String newFileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + fileExt;
 
         // 파일 저장 경로 설정
         Path targetPath = Paths.get(uploadDir, newFileName);
 
         // 파일 저장
         Files.copy(file.getInputStream(), targetPath);
+
+        // 파일 경로에서 디렉토리 경로만 추출
+        String directoryPath = Paths.get(uploadDir).toString();
 
         FileDto fileDto = new FileDto();
         fileDto.setFileGbnCd(fileGbnCd);
@@ -84,7 +85,7 @@ public class FileUploadUtil {
         fileDto.setFileOldName(originalFilename);
         fileDto.setFileExt(fileExt);
         fileDto.setFileSize(fileSize);
-        fileDto.setFileUrl(targetPath.toString());
+        fileDto.setFileUrl(directoryPath); // 디렉토리 경로만 설정
         fileDto.setInstId(userId);
 
         return fileDto;

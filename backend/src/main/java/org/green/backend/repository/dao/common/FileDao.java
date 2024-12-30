@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.common.FileDto;
 
+import java.util.List;
+
 /**
  * 패키지명        : org.green.backend.repository.dao.common
  * 파일명          : FileDao
@@ -20,5 +22,9 @@ import org.green.backend.dto.common.FileDto;
 public interface FileDao {
 
     void save(@Param("file") FileDto file);
+
+    List<FileDto> findAllFileByFileGbnCdAndFileRefId(String fileGbnCd, String fileRefId);
+
+    void deleteAllFileByFileGbnCdAndFileRefId(String fileGbnCd, String fileRefId);
 
 }

@@ -14,7 +14,7 @@
             <aside layout:fragment="sidebar" th:replace="~{fragment/aside :: asideUser}"></aside>
             </th:block>
             <div class="sign-up">
-                <input type="hidden" name="userGbnCd" id="userGbnCd" th:value="${userGbnCd}">
+                <input type="hidden" name="userGbnCd" id="userGbnCd" th:value="${mode == 'insert' ? userGbnCd : userInfo?.userGbnCd}">
                 <div class="title"><span th:text="${userGbnCd == '20' ? '기업' : '구직자'}"></span> <span th:text="${mode == 'edit' ? '정보' : '회원가입'}"></span></div>
                 <div class="form-container">
                     <form class="form">
@@ -30,9 +30,9 @@
                             <label for="id">아이디<span class="required-icon">*</span></label>
                             <div class="input-with-button">
                                 <input class="required" type="text" id="id" name="id" placeholder="아이디를 입력하세요."
-                                       maxlength="20" th:value="${userInfo?.id}">
-                                <input type="hidden" name="idChk" th:value="true">
-                                <button type="button" class="check-button" id="check-button">중복체크</button>
+                                       maxlength="20" th:value="${userInfo?.id}" th:readonly="${mode == 'edit'}">
+                                <input type="hidden" name="idChk" th:value="${mode == 'edit' ? true : false}">
+                                <button type="button" class="check-button" id="check-button" th:if="${mode == 'insert'}">중복체크</button>
                             </div>
                             <label class="msg-label"></label>
                         </div>
@@ -85,7 +85,7 @@
                                     <label>
                                         <input th:class="${userGbnCd == '10' ? 'required' : ''}" type="radio"
                                                name="genderCd" th:value="${gender.cd}" th:text="${gender.cdNm}"
-                                               placeholder="성별을 입력하세요" th:checked="${userInfo.genderCd == gender.cd}">
+                                               placeholder="성별을 입력하세요" th:checked="${userInfo?.genderCd == gender.cd}">
                                     </label>
                                 </th:block>
                             </div>

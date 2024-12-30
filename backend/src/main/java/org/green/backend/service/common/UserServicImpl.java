@@ -63,7 +63,28 @@ public class UserServicImpl implements UserService {
     }
 
     @Override
-    public int checkPw(String token, String pw){
+    public int edit(UserDto user, boolean fileChk) throws IOException {
+
+        System.out.println(user.getPw());
+
+        user.setPw(bCryptPasswordEncoder.encode(user.getPw()));
+
+        int result = userDao.edit(user);
+
+        if (fileChk) {
+
+            fileService.deleteAllFiles("10", user.getId());
+
+            if (user.getProfile() != null && !user.getProfile().isEmpty()) {
+                fileService.saveFile(user.getProfile(), user.getUserGbnCd(), user.getId(), user.getId());
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public int checkPw(String token, String pw) {
 
         String id = jwtUtil.getId(token);
         String resultPw = userDao.checkPw(id);

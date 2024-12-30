@@ -62,6 +62,7 @@ public class UserController {
         }
 
         List<CodeInfoDto> genders = userService.genderInfo();
+        System.out.println(genders);
         UserDto userInfo = userService.userInfo();
         System.out.println(userInfo);
         model.addAttribute("genders", genders);
