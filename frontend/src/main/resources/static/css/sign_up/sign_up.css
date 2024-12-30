@@ -42,6 +42,7 @@
 }
 
 .sign-up .image-placeholder span{
+    cursor: pointer;
     display: none;
     color: red;
     font-size: 1.5rem;
@@ -174,4 +175,9 @@ input[type="password"]:not(:placeholder-shown) {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.sign-up .required-icon {
+    color: #FF0083;
+    padding: 0 5px;
 }
