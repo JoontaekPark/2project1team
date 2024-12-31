@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.common.FileDto;
 import org.green.backend.dto.common.SignInDto;
 import org.green.backend.dto.common.UserDto;
+import org.green.backend.dto.company.CompanyDto;
 import org.green.backend.repository.dao.common.UserDao;
 import org.green.backend.security.CustomUserDetails;
+import org.green.backend.service.company.CompanyService;
 import org.green.backend.utils.FileUploadUtil;
 import org.green.backend.utils.JWTUtil;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,6 +41,7 @@ public class UserServicImpl implements UserService {
     private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JWTUtil jwtUtil;
+    private final CompanyService companyService;
 
 
     @Override
@@ -55,6 +58,12 @@ public class UserServicImpl implements UserService {
 
         int result = userDao.save(user);
 
+        if (user.getUserGbnCd().equals("20")){
+            CompanyDto company = new CompanyDto();
+            company.setId(user.getId());
+            companyService.save(company);
+        }
+
         if (user.getProfile() != null && !user.getProfile().isEmpty()) {
             fileService.saveFile(user.getProfile(), "10", user.getId(), user.getId());
         }
@@ -63,6 +72,7 @@ public class UserServicImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public int edit(UserDto user, boolean fileChk) throws IOException {
 
         user.setPw(bCryptPasswordEncoder.encode(user.getPw()));
@@ -82,6 +92,7 @@ public class UserServicImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public int checkPw(String token, String pw) {
 
         String id = jwtUtil.getId(token);
@@ -99,6 +110,7 @@ public class UserServicImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDto userInfo(String token) throws Exception {
 
         if (token == null || token.isEmpty()) {
