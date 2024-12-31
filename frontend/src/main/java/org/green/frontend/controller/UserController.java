@@ -1,8 +1,8 @@
 package org.green.frontend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.green.frontend.dto.common.CodeInfoDto;
 import org.green.frontend.dto.common.UserDto;
+import org.green.frontend.dto.common.CodeInfoDto;
 import org.green.frontend.service.common.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +62,7 @@ public class UserController {
         }
 
         List<CodeInfoDto> genders = userService.genderInfo();
+        System.out.println(genders);
         UserDto userInfo = userService.userInfo();
         System.out.println(userInfo);
         model.addAttribute("genders", genders);

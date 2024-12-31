@@ -30,4 +30,6 @@ public interface UserDao {
 
     public int save(@Param("user") UserDto user);
 
+    public int edit(@Param("user") UserDto user);
+
 }

@@ -33,7 +33,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<CodeInfoDto> genderInfo() throws Exception {
         ApiResponse<List> response = webClientUtil.getApi("/api/v1/code-Infos?upCd=gender_cd", List.class);
-        return response.getBody();     }
+        return response.getBody();
+    }
 
     @Override
     public UserDto userInfo() throws Exception {
