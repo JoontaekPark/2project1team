@@ -32,6 +32,9 @@ public class FileUploadUtil {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    @Value("${front.file-dir}")
+    private String fontFileDir;
+
     @PostConstruct
     public void init() {
         // 업로드 디렉토리 생성
@@ -77,8 +80,7 @@ public class FileUploadUtil {
         Files.copy(file.getInputStream(), targetPath);
 
         // Base URL 가져오기
-        String baseUrl = UrlUtils.getFileUrl(4000); // 유틸리티 메서드 호출
-        String fileUrl = baseUrl + "/uploads/";
+        String fileUrl = fontFileDir;
 
         // FileDto 생성
         FileDto fileDto = new FileDto();
