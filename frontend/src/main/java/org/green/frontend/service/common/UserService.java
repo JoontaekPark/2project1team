@@ -1,6 +1,7 @@
 package org.green.frontend.service.common;
 
 import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.common.UserDto;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ import java.util.List;
 public interface UserService {
 
     List<CodeInfoDto> genderInfo() throws Exception;
+
+    UserDto userInfo() throws Exception;
 
 }

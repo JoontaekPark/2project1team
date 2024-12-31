@@ -1,8 +1,11 @@
-.sign-up {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+main{
     display: flex;
+    flex: 1;
+}
+
+.sign-up {
+    margin: 0 auto;
+    padding: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -120,7 +123,7 @@ input[type="password"]:not(:placeholder-shown) {
 }
 
 .sign-up #zipCd {
-    width: 72.9%;
+    width: 72.2%;
 }
 
 .sign-up #id {
@@ -159,6 +162,16 @@ input[type="password"]:not(:placeholder-shown) {
 }
 
 .sign-up .submit-button {
+    width: 48%;
+    height: 40px;
+    background-color: #FF0083;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.sign-up .edit-button {
     width: 48%;
     height: 40px;
     background-color: #FF0083;

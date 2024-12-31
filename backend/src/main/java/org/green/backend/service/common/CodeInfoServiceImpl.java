@@ -34,4 +34,11 @@ public class CodeInfoServiceImpl implements CodeInfoService {
     public CodeInfoDto getCodeInfo(String cd, String upCd) {
         return codeInfoDao.getCodeInfo(cd, upCd);
     }
+
+    @Override
+    public List<CodeInfoDto> getCodeInfosBySubCode(String upCd) {
+        return codeInfoDao.getCodeInfosBySubCode(upCd);
+    }
+
+
 }

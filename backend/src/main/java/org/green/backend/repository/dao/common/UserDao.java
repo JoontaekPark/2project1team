@@ -26,6 +26,8 @@ public interface UserDao {
 
     public int checkId(String id);
 
+    public String checkPw(String id);
+
     public int save(@Param("user") UserDto user);
 
 }

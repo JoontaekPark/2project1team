@@ -15,8 +15,6 @@ public class TestController {
     @GetMapping("/")
     public String index() {
 
-        System.out.println(testService.test());
-
         return "main";
     }
 
