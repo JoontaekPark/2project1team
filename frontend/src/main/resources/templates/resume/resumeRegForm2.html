@@ -7,6 +7,45 @@
 
     <title>이력서 작성</title>
     <style>
+        .stack-btn {
+            margin: 5px;
+            color: #FFFFFF;
+            padding: 10px 15px;
+            background-color: #FF0083;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .stack-btn:hover {
+            background-color: #d6d6d6;
+        }
+
+        .stack-btn.selected {
+            background-color: #ffcccc;
+            cursor: not-allowed;
+        }
+
+        .selected-stack-btn {
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: #c8e6c9;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .selected-stack-btn:hover {
+            background-color: #b0d3b3;
+        }
+
+        .stack-container, .selected-stacks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -494,15 +533,16 @@
                         <li>데이터 분석 툴이나 협업 툴 등의 사용해본 경험이 있으신 툴들도 추가해보세요.</li>
                     </ul>
                 </div>
-
-                <button type="button" onclick="addSkillForm()" class="add-btn">
-                    + 기술스택 추가
-                </button>
-                <div id="skills-forms-container">
-                    <!-- 여기에 동적으로 폼이 추가됩니다 -->
-                </div>
+                <th:block th:each="stack : ${jobNoticeStackGbnCdList}">
+                    <button class="stack-btn" th:value="${stack.cd}" th:text="${stack.cdNm}">
+                    </button>
+                </th:block>
             </div>
+            <h4>선택된 기술 스택</h4>
+            <div id="selected-stacks" class="selected-stacks"></div>
         </div>
+
+
         <div class="right-section">
             <div class="photo-container" onclick="uploadPhoto()">
                 <img id="profile-photo" src="person-icon.png" alt="프로필 사진">
@@ -513,6 +553,15 @@
 </div>
 
 <button onclick="submitFormData()" class="add-btn">이력서 저장</button>
+
+
+
+
+
+
+
+
+
 
 <script th:inline="javascript">
     function uploadPhoto() {
@@ -534,6 +583,47 @@
         // 여기에 이력서 불러오기 로직을 구현하시면 됩니다
         alert('이력서 불러오기 기능은 아직 구현되지 않았습니다.');
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const stackButtons = document.querySelectorAll(".stack-btn");
+        const selectedContainer = document.getElementById("selected-stacks");
+
+        // 버튼 클릭 이벤트 등록
+        stackButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const selectedCd = button.value;
+                const selectedName = button.textContent;
+
+                // 이미 선택된 버튼인지 확인
+                if (button.classList.contains("selected")) return;
+
+                // 선택된 버튼 숨기기
+                button.classList.add("selected");
+
+                // 선택된 기술 스택을 아래 리스트에 버튼으로 추가
+                const stackButton = document.createElement("button");
+                stackButton.className = "selected-stack-btn";
+                stackButton.value = selectedCd;
+                stackButton.innerText = selectedName;
+
+                // 선택된 버튼을 클릭하면 다시 원래 위치로 복원
+                stackButton.addEventListener("click", () => {
+                    // 아래 리스트에서 제거
+                    stackButton.remove();
+
+                    // 원래 버튼 다시 보이게 하기
+                    button.classList.remove("selected");
+                });
+
+                selectedContainer.appendChild(stackButton);
+
+                // 선택된 영역으로 스크롤 이동
+                selectedContainer.scrollIntoView({ behavior: "smooth", block: "center" });
+            });
+        });
+    });
+
+
 
     let activeCount = 0;
     function addActiveForm() {
@@ -779,35 +869,8 @@
         container.appendChild(form);
     }
 
-    // 기술스택 폼 추가
-    function addSkillForm() {
-        skillCount++;
-        const container = document.getElementById('skills-forms-container');
-        const form = document.createElement('div');
-        form.className = 'form-container';
-        form.id = `skill-${skillCount}`;
 
-        form.innerHTML = `
-                <div class="form-row">
-                    <select name="stacks[${skillCount}].stackCd" style="flex: 1;">
-                        <option value="">기술분류</option>
-                        <option value="언어">언어</option>
-                        <option value="프레임워크">프레임워크</option>
-                        <option value="데이터베이스">데이터베이스</option>
-                        <option value="도구">도구</option>
-                    </select>
-                    <input type="text" placeholder="기술명" name="stacks[${skillCount}].stackCd" style="flex: 2;">
-                </div>
-                <div class="delete-btn-container">
-                    <button type="button" class="delete-career-btn" onclick="deleteForm('skill-${skillCount}')">삭제</button>
-                </div>
-            `;
-        //여기서 윤서씨꺼 기술스택 떙겨오기@@@@@@@@@@@서비스도 가져와야됨@@@@@@@@@@@@@@@@@
-        //여기서 윤서씨꺼 기술스택 떙겨오기@@@@@@@@@@@서비스도 가져와야됨@@@@@@@@@@@@@@@@@
-        //여기서 윤서씨꺼 기술스택 떙겨오기@@@@@@@@@@@서비스도 가져와야됨@@@@@@@@@@@@@@@@@
-        //여기서 윤서씨꺼 기술스택 떙겨오기@@@@@@@@@@@서비스도 가져와야됨@@@@@@@@@@@@@@@@@ 수정 많이해야함@@@
-        container.appendChild(form);
-    }
+
 
     // 자기소개 폼 추가
     let selfIntroCount = 0;
@@ -1036,10 +1099,10 @@
         });
 
         // 기술스택 수집
-        document.querySelectorAll('#skills-forms-container .form-container').forEach((form, index) => {
+        document.querySelectorAll('#selected-stacks .selected-stack-btn').forEach((button) => {
             resumeData.stacks.push({
-                stackCd: form.querySelector(`select[name="stacks[${index + 1}].stackCd"]`).value,
-                stackName: form.querySelector(`input[name="stacks[${index + 1}].stackCd"]`).value,
+                stackCd: button.value, // 기술 코드
+                stackName: button.textContent, // 기술 이름
             });
         });
 

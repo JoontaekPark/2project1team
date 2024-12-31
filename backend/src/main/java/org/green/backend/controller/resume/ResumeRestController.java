@@ -149,18 +149,16 @@ public class ResumeRestController {
     public String regProc2(@RequestBody ResumeInfoAll2Dto resumeDto) {
 
 
-// 활동사항 출력
+    // 활동사항 출력
         List<ResumeActiveDto> actives = resumeDto.getActives();
         if (actives != null) {
-            for (int i = 0; i < actives.size(); i++) {
-                System.out.println(i + "번째 학력사항: " + actives.get(i));
-            }
+
         } else {
             System.out.println("학력사항 데이터가 없습니다.");
         }
 
 
-// 경력사항 출력
+    // 경력사항 출력
         List<ResumeCareerDto> careers = resumeDto.getCareers();
         if (careers != null) {
             for (int i = 0; i < careers.size(); i++) {

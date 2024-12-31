@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.common.CodeInfoDto;
 import org.green.frontend.dto.resume.ResumeDto;
 import org.green.frontend.dto.resume.ResumeInfoAllDto;
+import org.green.frontend.service.JobNotice.JobNoticeService;
 import org.green.frontend.service.resumeService.ResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ import java.util.List;
 
 
  private final ResumeService resumeService;
+ private final JobNoticeService jobNoticeService;
 
 
 
@@ -86,6 +88,11 @@ import java.util.List;
 
   List<CodeInfoDto> militaryFinish = resumeService.resumeMilitaryFinishGbnCd();
   model.addAttribute("militaryFinish", militaryFinish);
+
+  //윤서씨꺼 기술스택 훔쳐옴
+  List<CodeInfoDto> jobNoticeStackGbnCdList = jobNoticeService.stackInfo();
+  model.addAttribute("jobNoticeStackGbnCdList", jobNoticeStackGbnCdList);
+
 
 
 

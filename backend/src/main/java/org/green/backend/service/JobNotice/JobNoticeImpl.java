@@ -25,7 +25,8 @@ public class JobNoticeImpl implements JobNoticeService {
     @Override
     public JobNoticeResponseDto registJobNotice(JobNoticeResponseDto dto) {
 
-        return jobNoticeDao.registJobNotice(JobNoticeResponseDto dto);
+//        return jobNoticeDao.registJobNotice(JobNoticeResponseDto dto);
+        return null;
     }
 
 
