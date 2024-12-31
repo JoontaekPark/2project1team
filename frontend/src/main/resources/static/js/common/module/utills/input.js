@@ -46,7 +46,12 @@ export const input = {
                         res.data[input.name] = input.value;
                     }
                 } else if (input.type === "file") {
-                    res.data[input.name] = handleFileInput(input);
+                    const files = handleFileInput(input);
+                    if (files.length > 0) {
+                        res.data[input.name] = files;
+                    } else {
+                        delete res.data[input.name];
+                    }
                 } else {
                     if (res.data[input.name]) {
                         if (!Array.isArray(res.data[input.name])) {
@@ -80,6 +85,25 @@ export const input = {
         }
 
         return res;
+    },
+
+    setFormData: (data) => {
+        const formDataObj = new FormData();
+        for (const key in data) {
+            if (Array.isArray(data[key])) {
+                data[key].forEach(value => {
+                    if (value instanceof File) {
+                        formDataObj.append(key, value, value.name);
+                    } else {
+                        formDataObj.append(key, value);
+                    }
+                });
+            } else {
+                formDataObj.append(key, data[key]);
+            }
+        }
+
+        return  formDataObj;
     }
 };
 
@@ -125,5 +149,5 @@ const handleSelectMultiple = (input) => {
  * @returns {Array} 업로드된 파일 배열.
  */
 const handleFileInput = (input) => {
-    return Array.from(input.files).map(file => file);
+    return input.files && input.files.length > 0 ? Array.from(input.files).map(file => file) : [];
 };

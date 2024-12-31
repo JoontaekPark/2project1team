@@ -53,4 +53,12 @@ public class UserController {
         return userService.userInfo(token);
     }
 
+    @PostMapping("/api/v1/user-info")
+    public int userInfo(@ModelAttribute UserDto user,
+                            @RequestParam("fileChk") boolean fileChk) throws IOException {
+
+        System.out.println(user);
+        return userService.edit(user, fileChk);
+    }
+
 }

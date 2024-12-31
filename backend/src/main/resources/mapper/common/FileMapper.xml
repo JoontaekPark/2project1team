@@ -31,4 +31,42 @@
 
     </insert>
 
+    <select id="findAllFileByFileGbnCdAndFileRefId" resultType="org.green.backend.dto.common.FileDto">
+        SELECT  file_no,
+                file_gbn_cd,
+                file_ref_id,
+                file_new_name,
+                file_old_name,
+                file_ext,
+                file_size,
+                file_url,
+                inst_id,
+                inst_dt
+        FROM tbl_file
+        WHERE file_gbn_cd = #{fileGbnCd}
+        AND file_ref_id = #{fileRefId}
+    </select>
+
+    <delete id="deleteAllFileByFileGbnCdAndFileRefId">
+        DELETE FROM tbl_file
+        WHERE file_gbn_cd = #{fileGbnCd}
+        AND file_ref_id = #{fileRefId}
+    </delete>
+
+    <select id="findOneByFileGbnCdAndFileRefId" resultType="org.green.backend.dto.common.FileDto">
+        SELECT  file_no,
+                file_gbn_cd,
+                file_ref_id,
+                file_new_name,
+                file_old_name,
+                file_ext,
+                file_size,
+                file_url,
+                inst_id,
+                inst_dt
+        FROM tbl_file
+        WHERE file_gbn_cd = #{fileGbnCd}
+        AND file_ref_id = #{fileRefId}
+    </select>
+
 </mapper>

@@ -11,6 +11,8 @@
                 name,
                 birth,
                 gender_cd,
+                email,
+                phone,
                 zip_cd,
                 addr,
                 addr_detail,
@@ -51,6 +53,8 @@
             name,
             birth,
             gender_cd,
+            email,
+            phone,
             zip_cd,
             addr,
             addr_detail,
@@ -62,6 +66,8 @@
             #{user.name},
             #{user.birth},
             #{user.genderCd},
+            #{user.email},
+            #{user.phone},
             #{user.zipCd},
             #{user.addr},
             #{user.addrDetail},
@@ -70,5 +76,23 @@
         )
 
     </insert>
+
+    <update id="edit">
+
+        UPDATE tbl_user
+        SET pw = #{user.pw},
+            name = #{user.name},
+            birth = #{user.birth},
+            gender_cd = #{user.genderCd},
+            email = #{user.email},
+            phone = #{user.phone},
+            zip_cd = #{user.zipCd},
+            addr = #{user.addr},
+            addr_detail = #{user.addrDetail},
+            use_yn = #{user.useYn},
+            user_gbn_cd = #{user.userGbnCd}
+        WHERE id = #{user.id}
+
+    </update>
 
 </mapper>
