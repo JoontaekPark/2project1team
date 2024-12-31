@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.resume.*;
 
+import java.util.List;
+
 /**
  * packageName    : org.green.backend.repository.dao.resume
  * fileName       : ResumeDao
@@ -21,23 +23,23 @@ public interface ResumeDao {
 
     public int getResumeId();
 
-    public void insertResumeActive(@Param("resumeId") int resumeId, @Param("resume") ResumeActiveDto resumeActiveDto);
+    public void insertResumeActive(@Param("resumeId") int resumeId, @Param("resume") List<ResumeActiveDto> resumeActiveDto);
 
-    public void insertResumeCareer(@Param("resumeId") int resumeId, @Param("resume") ResumeCareerDto resumeCareerDto);
+    public void insertResumeCareer(@Param("resumeId") int resumeId, @Param("resume") List<ResumeCareerDto> resumeCareerDto);
 
-    public void insertResumeCerts(@Param("resumeId") int resumeId, @Param("resume") ResumeCertsDto resumeCertsDto);
+    public void insertResumeCerts(@Param("resumeId") int resumeId, @Param("resume") List<ResumeCertsDto> resumeCertsDto);
 
-    public void insertResumeEducation(@Param("resumeId") int resumeId, @Param("resume")ResumeEducationDto resumeEducationDto);
+    public void insertResumeEducation(@Param("resumeId") int resumeId, @Param("resume") List<ResumeEducationDto> resumeEducationDto);
 
-    public void insertResumeIntroduce(@Param("resumeId") int resumeId, @Param("resume") ResumeIntroduceDto resumeIntroduceDto);
+    public void insertResumeIntroduce(@Param("resumeId") int resumeId, @Param("resume") List<ResumeIntroduceDto> resumeIntroduceDto);
 
-    public void insertResumeLoyalty(@Param("resumeId") int resumeId, @Param("resume")  ResumeLoyaltyDto resumeLoyaltyDto);
+    public void insertResumeLoyalty(@Param("resumeId") int resumeId, @Param("resume")  List<ResumeLoyaltyDto> resumeLoyaltyDto);
 
-    public void insertResumeMilitary(@Param("resumeId") int resumeId, @Param("resume")  ResumeMilitaryDto resumeMilitaryDto);
+    public void insertResumeMilitary(@Param("resumeId") int resumeId, @Param("resume")  List<ResumeMilitaryDto> resumeMilitaryDto);
 
-    public void insertResumePrtf(@Param("resumeId") int resumeId, @Param("resume")  ResumePrtfDto resumePrtfDto);
+    public void insertResumePrtf(@Param("resumeId") int resumeId, @Param("resume")  List<ResumePrtfDto> resumePrtfDto);
 
-    public void insertResumeStack(@Param("resumeId") int resumeId, @Param("resume") ResumeStackDto resumeStackDto);
+    public void insertResumeStack(@Param("resumeId") int resumeId, @Param("resume") List<ResumeStackDto> resumeStackDto);
 
 }
 

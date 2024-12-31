@@ -1,4 +1,4 @@
-package org.green.frontend.dto.resume;
+package org.green.backend.dto.resume;
 
 import lombok.Data;
 

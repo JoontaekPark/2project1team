@@ -1,6 +1,8 @@
 package org.green.backend.dto.resume;
 
 import lombok.Data;
+import org.green.backend.dto.common.FileDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -31,4 +33,11 @@ public class ResumePrtfDto {
     private Integer resumePrtfCnt;
     // 작업내용
     private String resumePrtfContent;
+
+    //포트폴리오 파일 저장용(등록하기)
+    private MultipartFile resumePrtfFile;
+
+    //포트폴리오 파일 조회용(가져오기)
+    private FileDto resumePrtfGetFile;
+
 }

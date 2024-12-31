@@ -18,60 +18,112 @@
 
     <insert id="insertResumeActive">
         insert into tbl_resume_active
-        (resume_active_num,resume_id,resume_active_detail,resume_active_str_date,resume_active_end_date) value
-        (null,#{resumeId},#{resume.resumeActiveDetail},#{resume.resumeActiveStrDate},#{resume.resumeActiveEndDate})
+        (resume_active_num, resume_id, resume_active_detail, resume_active_str_date, resume_active_end_date)
+        values
+        <foreach collection="resume" item="item" separator=",">
+            (null, #{resumeId}, #{item.resumeActiveDetail}, #{item.resumeActiveStrDate}, #{item.resumeActiveEndDate})
+        </foreach>
     </insert>
+
 
     <insert id="insertResumeCareer">
         insert into tbl_resume_career
-        (resume_career_num,resume_id,resume_career_company_nm,resume_career_join_dt,resume_career_out_dt,resume_career_dmpt,resume_career_pstn,resume_career_duties)
+        (resume_career_num, resume_id, resume_career_company_nm, resume_career_join_dt, resume_career_out_dt, resume_career_dmpt, resume_career_pstn, resume_career_duties)
         values
-        (null,#{resumeId},#{resume.resumeCareerCompanyNm},#{resume.resumeCareerJoinDt},#{resume.resumeCareerOutDt},#{resume.resumeCareerDmpt},#{resume.resumeCareerPstn},#{resume.resumeCareerDuties})
+        <foreach collection="resume" item="item" separator=",">
+            (null, #{resumeId}, #{item.resumeCareerCompanyNm}, #{item.resumeCareerJoinDt}, #{item.resumeCareerOutDt}, #{item.resumeCareerDmpt}, #{item.resumeCareerPstn}, #{item.resumeCareerDuties})
+        </foreach>
     </insert>
+
+
 
     <insert id="insertResumeCerts">
         insert into tbl_resume_certs
-        (resume_certs_num,resume_id,resume_certs_dt,resume_certs_nm,resume_certs_place,resume_certs_gbn_cd)
+        (resume_certs_num, resume_id, resume_certs_dt, resume_certs_nm, resume_certs_place, resume_certs_gbn_cd)
         values
-        (null,#{resumeId},#{resume.resumeCertsDt},#{resume.resumeCertsNm},#{resume.resumeCertsPlace},#{resume.resumeCertsGbnCd})
+        <foreach collection="resume" item="item" separator=",">
+            (null, #{resumeId}, #{item.resumeCertsDt}, #{item.resumeCertsNm}, #{item.resumeCertsPlace}, #{item.resumeCertsGbnCd})
+        </foreach>
     </insert>
 
     <insert id="insertResumeEducation">
         insert into tbl_resume_education
-        (resume_education_num,resume_id,resume_education_gbn_cd,resume_education_school_nm,resume_education_major,resume_education_score,resume_education_indt,resume_education_outdt,resume_education_transfer_yn,resume_education_resion)
+        (resume_education_num, resume_id, resume_education_gbn_cd, resume_education_school_nm, resume_education_major, resume_education_score, resume_education_indt, resume_education_outdt, resume_education_transfer_yn, resume_education_resion)
         values
-        (null,#{resumeId},#{resume.resumeEducationGbnCd},#{resume.resumeEducationSchoolNm},#{resume.resumeEducationMajor},#{resume.resumeEducationScore},#{resume.resumeEducationIndt},#{resume.resumeEducationOutdt},#{resume.resumeEducationTransferYn},#{resume.resumeEducationResion})
+        <foreach collection="resume" item="item" separator=",">
+            (null, #{resumeId}, #{item.resumeEducationGbnCd}, #{item.resumeEducationSchoolNm}, #{item.resumeEducationMajor}, #{item.resumeEducationScore}, #{item.resumeEducationIndt}, #{item.resumeEducationOutdt}, #{item.resumeEducationTransferYn}, #{item.resumeEducationResion})
+        </foreach>
     </insert>
 
     <insert id="insertResumeIntroduce">
         insert into tbl_resume_introduce
-        (resume_introduce_num,resume_Id,resume_introduce_title,resume_introduce_content) values
-        (null,#{resumeId},#{resume.resumeIntroduceTitle},#{resume.resumeIntroduceContent})
+        (resume_introduce_num, resume_id, resume_introduce_title, resume_introduce_content)
+        values
+        <foreach collection="resume" item="item" separator=",">
+            (null, #{resumeId}, #{item.resumeIntroduceTitle}, #{item.resumeIntroduceContent})
+        </foreach>
     </insert>
+
+<!--    <insert id="insertResumeLoyalty">-->
+<!--        insert into tbl_resume_loyalty-->
+<!--        (resume_loyalty_num,resume_Id,resume_loyalty_detail) values-->
+<!--        (null,#{resumeId},#{resume.resumeLoyaltyDetail})-->
+<!--    </insert>-->
+
+<!--    <insert id="insertResumeMilitary">-->
+<!--        insert into tbl_resume_military-->
+<!--        (resume_military_num,resume_id,resume_military_str_date,resume_military_end_date,resume_military_gbn_cd,resume_military_rank_gbn_cd,resume_military_type_gbn_cd,resume_military_finish_gbn_cd)-->
+<!--        values (null,#{resumeId},#{resume.resumeMilitaryStrDate},#{resume.resumeMilitaryEndDate},#{resume.resumeMilitaryGbnCd},#{resume.resumeMilitaryRankGbnCd},#{resume.resumeMilitaryTypeGbnCd},#{resume.resumeMilitaryFinishGbnCd})-->
+<!--    </insert>-->
+
+<!--    <insert id="insertResumePrtf">-->
+<!--        insert into tbl_resume_prtf-->
+<!--        (resume_prtf_num,resume_id,resume_prtf_str_date,resume_prtf_end_date,resume_prtf_url,resume_prtf_cnt,resume_prtf_content) values-->
+<!--        (null,#{resumeId},#{resume.resumePrtfStrDate},#{resume.resumePrtfEndDate},#{resume.resumePrtfUrl},#{resume.resumePrtfCnt},#{resume.resumePrtfContent})-->
+<!--    </insert>-->
+
+<!--    <insert id="insertResumeStack">-->
+<!--        insert into tbl_resume_stack-->
+<!--        (resume_stack_num,resume_id,stack_cd) VALUES-->
+<!--        (null,#{resumeId},#{resume.stackCd})-->
+<!--    </insert>-->
 
     <insert id="insertResumeLoyalty">
         insert into tbl_resume_loyalty
-        (resume_loyalty_num,resume_Id,resume_loyalty_detail) values
-        (null,#{resumeId},#{resume.resumeLoyaltyDetail})
+        (resume_loyalty_num, resume_id, resume_loyalty_detail)
+        values
+        <foreach collection="resume" item="item" separator=",">
+            (null, #{resumeId}, #{item.resumeLoyaltyDetail})
+        </foreach>
     </insert>
 
     <insert id="insertResumeMilitary">
         insert into tbl_resume_military
-        (resume_military_num,resume_id,resume_military_str_date,resume_military_end_date,resume_military_gbn_cd,resume_military_rank_gbn_cd,resume_military_type_gbn_cd,resume_military_finish_gbn_cd)
-        values (null,#{resumeId},#{resume.resumeMilitaryStrDate},#{resume.resumeMilitaryEndDate},#{resume.resumeMilitaryGbnCd},#{resume.resumeMilitaryRankGbnCd},#{resume.resumeMilitaryTypeGbnCd},#{resume.resumeMilitaryFinishGbnCd})
+        (resume_military_num, resume_id, resume_military_str_date, resume_military_end_date, resume_military_gbn_cd, resume_military_rank_gbn_cd, resume_military_type_gbn_cd, resume_military_finish_gbn_cd)
+        values
+        <foreach collection="resume" item="item" separator=",">
+            (null, #{resumeId}, #{item.resumeMilitaryStrDate}, #{item.resumeMilitaryEndDate}, #{item.resumeMilitaryGbnCd}, #{item.resumeMilitaryRankGbnCd}, #{item.resumeMilitaryTypeGbnCd}, #{item.resumeMilitaryFinishGbnCd})
+        </foreach>
     </insert>
 
     <insert id="insertResumePrtf">
         insert into tbl_resume_prtf
-        (resume_prtf_num,resume_id,resume_prtf_str_date,resume_prtf_end_date,resume_prtf_url,resume_prtf_cnt,resume_prtf_content) values
-        (null,#{resumeId},#{resume.resumePrtfStrDate},#{resume.resumePrtfEndDate},#{resume.resumePrtfUrl},#{resume.resumePrtfCnt},#{resume.resumePrtfContent})
+        (resume_prtf_num, resume_id, resume_prtf_str_date, resume_prtf_end_date, resume_prtf_url, resume_prtf_cnt, resume_prtf_content)
+        values
+        <foreach collection="resume" item="item" separator=",">
+            (null, #{resumeId}, #{item.resumePrtfStrDate}, #{item.resumePrtfEndDate}, #{item.resumePrtfUrl}, #{item.resumePrtfCnt}, #{item.resumePrtfContent})
+        </foreach>
     </insert>
 
     <insert id="insertResumeStack">
         insert into tbl_resume_stack
-        (resume_stack_num,resume_id,stack_cd) VALUES
-        (null,#{resumeId},#{resume.stackCd})
+        (resume_stack_num, resume_id, stack_cd)
+        values
+        <foreach collection="resume" item="item" separator=",">
+            (null, #{resumeId}, #{item.stackCd})
+        </foreach>
     </insert>
+
 
 
 </mapper>
