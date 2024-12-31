@@ -27,4 +27,6 @@ public interface FileService {
     void deleteFile(String fileNo);
 
     void deleteAllFiles(String fileGbnCd, String fileRefId);
+
+    FileDto getFile(String fileGbnCd, String fileRefId);
 }

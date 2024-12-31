@@ -56,7 +56,7 @@ public class UserServicImpl implements UserService {
         int result = userDao.save(user);
 
         if (user.getProfile() != null && !user.getProfile().isEmpty()) {
-            fileService.saveFile(user.getProfile(), user.getUserGbnCd(), user.getId(), user.getId());
+            fileService.saveFile(user.getProfile(), "10", user.getId(), user.getId());
         }
 
         return result;
@@ -64,8 +64,6 @@ public class UserServicImpl implements UserService {
 
     @Override
     public int edit(UserDto user, boolean fileChk) throws IOException {
-
-        System.out.println(user.getPw());
 
         user.setPw(bCryptPasswordEncoder.encode(user.getPw()));
 
@@ -108,8 +106,14 @@ public class UserServicImpl implements UserService {
         }
 
         String id = jwtUtil.getId(token);
+        String fileGbnCd = "10";
 
-        return userDao.findById(id);
+        UserDto user = userDao.findById(id);
+
+        FileDto file = fileService.getFile(fileGbnCd, id);
+        user.setFileDto(file);
+        return user;
+
     }
 
 }

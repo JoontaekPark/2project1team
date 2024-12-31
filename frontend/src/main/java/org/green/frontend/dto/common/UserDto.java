@@ -1,6 +1,5 @@
 package org.green.frontend.dto.common;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +27,6 @@ public class UserDto {
     // 구직자: 이름, 회사: 회사명
     private String name;
     // 구직자: 생년월일, 회사: 설립일
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birth;
     // 성별
     private String genderCd;
@@ -36,6 +34,10 @@ public class UserDto {
     private Integer zipCd;
     // 주소
     private String addr;
+    // 전화번호
+    private String phone;
+    // 이메일
+    private String email;
     // 상세주소
     private String addrDetail;
     // 사용여부
@@ -55,5 +57,9 @@ public class UserDto {
     // 업종 (텍스트)
     private String companyIndustry;
 
+    // 저장시 담음
     private MultipartFile profile;
+
+    // 수정 및 조회시 담음
+    private FileDto fileDto;
 }

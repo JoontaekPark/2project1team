@@ -63,29 +63,32 @@ public class FileUploadUtil {
             throw new IllegalArgumentException("빈 파일은 저장할 수 없습니다.");
         }
 
-        // 파일 이름 생성 (UUID 사용)
+        // 파일 이름 생성
         String originalFilename = file.getOriginalFilename();
         String fileExt = getFileExtension(originalFilename);
+        String originalNameWithoutExt = originalFilename != null ? originalFilename.replaceAll("\\.[^.]*$", "") : "unknown";
+
         Long fileSize = file.getSize();
-        String newFileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + fileExt;
+        String newFileNameWithoutExt = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        String newFileName = newFileNameWithoutExt + fileExt;
 
         // 파일 저장 경로 설정
         Path targetPath = Paths.get(uploadDir, newFileName);
-
-        // 파일 저장
         Files.copy(file.getInputStream(), targetPath);
 
-        // 파일 경로에서 디렉토리 경로만 추출
-        String directoryPath = Paths.get(uploadDir).toString();
+        // Base URL 가져오기
+        String baseUrl = UrlUtils.getFileUrl(4000); // 유틸리티 메서드 호출
+        String fileUrl = baseUrl + "/uploads/";
 
+        // FileDto 생성
         FileDto fileDto = new FileDto();
         fileDto.setFileGbnCd(fileGbnCd);
         fileDto.setFileRefId(fileRefId);
-        fileDto.setFileNewName(newFileName);
-        fileDto.setFileOldName(originalFilename);
+        fileDto.setFileNewName(newFileNameWithoutExt);
+        fileDto.setFileOldName(originalNameWithoutExt);
         fileDto.setFileExt(fileExt);
         fileDto.setFileSize(fileSize);
-        fileDto.setFileUrl(directoryPath); // 디렉토리 경로만 설정
+        fileDto.setFileUrl(fileUrl);
         fileDto.setInstId(userId);
 
         return fileDto;

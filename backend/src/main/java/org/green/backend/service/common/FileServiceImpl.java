@@ -63,4 +63,9 @@ public class FileServiceImpl implements FileService {
         fileDao.deleteAllFileByFileGbnCdAndFileRefId(fileGbnCd, fileRefId);
     }
 
+    @Override
+    public FileDto getFile(String fileGbnCd, String fileRefId) {
+        return fileDao.findOneByFileGbnCdAndFileRefId(fileGbnCd, fileRefId);
+    }
+
 }
