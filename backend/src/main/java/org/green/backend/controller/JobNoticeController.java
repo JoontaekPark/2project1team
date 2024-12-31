@@ -1,5 +1,6 @@
 package org.green.backend.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.green.backend.dto.JobNotice.JobNoticeRequestDto;
 import org.green.backend.dto.JobNotice.JobNoticeResponseDto;
 import org.green.backend.service.JobNotice.JobNoticeImpl;
@@ -14,9 +15,10 @@ import java.util.List;
 /**
  * Created on 2024-12-27 by 최윤서
  */
-@CrossOrigin("*")
+//@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1")
+@Slf4j
 public class JobNoticeController {
 
     @Autowired
@@ -32,12 +34,12 @@ public class JobNoticeController {
     }
 
     @PostMapping("/job-notice")
-    public JobNoticeRequestDto createJobNotice(@RequestBody JobNoticeRequestDto dto) throws IOException {
-//        List<MultipartFile> jobNoticeImages = fileService.saveFile(파일, 구분코드, 관련id , 아이디);
-
-        jobNoticeService.createJobNotice(dto);
-        return dto;
+    public String createJobNotice(
+            @ModelAttribute JobNoticeRequestDto JobNoticeRequestDto)
+            throws IOException {
+        System.out.println("Received dto: " + JobNoticeRequestDto);
+        jobNoticeService.createJobNotice(JobNoticeRequestDto);
+        return "등록완료";
     }
-
-
+    
 }

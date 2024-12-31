@@ -3,6 +3,7 @@ package org.green.backend.service.JobNotice;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.JobNotice.JobNoticeRequestDto;
 import org.green.backend.dto.JobNotice.JobNoticeResponseDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;

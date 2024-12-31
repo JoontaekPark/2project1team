@@ -20,6 +20,7 @@ public class JobNoticeImpl implements JobNoticeService {
 
     @Autowired
     private JobNoticeDao jobNoticeDao;
+    @Autowired
     private FileService fileService;
 
     //채용공고 조회
@@ -34,22 +35,23 @@ public class JobNoticeImpl implements JobNoticeService {
         // 1. 채용 공고 정보 등록
         jobNoticeDao.registJobNotice(dto);
 
+        int jobNoticeNum = dto.getJobNoticeNum();
+        System.out.println("jobNoticeNum : "+jobNoticeNum);
+
         // 파일 등록
-        if (dto.getJobNoticeImage() != null) {
-            for (MultipartFile file : dto.getJobNoticeImage()) {
-                String refId = String.valueOf(dto.getJobNoticeNum());
-                fileService.saveFile(file, "20", refId, dto.getInstId());
+        if (!dto.getFiles().isEmpty() && dto.getFiles().size() > 0) {
+            for (MultipartFile file : dto.getFiles()) {
+                fileService.saveFile(file, "20", String.valueOf(jobNoticeNum), dto.getInstId());
             }
         }
-
         // 2. 기술 스택 등록
-        jobNoticeDao.registStacks(dto.getJobNoticeNum(), dto.getStackList());
+        jobNoticeDao.registStacks(jobNoticeNum, dto.getStackList());
 
         // 3. 절차 등록
-        jobNoticeDao.registSteps(dto.getJobNoticeNum(), dto.getStepList());
+        jobNoticeDao.registSteps(jobNoticeNum, dto.getStepList());
 
         // 4. 복리후생 등록
-        jobNoticeDao.registWelfares(dto.getJobNoticeNum(), dto.getWelfareList());
+        jobNoticeDao.registWelfares(jobNoticeNum, dto.getWelfareList());
     }
 
 
