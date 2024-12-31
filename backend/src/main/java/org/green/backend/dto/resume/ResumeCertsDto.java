@@ -21,6 +21,8 @@ public class ResumeCertsDto {
     private Long resumeCertsNum;
     // 이력서 번호
     private Long resumeId;
+
+
     // 자격증 취득일
     private LocalDate resumeCertsDt;
     // 자격증 명

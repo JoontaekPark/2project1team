@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
 <head>
   <meta charset="UTF-8">
   <title>이력서 작성 폼</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="/static/css/sign_in/sign_in.css">
 </head>
 <body>
+<main layout:fragment="content" class="login-container">
 <h1>이력서 작성 폼</h1>
 
 <h4>이력서 기본내용</h4>
@@ -17,11 +21,13 @@
   <input type="text" name="instId" placeholder="작성자 ID"><br>
   <input type="date" name="instDt" placeholder="작성 일시"><br>
   <hr>
+
   <h4>이력서 활동내용</h4>
   <input type="text" name="resumeActiveDetail" placeholder="활동 내용"><br>
   <input type="date" name="resumeActiveStrDate" placeholder="활동 시작일"><br>
   <input type="date" name="resumeActiveEndDate" placeholder="활동 종료일"><br>
   <hr>
+
   <h4>이력서 경력내용</h4>
   <input type="text" name="resumeCareerCompanyNm" placeholder="회사명"><br>
   <input type="date" name="resumeCareerJoinDt" placeholder="입사연월"><br>
@@ -30,12 +36,14 @@
   <input type="text" name="resumeCareerPstn" placeholder="직책"><br>
   <input type="text" name="resumeCareerDuties" placeholder="담당업무"><br>
   <hr>
+
   <h4>이력서 자격증내용</h4>
   <input type="date" name="resumeCertsDt" placeholder="자격증 취득일"><br>
   <input type="text" name="resumeCertsNm" placeholder="자격증 명"><br>
   <input type="text" name="resumeCertsPlace" placeholder="자격증 발급기관"><br>
   <input type="text" name="resumeCertsGbnCd" placeholder="자격증 합격여부"><br>
   <hr>
+
   <h4>이력서 학력내용</h4>
   <input type="text" name="resumeEducationGbnCd" placeholder="학력구분"><br>
   <input type="text" name="resumeEducationSchoolNm" placeholder="학교이름"><br>
@@ -46,13 +54,16 @@
   <input type="text" name="resumeEducationTransferYn" placeholder="편입여부"><br>
   <input type="text" name="resumeEducationResion" placeholder="지역"><br>
   <hr>
+
   <h4>이력서 자기소개 내용</h4>
   <input type="text" name="resumeIntroduceTitle" placeholder="자기소개 제목"><br>
   <input type="text" name="resumeIntroduceContent" placeholder="자기소개 내용"><br>
   <hr>
+
   <h4>이력서 우대사항 내용</h4>
   <input type="text" name="resumeLoyaltyDetail" placeholder="우대사항 내용"><br>
   <hr>
+
   <h4>이력서 병역내용</h4>
   <input type="date" name="resumeMilitaryStrDate" placeholder="병역 시작일자"><br>
   <input type="date" name="resumeMilitaryEndDate" placeholder="병역 종료일자"><br>
@@ -61,6 +72,7 @@
   <input type="text" name="resumeMilitaryTypeGbnCd" placeholder="군별 육,해,공"><br>
   <input type="text" name="resumeMilitaryFinishGbnCd" placeholder="전역구분(의가사 등등)"><br>
   <hr>
+
   <h4>이력서 포트폴리오 내용</h4>
   <input type="date" name="resumePrtfStrDate" placeholder="작업시작날짜"><br>
   <input type="date" name="resumePrtfEndDate" placeholder="작업종료날짜"><br>
@@ -68,6 +80,7 @@
   <input type="text" name="resumePrtfCnt" placeholder="작업인원수"> <br>
   <input type="text" name="resumePrtfContent" placeholder="작업내용"> <br>
   <hr>
+
   <h4>이력서 기술스택내용</h4>
   <input type="text" name="stackCd" placeholder="기술스택번호"><br>
 
@@ -104,6 +117,6 @@
             });
   });
 </script>
-
+</main>
 </body>
 </html>

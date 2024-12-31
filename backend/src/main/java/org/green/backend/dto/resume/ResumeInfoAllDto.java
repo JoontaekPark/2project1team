@@ -58,7 +58,6 @@ public class ResumeInfoAllDto {
  //-----------------------------------------------
 // 이력서 자격증 번호
  private Long resumeCertsNum;
-
  // 자격증 취득일
  private LocalDate resumeCertsDt;
  // 자격증 명

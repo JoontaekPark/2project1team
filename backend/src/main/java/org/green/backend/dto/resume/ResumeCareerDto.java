@@ -3,6 +3,7 @@ package org.green.backend.dto.resume;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 /**
  * packageName    : org.green.frontend.dto.resume
@@ -24,9 +25,9 @@ public class ResumeCareerDto {
     // 회사명
     private String resumeCareerCompanyNm;
     // 입사연월
-    private LocalDate resumeCareerJoinDt;
+    private YearMonth resumeCareerJoinDt;
     // 퇴사연월
-    private LocalDate resumeCareerOutDt;
+    private YearMonth  resumeCareerOutDt;
     // 부서명
     private String resumeCareerDmpt;
     // 직책

@@ -6,6 +6,8 @@ import org.green.frontend.dto.resume.ResumeInfoAllDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * packageName    : org.green.backend.controller.resume
  * fileName       : ResumeRestController
@@ -27,7 +29,7 @@ public class ResumeRestController {
 
     @Autowired
     private ResumeService resumeService;
-
+/*
     @PostMapping("/regProc")
     public String regProc(@RequestBody ResumeInfoAllDto resumeDto){
 
@@ -140,6 +142,125 @@ public class ResumeRestController {
 
 
         return "이력서 저장 해볼까 이제?";
+    }*/
+
+
+    @PostMapping("regProc2")
+    public String regProc2(@RequestBody ResumeInfoAll2Dto resumeDto) {
+
+
+// 활동사항 출력
+        List<ResumeActiveDto> actives = resumeDto.getActives();
+        if (actives != null) {
+            for (int i = 0; i < actives.size(); i++) {
+                System.out.println(i + "번째 학력사항: " + actives.get(i));
+            }
+        } else {
+            System.out.println("학력사항 데이터가 없습니다.");
+        }
+
+
+// 경력사항 출력
+        List<ResumeCareerDto> careers = resumeDto.getCareers();
+        if (careers != null) {
+            for (int i = 0; i < careers.size(); i++) {
+                System.out.println(i + "번째 경력사항: " + careers.get(i));
+            }
+        } else {
+            System.out.println("경력사항 데이터가 없습니다.");
+        }
+
+
+//자격증 출력
+        List<ResumeCertsDto> certs = resumeDto.getCerts();
+        if (certs != null) {
+            for (int i = 0; i < certs.size(); i++) {
+                System.out.println(i + "번째 자격증: " + certs.get(i));
+            }
+        } else {
+            System.out.println("자격증 데이터가 없습니다.");
+        }
+
+
+// 학력사항 출력
+        List<ResumeEducationDto> educations = resumeDto.getEducations();
+        if (educations != null) {
+            for (int i = 0; i < educations.size(); i++) {
+                System.out.println(i + "번째 학력사항: " + educations.get(i));
+            }
+        } else {
+            System.out.println("학력사항 데이터가 없습니다.");
+        }
+
+// 자기소개 출력
+        List<ResumeIntroduceDto> introduces = resumeDto.getIntroduces();
+        if (introduces != null) {
+            for (int i = 0; i < introduces.size(); i++) {
+                System.out.println(i + "번째 자기소개: " + introduces.get(i));
+            }
+        } else {
+            System.out.println("자기소개 데이터가 없습니다.");
+        }
+
+// 우대사항 출력
+        List<ResumeLoyaltyDto> loyalties = resumeDto.getLoyalties();
+        if (loyalties != null) {
+            for (int i = 0; i < loyalties.size(); i++) {
+                System.out.println(i + "번째 우대사항: " + loyalties.get(i));
+            }
+        } else {
+            System.out.println("우대사항 데이터가 없습니다.");
+        }
+
+// 병역사항 출력
+        List<ResumeMilitaryDto> militaries = resumeDto.getMilitaries();
+        if (militaries != null) {
+            for (int i = 0; i < militaries.size(); i++) {
+                System.out.println(i + "번째 병역사항: " + militaries.get(i));
+            }
+        } else {
+            System.out.println("병역사항 데이터가 없습니다.");
+        }
+
+// 포트폴리오 출력
+        List<ResumePrtfDto> prtfs = resumeDto.getPrtfs();
+        if (prtfs != null) {
+            for (int i = 0; i < prtfs.size(); i++) {
+                System.out.println(i + "번째 포트폴리오: " + prtfs.get(i));
+            }
+        } else {
+            System.out.println("포트폴리오 데이터가 없습니다.");
+        }
+
+// 기술스택 출력
+        List<ResumeStackDto> stacks = resumeDto.getStacks();
+        if (stacks != null) {
+            for (int i = 0; i < stacks.size(); i++) {
+                System.out.println(i + "번째 기술스택: " + stacks.get(i));
+            }
+        } else {
+            System.out.println("기술스택 데이터가 없습니다.");
+        }
+
+
+
+
+
+
+
+
+        return "";
+    }
+
+
+
+
+
+
+    @GetMapping("getCodeInfo")
+    public String getCodeInfo() {
+
+        return "";
     }
 
 
