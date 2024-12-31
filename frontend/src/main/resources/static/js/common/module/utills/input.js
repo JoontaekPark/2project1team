@@ -8,7 +8,7 @@ export const input = {
      */
     getByName: (required = "required", formData = false) => {
         const rejectType = ["button", "submit", "reset", "image"];
-        const inputs = document.querySelectorAll("input, select");
+        const inputs = document.querySelectorAll("input, select, textarea");
         console.log(inputs);
         let res = { result: true, data: {} };
 

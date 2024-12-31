@@ -1,8 +1,17 @@
 package org.green.frontend.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.company.CompanyDto;
+import org.green.frontend.service.common.CodeInfoService;
+import org.green.frontend.service.company_info.CompanyService;
+import org.green.frontend.utils.DateUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 /**
  * 패키지명        : org.green.frontend.controller
@@ -17,10 +26,21 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 
 @Controller
+@RequiredArgsConstructor
 public class CompanyController {
 
+    private final CodeInfoService codeInfoService;
+    private final CompanyService companyService;
+
     @GetMapping("/company-info/edit")
-    public String companyInfo() {
+    public String companyInfo(Model model) throws Exception {
+
+        List<CodeInfoDto> companyTypeCd = codeInfoService.getCodeInfos("company_type_cd");
+        CompanyDto company = companyService.getCompany();
+
+        model.addAttribute("companyTypeCd", companyTypeCd);
+        model.addAttribute("company", company);
+        System.out.println(company);
         return "company_info/company_info_edit";
     }
 

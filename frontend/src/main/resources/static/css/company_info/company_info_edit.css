@@ -224,6 +224,11 @@ input[type="password"]:focus {
     /*text-align: center; !* 가운데 정렬 *!*/
 }
 
+#modal-date{
+    height: auto;
+    border: 0;
+}
+
 .modal-content label {
     display: block;
     margin: 15px 0 5px;

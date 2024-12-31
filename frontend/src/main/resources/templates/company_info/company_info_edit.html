@@ -1,101 +1,123 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/fragment/main_layout_with_aside}">
-  <head>
-    <title>Example with Aside</title>
-    <link rel="stylesheet" href="/static/css/company_info/company_info_edit.css">
-  </head>
-  <body>
-    <main layout:fragment="content">
-      <h1>Page with Aside</h1>
-      <div class="company-info-edit">
-        <form>
-          <div class="form-group">
-            <label for="ceoName">대표자명 <span class="required-icon">*</span></label>
-            <input class="required" type="text" name="ceoName" id="ceoName" placeholder="대표자명을 입력해 주세요." maxlength="50">
-          </div>
+    <head>
+        <title>Example with Aside</title>
+        <link rel="stylesheet" href="/static/css/company_info/company_info_edit.css">
+    </head>
+    <body>
+        <main layout:fragment="content">
+            <h1>기업정보</h1>
+            <div class="company-info-edit">
+                <form>
+                    <div class="form-group">
+                        <label for="ceoName">대표자명 <span class="required-icon">*</span></label>
+                        <input class="required" type="text" name="ceoName" id="ceoName" placeholder="대표자명을 입력해 주세요."
+                               maxlength="50" th:value="${company?.ceoName}">
+                    </div>
 
-          <div class="form-group">
-            <label for="companyTypeCd">기업형태 <span class="required-icon">*</span></label>
-            <select class="required" id="companyTypeCd" name="companyTypeCd" placeholder="기업형태를 선택해 주세요.">
-              <option value="">기업형태를 선택해 주세요.</option>
-              <option value="type1">타입 1</option>
-              <option value="type2">타입 2</option>
-            </select>
-          </div>
+                    <div class="form-group">
+                        <label for="companyTypeCd">기업형태 <span class="required-icon">*</span></label>
+                        <select class="required" id="companyTypeCd" name="companyTypeCd" placeholder="기업형태를 선택해 주세요.">
+                            <option value="">기업형태를 선택해 주세요.</option>
+                            <th:block th:each="type : ${companyTypeCd}">
+                                <option th:value="${type.cd}" th:text="${type.cdNm}" th:selected="${company?.companyTypeCd == type.cd}"></option>
+                            </th:block>
+                        </select>
+                    </div>
 
-          <div class="form-group">
-            <label for="businessNum">사업자 등록 번호 <span class="required-icon">*</span></label>
-            <input class="required" type="text" id="businessNum" name="businessNum" placeholder="사업자등록번호를 입력해 주세요." maxlength="11">
-          </div>
+                    <div class="form-group">
+                        <label for="businessNum">사업자 등록 번호 <span class="required-icon">*</span></label>
+                        <input class="required" type="text" id="businessNum" name="businessNum"
+                               placeholder="사업자등록번호를 입력해 주세요." maxlength="11" th:value="${company?.businessNum}">
+                    </div>
 
-          <div class="form-group">
-            <label for="companyIndustry">업종 <span class="required-icon">*</span></label>
-            <input class="required" type="text" id="companyIndustry" name="companyIndustry" placeholder="업종을 입력해 주세요." maxlength="50">
-          </div>
+                    <div class="form-group">
+                        <label for="companyIndustry">업종 <span class="required-icon">*</span></label>
+                        <input class="required" type="text" id="companyIndustry" name="companyIndustry"
+                               placeholder="업종을 입력해 주세요." maxlength="50" th:value="${company?.companyIndustry}">
+                    </div>
 
-          <div class="form-group">
-            <label for="homepage">홈페이지</label>
-            <input type="text" id="homepage" name="homepage" placeholder="홈페이지를 입력해 주세요." maxlength="255">
-          </div>
+                    <div class="form-group">
+                        <label for="homepage">홈페이지</label>
+                        <input type="text" id="homepage" name="homepage" placeholder="홈페이지를 입력해 주세요." maxlength="255" th:value="${company?.homepage}">
+                    </div>
 
-          <div class="form-group">
-            <label for="company-details">기업 설명</label>
-            <textarea id="company-details" name="companyDetail" placeholder="기업 설명을 입력해 주세요."></textarea>
-          </div>
+                    <div class="form-group">
+                        <label for="company-details">기업 설명</label>
+                        <textarea id="company-details" name="companyDetail" placeholder="기업 설명을 입력해 주세요." th:value="${company?.companyDetail}"></textarea>
+                    </div>
 
-          <div class="form-group">
-            <label for="history">연혁</label>
-            <div class="input-list" id="history-list">
-              <!-- 연혁 항목 -->
+                    <div class="form-group">
+                        <label for="history">연혁</label>
+                        <div class="input-list" id="history-list">
+                            <!-- 연혁 항목 -->
+                            <th:block th:each="history : ${company?.history}">
+                                <div class="history-item" th:attr="data-history-date=${@dateUtil.formatYearMonth(history.historyDate)}, data-history-content=${history.historyContent}" >
+                                    <span class="date" th:text="${@dateUtil.formatYearMonth(history.historyDate)}"></span>
+                                    <span class="content" th:text="${history.historyContent}"></span>
+                                    <button class="remove-btn" type="button">X</button>
+                                </div>
+                            </th:block>
+                        </div>
+                        <button type="button" class="add-btn" data-list_id="history">+</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="employees">사원 수</label>
+                        <div class="input-list" id="employees-list">
+                            <!-- 사원 수 항목 -->
+                            <th:block th:each="employee : ${company?.employee}">
+                                <div class="input-item" th:attr="data-emplo-date=${@dateUtil.formatYearMonth(employee.emploDate)}, data-emplo-cnt=${employee.emploCnt}">
+                                    <span class="date" th:text="${@dateUtil.formatYearMonth(employee.emploDate)}">2025-06</span>
+                                    <span class="content"><span th:text="${@numberUtil.formatWithComma(employee.emploCnt)}"></span><b>명</b></span>
+                                    <button class="remove-btn" type="button">X</button>
+                                </div>
+                            </th:block>
+                        </div>
+                        <button type="button" class="add-btn" data-list_id="employees">+</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sales">매출액</label>
+                        <div class="input-list" id="sales-list">
+                            <!-- 매출액 항목 -->
+                            <th:block th:each="revenuse : ${company?.revenuse}">
+                                <div class="input-item" data-revenue-year="123" data-revenue-pay="242"
+                                     th:attr="data-revenue-year=${revenuse.revenueYear}, data-revenue-pay=${revenuse.revenuePay}">
+                                    <span class="date" th:text="${revenuse.revenueYear}">123</span>
+                                    <span class="content"><span th:text="${@numberUtil.formatWithComma(revenuse.revenuePay)}"></span>  <b>백만원</b></span>
+                                    <button class="remove-btn" type="button">X</button>
+                                </div>
+                            </th:block>
+                        </div>
+                        <button type="button" class="add-btn" data-list_id="sales">+</button>
+                    </div>
+
+                    <button type="button" class="submit-btn">저장</button>
+                </form>
             </div>
-            <button type="button" class="add-btn" data-list_id="history">+</button>
-          </div>
 
-          <div class="form-group">
-            <label for="employees">사원 수</label>
-            <div class="input-list" id="employees-list">
-              <!-- 사원 수 항목 -->
+            <!-- 모달 -->
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <label for="modal-date">기간</label>
+                    <div class="input-wrapper">
+                        <input type="number" name="modal-date" id="modal-date" placeholder="YYYY.MM">
+                        <!--            <span class="calendar-icon">📅</span>-->
+                    </div>
+                    <label for="modal-content">내용</label>
+                    <input id="modal-content" name="modal-content" placeholder="내용을 입력하세요"/>
+                    <div class="button-group">
+                        <button type="button" class="modal-confirm-btn" onclick="">확인</button>
+                        <button type="button" class="modal-cancel-btn" onclick="">취소</button>
+                    </div>
+                </div>
             </div>
-            <button type="button" class="add-btn" data-list_id="employees">+</button>
-          </div>
-
-          <div class="form-group">
-            <label for="sales">매출액</label>
-            <div class="input-list" id="sales-list">
-              <!-- 매출액 항목 -->
-            </div>
-            <button type="button" class="add-btn" data-list_id="sales">+</button>
-          </div>
-
-          <button type="button" class="submit-btn">저장</button>
-        </form>
-      </div>
-
-      <!-- 모달 -->
-      <div id="modal" class="modal">
-        <div class="modal-content">
-          <label for="modal-date">연월</label>
-          <div class="input-wrapper">
-            <input type="month" name="modal-date" id="modal-date" placeholder="YYYY.MM">
-<!--            <span class="calendar-icon">📅</span>-->
-          </div>
-          <label for="modal-content">내용</label>
-          <input id="modal-content" name="modal-content" placeholder="내용을 입력하세요"></input>
-          <div class="button-group">
-            <button type="button" class="modal-confirm-btn" onclick="">확인</button>
-            <button type="button" class="modal-cancel-btn" onclick="">취소</button>
-          </div>
-        </div>
-      </div>
-    </main>
+        </main>
 
 
-  </body>
+    </body>
 </html>
-
-<script>
-
-</script>
 
 <script type="module" src="/static/js/company_info/company_info_edit.js"></script>

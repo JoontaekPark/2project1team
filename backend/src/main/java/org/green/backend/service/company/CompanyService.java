@@ -17,6 +17,10 @@ import org.green.backend.dto.company.CompanyDto;
 
 public interface CompanyService {
 
+    public CompanyDto getCompany(String token);
+
     public void save(CompanyDto company);
+
+    public void update(CompanyDto company, String token);
 
 }

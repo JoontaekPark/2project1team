@@ -1,4 +1,4 @@
-package org.green.backend.dto.company;
+package org.green.frontend.dto.company;
 
 import lombok.Data;
 

@@ -23,4 +23,107 @@
             #{company.companyDetail}
         );
     </insert>
+
+    <update id="update">
+        UPDATE tbl_company
+        SET ceo_name = #{company.ceoName},
+            business_num = #{company.businessNum},
+            homepage = #{company.homepage},
+            company_type_cd = #{company.companyTypeCd},
+            company_industry = #{company.companyIndustry},
+            company_detail = #{company.companyDetail}
+        WHERE id = #{company.id}
+    </update>
+
+    <delete id="deleteRevenue">
+        DELETE FROM tbl_revenue
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteEmployee">
+        DELETE FROM tbl_employee_cnt
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteHistory">
+        DELETE FROM tbl_history
+        WHERE id = #{id}
+    </delete>
+
+    <insert id="saveRevenue">
+        INSERT INTO tbl_revenue (
+            id,
+            revenue_year,
+            revenue_pay
+        ) VALUES (
+            #{revenue.id},
+            #{revenue.revenueYear},
+            #{revenue.revenuePay}
+        )
+    </insert>
+
+    <insert id="saveEmployee">
+        INSERT INTO tbl_employee_cnt (
+            id,
+            emplo_date,
+            emplo_cnt
+        ) VALUES (
+            #{employee.id},
+            #{employee.emploDate},
+            #{employee.emploCnt}
+        )
+    </insert>
+
+    <insert id="saveHistory">
+        INSERT INTO tbl_history (
+            id,
+            history_date,
+            history_content
+        ) VALUES (
+            #{history.id},
+            #{history.historyDate},
+            #{history.historyContent}
+        )
+    </insert>
+
+    <select id="getRevenuses" resultType="org.green.backend.dto.company.RevenusDto">
+        SELECT  id,
+                revenue_year,
+                revenue_pay
+        FROM tbl_revenue
+        WHERE id = #{id}
+        ORDER BY revenue_year
+
+    </select>
+
+    <select id="getEmployees" resultType="org.green.backend.dto.company.EmployeeDto">
+        SELECT  id,
+                emplo_date,
+                emplo_cnt
+        FROM tbl_employee_cnt
+        WHERE id = #{id}
+        ORDER BY emplo_date
+    </select>
+
+    <select id="getHistories" resultType="org.green.backend.dto.company.HistoryDto">
+        SELECT  id,
+                history_date,
+                history_content
+        FROM tbl_history
+        WHERE id = #{id}
+        ORDER BY history_date
+    </select>
+
+    <select id="get" resultType="org.green.backend.dto.company.CompanyDto">
+        SELECT  id,
+                ceo_name,
+                business_num,
+                homepage,
+                company_type_cd,
+                company_industry,
+                company_detail
+        FROM tbl_company
+        WHERE id = #{id}
+    </select>
+
 </mapper>
