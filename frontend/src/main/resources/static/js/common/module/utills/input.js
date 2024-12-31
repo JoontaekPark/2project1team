@@ -9,6 +9,7 @@ export const input = {
     getByName: (required = "required", formData = false) => {
         const rejectType = ["button", "submit", "reset", "image"];
         const inputs = document.querySelectorAll("input, select");
+        console.log(inputs);
         let res = { result: true, data: {} };
 
         for (let input of inputs) {
@@ -83,7 +84,7 @@ export const input = {
             }
             res.formData = formDataObj;
         }
-
+        console.log(res);
         return res;
     },
 
@@ -117,7 +118,21 @@ export const input = {
 const handleRequired = (input, required) => {
     if (input.classList.contains(required)) {
         let msg = input.placeholder === "" ? `필수 입력값이 비어 있습니다: ${input.name}` : input.placeholder;
-        if (input.type === "radio") {
+
+        if (input.tagName === "SELECT") {
+            // 다중 선택 가능한 select 확인
+            msg = input.options[input.options.selectedIndex].innerText
+            const selectedOptions = Array.from(input.options).filter(option => option.selected);
+            if (selectedOptions.length === 0) {
+                return msg;
+            }
+
+            for (let option of selectedOptions){
+                if (option.value === ""){
+                    return msg;
+                }
+            }
+        } else if (input.type === "radio") {
             const radios = document.querySelectorAll(`input[name='${input.name}'][type='radio']`);
             const isChecked = Array.from(radios).some(radio => radio.checked);
             if (!isChecked) {
