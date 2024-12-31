@@ -41,16 +41,70 @@
         ON jn.job_notice_education_gbn_cd = education.cd
         AND education.up_cd='job_notice_education_gbn_cd'
 
-<!--        기업 이름 가져오기-->
+        <!--        기업 이름 가져오기-->
         JOIN tbl_user c
         ON jn.inst_id = c.id
         WHERE job_notice_num = #{jobNoticeNum}
     </select>
 
-    <insert id="getJobNotice" >
-        INSERT INTO tbl_job_notice ()
-        VALUES ();
+
+
+<!--    등록-->
+    <insert id="registJobNotice" parameterType="org.green.backend.dto.JobNotice.JobNoticeRequestDto">
+        INSERT INTO tbl_job_notice
+        (job_notice_title,
+        job_notice_area,
+        job_notice_worktime,
+        job_notice_work_gbn_cd,
+        job_notice_career_gbn_cd,
+        job_notice_education_gbn_cd,
+        job_notice_pay,
+        job_notice_detail,
+        job_notice_work_jogun,
+        job_notice_way,
+        job_notice_caution,
+        job_notice_str_date,
+        job_notice_end_date,
+        inst_id,
+        inst_dt)
+        VALUES
+        (#{jobNoticeTitle},
+        #{jobNoticeArea},
+        #{jobNoticeWorktime},
+        #{jobNoticeWorkGbnCd},
+        #{jobNoticeCareerGbnCd},
+        #{jobNoticeEducationGbnCd},
+        #{jobNoticePay},
+        #{jobNoticeDetail},
+        #{jobNoticeWorkJogun},
+        #{jobNoticeWay},
+        #{jobNoticeCaution},
+        #{jobNoticeStrDate},
+        #{jobNoticeEndDate},
+        #{instId},
+        #{instDt});
     </insert>
 
+    <insert id="registStacks">
+        INSERT INTO tbl_job_notice_stack
+        VALUES
+        <foreach collection="stackList" item="stack" separator=",">
+            (null, #{jobNoticeNum}, #{stack})
+        </foreach>
+    </insert>
+    <insert id="registSteps">
+        INSERT INTO tbl_job_notice_step
+        VALUES
+        <foreach collection="stepList" item="step" separator=",">
+            (null, #{jobNoticeNum}, #{step})
+        </foreach>
+    </insert>
+    <insert id="registWlefares">
+        INSERT INTO tbl_job_notice_welfare
+        VALUES
+        <foreach collection="welfareList" item="welfare" separator=",">
+            (null, #{jobNoticeNum}, #{welfare})
+        </foreach>
+    </insert>
 
 </mapper>

@@ -85,7 +85,7 @@
             align-items: center;
         }
 
-        #file-names{
+        #file-names {
             width: 750px;
         }
 
@@ -223,6 +223,11 @@
                     </th:block>
                 </select>
             </div>
+
+            <div class="form">
+                <p><span class="red-point">* </span> 급여</p>
+                <input type="text" id="jobNoticePay" placeholder="연봉 입력">
+            </div>
         </div>
 
         <div class="double-form">
@@ -252,9 +257,9 @@
         <div class="form">
             <p>이미지 업로드</p>
             <div class="upload-container">
-                <input type="text" id="file-names" name="fileNewName" placeholder="선택된 파일이 없습니다." readonly />
-                <input type="file" class="file-upload" id="file-upload" multiple>
-                <label for="file-upload" class="custom-file-upload" onchange="updateFileList()">파일 업로드..</label>
+                <input type="text" id="file-names" name="fileNewName" placeholder="선택된 파일이 없습니다." readonly/>
+                <input type="file" class="file-upload" id="file-upload" multiple onchange="updateFileList()">
+                <label for="file-upload" class="custom-file-upload">파일 업로드..</label>
             </div>
         </div>
 
@@ -386,7 +391,43 @@
     }
 
     //<!--등록-->
+    function regist() {
+        const jobNoticeData = {
+            jobNoticeTitle: $('#jobNoticeTitle').val(),
+            jobNoticeArea: $('#jobNoticeArea').val(),
+            jobNoticeWorktime: $('#jobNoticeWorktime').val(),
+            jobNoticeWorkGbnCd: $('#jobNoticeWorkGbnCd').val(),
+            jobNoticeCareerGbnCd: $('#jobNoticeCareerGbnCd').val(),
+            jobNoticeEducationGbnCd: $('#jobNoticeEducationGbnCd').val(),
+            jobNoticePay: $('#jobNoticePay').val(),
+            jobNoticeDetail: $('#jobNoticeDetail').val(),
+            jobNoticeWorkJogun: $('#jobNoticeWorkJogun').val(),
+            jobNoticeWay: $('#jobNoticeWay').val(),
+            jobNoticeCaution: $('#jobNoticeCaution').val(),
+            jobNoticeStrDate: $('#jobNoticeStrDate').val(),
+            jobNoticeEndDate: $('#jobNoticeEndDate').val(),
+            // instId : $('#').val()
+            stackList: $('.stack-container .active').map(function () {
+                return $(this).val();
+            }).get(),
+            stepList: $('#new-jobNoticeStep .addStep').map(function () {
+                return $(this).val();
+            }).get(),
+            welfareList: $('#new-welfare .addedWelfare').map(function () {
+                return $(this).val();
+            }).get(),
+        }
+        console.log(jobNoticeData);
 
+        api.post('/api/v1/job-notice', jobNoticeData)
+            .then(data => {
+                console.log(data)
+                location.href = "/main";
+            })
+
+            .catch(error => console.error(error));
+
+    }
 
 </script>
 </html>
