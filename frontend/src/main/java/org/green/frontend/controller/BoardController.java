@@ -21,4 +21,14 @@ public class BoardController {
     public String boardFormRoot() {
         return "/board/boardForm";
     }
+
+    @GetMapping("/list")
+    public String getBoardList() {
+        return "/board/list";
+    }
+
+    @GetMapping("/details")
+    public String getBoardDetail() {
+        return "/board/boardDetail";
+    }
 }

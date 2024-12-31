@@ -1,4 +1,4 @@
-package org.green.backend.dto;
+package org.green.backend.dto.board;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
