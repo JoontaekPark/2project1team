@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.green.backend.repository.dao.JobNoticeDao">
+    <select id="getJobNoticeDetails" resultType="org.green.backend.dto.JobNotice.JobNoticeResponseDto">
+        SELECT
+        <!--        기본 채용공고 정보-->
+        jn.job_notice_num,
+        c.name AS company_name <!-- 기업 이름-->
+        jn.job_notice_title,
+        jn.job_notice_area,
+        jn.job_notice_worktime,
+        jn.job_notice_pay,
+        jn.job_notice_detail,
+        jn.job_notice_work_jogun,
+        jn.job_notice_way,
+        jn.job_notice_caution,
+        jn.job_notice_str_date,
+        jn.job_notice_end_date,
+        jn.v_cnt,
+        jn.inst_id,
+        jn.inst_dt,
+        work_type.name AS work_type_name,
+        career.name AS career_name,
+        education.name AS education_name
+
+        FROM tbl_job_notice jn
+        <!-- 근무 형태-->
+        LEFT JOIN tbl_codeinfo work_type
+        ON jn.job_notice_work_gbn_cd = work_type.cd
+        AND work_type.up_cd='job_notice_work_gbn_cd'
+
+        <!-- 경력 구분-->
+        LEFT JOIN tbl_codeinfo career
+        ON jn.job_notice_career_gbn_cd = career.cd
+        AND career.up_cd='job_notice_career_gbn_cd'
+
+        <!-- 학력 구분-->
+        LEFT JOIN tbl_codeinfo education
+        ON jn.job_notice_education_gbn_cd = education.cd
+        AND education.up_cd='job_notice_education_gbn_cd'
+
+        <!--        기업 이름 가져오기-->
+        JOIN tbl_user c
+        ON jn.inst_id = c.id
+        WHERE job_notice_num = #{jobNoticeNum}
+    </select>
+
+
+
+<!--    등록-->
+    <insert id="registJobNotice" parameterType="org.green.backend.dto.JobNotice.JobNoticeRequestDto" keyProperty="jobNoticeNum" useGeneratedKeys="true">
+        INSERT INTO tbl_job_notice
+        (job_notice_title,
+        job_notice_area,
+        job_notice_worktime,
+        job_notice_work_gbn_cd,
+        job_notice_career_gbn_cd,
+        job_notice_education_gbn_cd,
+        job_notice_pay,
+        job_notice_detail,
+        job_notice_work_jogun,
+        job_notice_way,
+        job_notice_caution,
+        job_notice_str_date,
+        job_notice_end_date,
+        inst_id)
+        VALUES
+        (#{jobNoticeTitle},
+        #{jobNoticeArea},
+        #{jobNoticeWorktime},
+        #{jobNoticeWorkGbnCd},
+        #{jobNoticeCareerGbnCd},
+        #{jobNoticeEducationGbnCd},
+        #{jobNoticePay},
+        #{jobNoticeDetail},
+        #{jobNoticeWorkJogun},
+        #{jobNoticeWay},
+        #{jobNoticeCaution},
+        #{jobNoticeStrDate},
+        #{jobNoticeEndDate},
+        #{instId});
+    </insert>
+
+    <insert id="registStacks">
+        INSERT INTO tbl_job_notice_stack
+        VALUES
+        <foreach collection="stackList" item="stackCd" separator=",">
+            (null, #{jobNoticeNum}, #{stackCd})
+        </foreach>
+    </insert>
+    <insert id="registSteps">
+        INSERT INTO tbl_job_notice_step
+        VALUES
+        <foreach collection="stepList" item="jobNoticeStepDetail" separator=",">
+            (null, #{jobNoticeNum}, #{jobNoticeStepDetail})
+        </foreach>
+    </insert>
+    <insert id="registWelfares">
+        INSERT INTO tbl_job_notice_welfare
+        VALUES
+        <foreach collection="welfareList" item="jobNoticeWelfareDetail" separator=",">
+            (null, #{jobNoticeNum}, #{jobNoticeWelfareDetail})
+        </foreach>
+    </insert>
+
+</mapper>

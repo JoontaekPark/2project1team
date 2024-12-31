@@ -1,10 +1,11 @@
-import { api, utills } from '/static/js/common/module/common_module.js';
+import {api, utills} from '/static/js/common/module/common_module.js';
 
 $(function () {
 
     let chk = {
-        id: false,
-        pw: false
+        id: document.querySelector("input[name=idChk]"),
+        pw: false,
+        file: false
     }
 
     $(document).on("click", "#check-button", function () {
@@ -22,20 +23,24 @@ $(function () {
                 if (cnt > 0) {
                     id.focus();
                     func.msg(id, "중복되는 아이디 입니다.", "bad");
-                    chk.id = false;
+                    chk.id.value = false;
                     return false;
                 }
 
                 func.msg(id, "사용가능한 아이디 입니다.", "good");
-                chk.id = true;
+                chk.id.value = true;
             })
             .catch(error => console.error(error));
 
     });
 
-    $(document).on("keyup", "#id", function () {
-        chk.id = false;
-        func.msg(id, "아이디 중복체크를 해주세요", "bad");
+    $(document).on("keyup", "#id", function (e) {
+
+        if (!e.target.readOnly) {
+            chk.id.value = false;
+            func.msg(id, "아이디 중복체크를 해주세요", "bad");
+        }
+
     });
 
     $(document).on("keyup", "#pw", function () {
@@ -57,7 +62,7 @@ $(function () {
     });
 
     $(document).on("change", "#profile", function () {
-
+        chk.file = true;
         let file = this.files;
 
         if (file.length > 0) {
@@ -78,7 +83,7 @@ $(function () {
     });
 
     $(document).on("click", ".del-img", function (e) {
-
+        chk.file = true;
         e.stopPropagation();
 
         document.querySelector(".del-img").classList.remove("on");
@@ -93,14 +98,17 @@ $(function () {
 
     });
 
+    // 저장버튼
     $(document).on("click", ".submit-button", function () {
 
-        if (!chk.id) {
+        if (!chk.id.value || chk.id.value == "false") {
+            document.querySelector("#id").focus();
             func.msg(document.querySelector("#id"), "중복체크를 진행하세요.", "bad");
             return;
         }
 
         if (!chk.pw) {
+            document.querySelector("#confirmPw").focus();
             func.msg(document.querySelector("#confirmPw"), "비밀번호를 확인하세요.", "bad");
             return;
         }
@@ -119,8 +127,47 @@ $(function () {
             func.msg(data.element, data.error, "bad");
             return;
         }
+        console.log(data);
 
         api.post("/api/v1/sign-up", data.formData, {"Content-Type": "multipart/form-data"})
+            .then(data => {
+                if (data.status === "SUCCESS") {
+                    location.href = "/sign-in";
+                }
+            })
+            .catch(error => {
+                if (error.response.data.status === "ERROR") {
+                    alert(error.response.data.body.message);
+                }
+            });
+    });
+
+    // 수정버튼
+    $(document).on("click", ".edit-button", function () {
+
+        if (!chk.pw) {
+            document.querySelector("#confirmPw").focus();
+            func.msg(document.querySelector("#confirmPw"), "비밀번호를 확인하세요.", "bad");
+            return;
+        }
+
+        let labels = document.querySelectorAll(".input-group .bad");
+
+        for (let label of labels) {
+            label.classList.remove("bad");
+            label.innerText = "";
+        }
+
+        let inputData = utills.input.getByName("required");
+
+
+        if (!inputData.result) {
+            inputData.element.focus();
+            func.msg(inputData.element, inputData.error, "bad");
+            return;
+        }
+
+        api.post("/api/v1/user-info?fileChk=" + chk.file, utills.input.setFormData(inputData.data), {"Content-Type": "multipart/form-data"})
             .then(data => {
                 if (data.status === "SUCCESS") {
                     location.href = "/sign-in";

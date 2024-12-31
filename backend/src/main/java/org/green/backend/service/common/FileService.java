@@ -24,4 +24,9 @@ public interface FileService {
                   String fileRefId,
                   String userId) throws IOException;
 
+    void deleteFile(String fileNo);
+
+    void deleteAllFiles(String fileGbnCd, String fileRefId);
+
+    FileDto getFile(String fileGbnCd, String fileRefId);
 }

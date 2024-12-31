@@ -25,13 +25,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
 @Component
 public class FileUploadUtil {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
+
+    @Value("${front.file-dir}")
+    private String fontFileDir;
 
     @PostConstruct
     public void init() {
@@ -56,7 +58,6 @@ public class FileUploadUtil {
      * @return 저장된 파일 경로
      * @throws IOException 파일 저장 중 오류
      */
-
     public FileDto saveFile(MultipartFile file,
                             String fileGbnCd,
                             String fileRefId,
@@ -65,26 +66,31 @@ public class FileUploadUtil {
             throw new IllegalArgumentException("빈 파일은 저장할 수 없습니다.");
         }
 
-        // 파일 이름 생성 (UUID 사용)
+        // 파일 이름 생성
         String originalFilename = file.getOriginalFilename();
         String fileExt = getFileExtension(originalFilename);
+        String originalNameWithoutExt = originalFilename != null ? originalFilename.replaceAll("\\.[^.]*$", "") : "unknown";
+
         Long fileSize = file.getSize();
-        String newFileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        String newFileNameWithoutExt = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        String newFileName = newFileNameWithoutExt + fileExt;
 
         // 파일 저장 경로 설정
         Path targetPath = Paths.get(uploadDir, newFileName);
-
-        // 파일 저장
         Files.copy(file.getInputStream(), targetPath);
 
+        // Base URL 가져오기
+        String fileUrl = fontFileDir;
+
+        // FileDto 생성
         FileDto fileDto = new FileDto();
         fileDto.setFileGbnCd(fileGbnCd);
         fileDto.setFileRefId(fileRefId);
-        fileDto.setFileNewName(newFileName);
-        fileDto.setFileOldName(originalFilename);
+        fileDto.setFileNewName(newFileNameWithoutExt);
+        fileDto.setFileOldName(originalNameWithoutExt);
         fileDto.setFileExt(fileExt);
         fileDto.setFileSize(fileSize);
-        fileDto.setFileUrl(targetPath.toString());
+        fileDto.setFileUrl(fileUrl);
         fileDto.setInstId(userId);
 
         return fileDto;

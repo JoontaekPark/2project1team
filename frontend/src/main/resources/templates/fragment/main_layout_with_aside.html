@@ -12,7 +12,8 @@
 
         <!-- Layout -->
         <div class="layout">
-            <aside layout:fragment="sidebar">
+<!--            <aside th:replace="~{fragment/aside :: asideUser}">-->
+            <aside th:replace="~{fragment/aside :: asideCompany}" layout:fragment="sidebar">
                 <!-- 사이드바가 렌더링될 위치 -->
             </aside>
             <main layout:fragment="content">
