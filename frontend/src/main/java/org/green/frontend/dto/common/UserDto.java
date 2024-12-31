@@ -1,4 +1,4 @@
-package org.green.backend.dto.common;
+package org.green.frontend.dto.common;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

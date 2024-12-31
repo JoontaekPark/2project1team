@@ -1,8 +1,11 @@
-.sign-up {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+main{
     display: flex;
+    flex: 1;
+}
+
+.sign-up {
+    margin: 0 auto;
+    padding: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -77,8 +80,9 @@
 }
 
 .sign-up input[type="text"],
-input[type="password"],
-input[type="date"]
+.sign-up input[type="email"],
+.sign-up input[type="password"],
+.sign-up input[type="date"]
 {
     width: calc(100%);
     height: 40px;
@@ -97,6 +101,7 @@ input[type="date"]
 /* When the input is focused */
 input[type="text"]:focus,
 input[type="date"]:focus,
+input[type="email"]:focus,
 input[type="password"]:focus {
     border-color: #ff69b4;
     outline: none;
@@ -105,6 +110,7 @@ input[type="password"]:focus {
 /* When the input has a value (only works for inputs with a placeholder) */
 input[type="text"]:not(:placeholder-shown),
 input[type="date"]:not(:placeholder-shown),
+input[type="email"]:not(:placeholder-shown),
 input[type="password"]:not(:placeholder-shown) {
     border-color: #ff69b4;
 }
@@ -120,7 +126,7 @@ input[type="password"]:not(:placeholder-shown) {
 }
 
 .sign-up #zipCd {
-    width: 72.9%;
+    width: 72.2%;
 }
 
 .sign-up #id {
@@ -159,6 +165,16 @@ input[type="password"]:not(:placeholder-shown) {
 }
 
 .sign-up .submit-button {
+    width: 48%;
+    height: 40px;
+    background-color: #FF0083;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.sign-up .edit-button {
     width: 48%;
     height: 40px;
     background-color: #FF0083;

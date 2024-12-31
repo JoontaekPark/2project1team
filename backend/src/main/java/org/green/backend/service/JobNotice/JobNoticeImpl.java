@@ -33,7 +33,7 @@ public class JobNoticeImpl implements JobNoticeService {
     public void createJobNotice(JobNoticeRequestDto dto) throws IOException {
         // 1. 채용 공고 정보 등록
         jobNoticeDao.registJobNotice(dto);
-        
+
         // 파일 등록
         if (dto.getJobNoticeImage() != null) {
             for (MultipartFile file : dto.getJobNoticeImage()) {
@@ -53,9 +53,4 @@ public class JobNoticeImpl implements JobNoticeService {
     }
 
 
-
-
 }
-
-
-
