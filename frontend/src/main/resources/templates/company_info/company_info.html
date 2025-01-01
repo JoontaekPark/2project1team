@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
+    <head>
+        <title>Example with Aside</title>
+        <link rel="stylesheet" href="/static/css/company_info/company_info.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <main layout:fragment="content">
+            <div class="container">
+                <!-- Header Section -->
+                <div class="header">
+                    <div class="info">
+                        <div class="rating">
+                            <div>
+                                <span class="star">★</span>
+                                <span>2.5</span>
+                            </div>
+                            <div>
+                                <span>♥</span>
+                                <span>99+</span>
+                            </div>
+                        </div>
+                        <div class="company-name-wrap">
+                            <div class="company-name">
+                                <span class="type">중견기업</span>
+                                <span class="name">회사명</span>
+                            </div>
+                            <div class="name-wrap">
+                                <div>대표자명</div>
+                                <div>2년차 (2023)</div>
+                            </div>
+                        </div>
+                        <p>IT, 콘텐츠</p>
+                        <p>47282 부산광역시 부산진구 중앙대로 749<br>4층, 그래컴퓨터 아카데미</p>
+                        <a href="https://www.naver.com" target="_blank">https://www.naver.com/</a>
+                    </div>
+                    <img src="placeholder.png" alt="Company Logo">
+                </div>
+
+                <!-- Description Section -->
+                <div class="description">
+                    기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다.
+                    기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다.
+                </div>
+
+                <!-- Job Listings Section -->
+                <div>
+                    <div class="section-title">채용중인 공고</div>
+                    <div class="job-listings">
+                        <div class="job-card">
+                            <img src="placeholder.png" alt="Job Icon">
+                            <div class="details">
+                                <div class="detail-title">DevOps 엔지니어 (신입)</div>
+                                <div>
+                                    <span>신입 · 정직</span>
+                                    <span>D-20</span>
+                                </div>
+                                <div>부산광역시 부산진구 중앙대로 749</div>
+                            </div>
+                            <span>★</span>
+                        </div>
+                        <div class="job-card">
+                            <img src="placeholder.png" alt="Job Icon">
+                            <div class="details">
+                                <div>DevOps 엔지니어 (신입)</div>
+                                <div>
+                                    <span>신입 · 정직</span>
+                                    <span>D-20</span>
+                                </div>
+                                <div>부산광역시 부산진구 중앙대로 749</div>
+                            </div>
+                            <span>★</span>
+                        </div>
+                        <!-- Add more job cards as needed -->
+                    </div>
+                </div>
+
+                <!-- History Section -->
+                <div class="history">
+                    <div class="section-title">연혁</div>
+                    <div class="history-item">
+                        <div class="year">2023</div>
+                        <div class="list">
+                            <div>
+                                <span class="month">01월</span>
+                                <span class="text">연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다.</span>
+                            </div>
+                            <div>
+                                <span class="month">02월</span>
+                                <span class="text">연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다.</span>
+                            </div>
+                            <div>
+                                <span class="month">03월</span>
+                                <span class="text">연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="history-item">
+                        <div class="year">2024</div>
+                        <div class="list">
+                            <div>
+                                <span class="month">01월</span>
+                                <span class="text">연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다.</span>
+                            </div>
+                            <div>
+                                <span class="month">02월</span>
+                                <span class="text">연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다.</span>
+                            </div>
+                            <div>
+                                <span class="month">03월</span>
+                                <span class="text">연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts">
+                    <div class="section-title">사원수</div>
+                    <div class="chart">
+                        <canvas id="employeeChart"></canvas>
+                    </div>
+                    <div class="section-title">매출액</div>
+                    <div class="chart">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Map Section -->
+                <div class="map">
+                    <div class="section-title">위치</div>
+                    <img src="map-placeholder.png" alt="Map">
+                    <p>서울특별시 서초구 강남대로407, 13층(오퍼스407)</p>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
+
+<script type="module" src="/static/js/company_info/company_info.js"></script>

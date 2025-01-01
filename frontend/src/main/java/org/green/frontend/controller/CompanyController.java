@@ -46,7 +46,7 @@ public class CompanyController {
 
     @GetMapping("/company-info/{id}")
     public String companyInfo(@PathVariable String id) {
-        return "company_info";
+        return "company_info/company_info";
     }
 
 }

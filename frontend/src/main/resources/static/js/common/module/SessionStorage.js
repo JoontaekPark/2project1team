@@ -17,7 +17,7 @@
  *    SessionStorageManager.clear();
  */
 
-class SessionStorageManager {
+class SessionStorage {
     /**
      * 세션 스토리지에 데이터를 저장합니다.
      * @param {string} key - 데이터 키.
@@ -72,4 +72,4 @@ class SessionStorageManager {
     }
 }
 
-export default SessionStorageManager;
+export default SessionStorage;
