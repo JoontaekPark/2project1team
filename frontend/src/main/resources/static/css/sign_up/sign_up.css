@@ -107,13 +107,13 @@ input[type="password"]:focus {
     outline: none;
 }
 
-/* When the input has a value (only works for inputs with a placeholder) */
-input[type="text"]:not(:placeholder-shown),
-input[type="date"]:not(:placeholder-shown),
-input[type="email"]:not(:placeholder-shown),
-input[type="password"]:not(:placeholder-shown) {
-    border-color: #ff69b4;
-}
+/*!* When the input has a value (only works for inputs with a placeholder) *!*/
+/*input[type="text"]:not(:placeholder-shown),*/
+/*input[type="date"]:not(:placeholder-shown),*/
+/*input[type="email"]:not(:placeholder-shown),*/
+/*input[type="password"]:not(:placeholder-shown) {*/
+/*    border-color: #ff69b4;*/
+/*}*/
 
 .sign-up .check-button, .find-address {
     height: 40px;
