@@ -27,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/board")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4000")
 public class BoardController {
 
     private final BoardService boardService;
@@ -65,6 +66,8 @@ public class BoardController {
     public ResponseEntity<BoardDetailDto> getBoardDetail(
             @RequestParam Long boardNum
     ) {
+        System.out.println("detail: " + boardNum);
+        System.out.println("dhofdksfdsklfjsdkfdfdsjkl");
         BoardDetailDto detail = boardService.getBoardDetail(boardNum);
         if (detail == null) {
             return ResponseEntity.notFound().build();

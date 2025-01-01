@@ -29,7 +29,7 @@ async function registerBoard() {
 document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
 
-    if (currentPath.includes('/board/details')) {
+    if (currentPath.includes('/board/boardDetail')) {
         fetchBoardDetail();
     } else if (currentPath.includes('/board/list')) {
         fetchBoardList();
@@ -74,7 +74,7 @@ function renderBoardList(boardList, userGbnCd) {
         // 제목
         const titleCell = document.createElement('td');
         const link = document.createElement('a');
-        link.href = `/board/details?boardNum=${board.boardNum}`;
+        link.href = `/board/boardDetail?boardNum=${board.boardNum}`;
         link.textContent = board.boardTitle;
         titleCell.appendChild(link);
         row.appendChild(titleCell);
