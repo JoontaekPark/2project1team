@@ -487,23 +487,8 @@
                 <input type="email" id="email" name="email" placeholder="이메일" readonly>
                 <input type="tel" id="phone" name="phone" placeholder="연락처" readonly>
                 <input type="text" id="area" name="area" placeholder="희망근무지역">
+
             </div>
-            <div class="introduction-section">
-                <h3>간단 소개글</h3>
-                <div class="intro-tips">
-                    💡 간단소개 작성 팁
-                    <ul>
-                        <li>본인의 업무 경험을 기반으로 핵심역량과 업무 스킬을 간단히 작성해주세요.</li>
-                        <li>3~5줄로 요약하여 작성하는 것을 추천합니다!</li>
-                    </ul>
-                </div>
-                <textarea
-                        class="intro-textarea"
-                        placeholder="간단한 자기소개를 작성해주세요."></textarea>
-            </div>
-
-
-
             <div class="active-section">
                 <h3>활동사항</h3>
 
@@ -691,7 +676,7 @@
 
         <div class="right-section">
             <div class="photo-container" onclick="uploadPhoto()">
-                <img id="profile-photo" src="/uploads/person-icon.jpeg" alt="바보 사진" style="width: 100%; height: 100%;">
+                <img id="profile-photo" src="/uploads/person-icon.jpeg" alt="증명사진" style="width: 100%; height: 100%;">
 
                 <input type="file" id="photo-input" hidden accept="image/*">
             </div>
@@ -981,49 +966,49 @@
     }
 
     // 포트폴리오 폼 추가
-//     function addPortfolioForm() {
-//         portfolioCount++;
-//         const container = document.getElementById('portfolio-forms-container');
-//         const form = document.createElement('div');
-//         form.className = 'form-container';
-//         form.id = `portfolio-${portfolioCount}`;
-//
-//         form.innerHTML = `
-//                 <div class="form-row">
-//
-//                     <input type="number" placeholder="작업인원수" name="prtfs[${educationCount}].resumePrtfCnt" style="flex: 1;">
-//                 </div>
-//                 <div class="form-row">
-//                     <input type="text"
-//                         placeholder="시작날짜"
-//                         onfocus="(this.type='date')"
-//                         onblur="if(!this.value) this.type='text'"
-//                         name="prtfs[${educationCount}].resumePrtfStrDate">
-//                     <input type="text"
-//                         placeholder="종료날짜"
-//                         onfocus="(this.type='date')"
-//                         onblur="if(!this.value) this.type='text'"
-//                         name="prtfs[${educationCount}].resumePrtfEndDate">
-//                 </div>
-// <!--                경림이 수정함-->
-//                 <div class="form-row">
-//                     <input type="file" name="prtfs[${portfolioCount}].resumePrtfFile">
-//                 </div>
-// <!--                경림이 수정 끝-->
-//                 <div class="form-row">
-//                     <input type="url" placeholder="URL (선택사항)" name="prtfs[${educationCount}].resumePrtfUrl" style="width: 100%;">
-//                 </div>
-//                 <div class="form-row">
-//                     <textarea placeholder="작업내용" name="prtfs[${educationCount}].resumePrtfContent"
-//                         style="width: 100%; min-height: 100px;"></textarea>
-//                 </div>
-//                 <div class="delete-btn-container">
-//                     <button type="button" class="delete-career-btn" onclick="deleteForm('portfolio-${portfolioCount}')">삭제</button>
-//                 </div>
-//             `;
-//
-//         container.appendChild(form);
-//     }
+    //     function addPortfolioForm() {
+    //         portfolioCount++;
+    //         const container = document.getElementById('portfolio-forms-container');
+    //         const form = document.createElement('div');
+    //         form.className = 'form-container';
+    //         form.id = `portfolio-${portfolioCount}`;
+    //
+    //         form.innerHTML = `
+    //                 <div class="form-row">
+    //
+    //                     <input type="number" placeholder="작업인원수" name="prtfs[${educationCount}].resumePrtfCnt" style="flex: 1;">
+    //                 </div>
+    //                 <div class="form-row">
+    //                     <input type="text"
+    //                         placeholder="시작날짜"
+    //                         onfocus="(this.type='date')"
+    //                         onblur="if(!this.value) this.type='text'"
+    //                         name="prtfs[${educationCount}].resumePrtfStrDate">
+    //                     <input type="text"
+    //                         placeholder="종료날짜"
+    //                         onfocus="(this.type='date')"
+    //                         onblur="if(!this.value) this.type='text'"
+    //                         name="prtfs[${educationCount}].resumePrtfEndDate">
+    //                 </div>
+    // <!--                경림이 수정함-->
+    //                 <div class="form-row">
+    //                     <input type="file" name="prtfs[${portfolioCount}].resumePrtfFile">
+    //                 </div>
+    // <!--                경림이 수정 끝-->
+    //                 <div class="form-row">
+    //                     <input type="url" placeholder="URL (선택사항)" name="prtfs[${educationCount}].resumePrtfUrl" style="width: 100%;">
+    //                 </div>
+    //                 <div class="form-row">
+    //                     <textarea placeholder="작업내용" name="prtfs[${educationCount}].resumePrtfContent"
+    //                         style="width: 100%; min-height: 100px;"></textarea>
+    //                 </div>
+    //                 <div class="delete-btn-container">
+    //                     <button type="button" class="delete-career-btn" onclick="deleteForm('portfolio-${portfolioCount}')">삭제</button>
+    //                 </div>
+    //             `;
+    //
+    //         container.appendChild(form);
+    //     }
 
 
 
@@ -1344,26 +1329,19 @@
 
 
 
+
+        const resumeTitle = document.getElementById('resume-title').value;
+        formData.append('basicInfo.resumeTitle',resumeTitle);
+
+        const area = document.getElementById('resume-title').value;
+        formData.append('basicInfo.resumeArea',area);
         //-------------이력서 증명사진-----------------
         const profilePhoto = document.getElementById('photo-input').files[0];
         if (profilePhoto) {
-            formData.append('profilePhoto', profilePhoto);
+            formData.append('basicInfo.resumeProfile', profilePhoto);
         }
 
 
-
-        // const resumePrtfFile2 = document.getElementById("resumePrtfFile").files[0];
-        //
-        // console.log("파일 이름 : :"+resumePrtfFile2.name);
-        // console.log("파일 크기 : :"+resumePrtfFile2.size);
-        // console.log("파일 타입 : :"+resumePrtfFile2.type);
-        // console.log("오브젝트 파일이 뜨면 맞는거죠? : " +resumePrtfFile2);
-        //
-        //
-        // console.log("경림님이 궁금하신곳 : "+formData);
-        // for (let [key, value] of formData.entries()) {
-        //     console.log(`${key}:`, value);
-        // }
 
         axios.post('http://localhost:8080/resume/regProc2', formData)
             .then(response => {
@@ -1381,3 +1359,4 @@
 </script>
 </body>
 </html>
+

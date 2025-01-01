@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ResumeService {
 
-    public void insertResumeBase(@RequestParam("resume") ResumeDto resumeDto);
+    public void insertResumeBase(int resumeId,ResumeDto resumeDto) throws IOException;
 
     public int getResumeId();
 

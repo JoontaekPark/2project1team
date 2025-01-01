@@ -37,6 +37,7 @@ public class ResumeRestController {
 
 
         //이력서 기본 내용
+
         ResumeDto resume1 = new ResumeDto();
         resume1.setResumeTitle(resumeDto.getResumeTitle());
         resume1.setResumeArea(resumeDto.getResumeArea());
@@ -150,8 +151,19 @@ public class ResumeRestController {
     @PostMapping("regProc2")
     public String regProc2(@ModelAttribute ResumeInfoAll2Dto resumeDto) throws IOException {
 
+        int resumeId2 = resumeService.getResumeId();
+        int resumeId = resumeId2+1;
+        ResumeDto basicInfo = resumeDto.getBasicInfo();
+        //이름,이메일,전화번호는 나중에 추가
 
-        int resumeId = resumeService.getResumeId();
+        if (basicInfo != null) {
+            resumeService.insertResumeBase(resumeId,basicInfo);
+            System.out.println("기본 정보 사항 저장 완료 :" + basicInfo);
+        }
+        
+
+
+
 
 
          // 활동사항 출력

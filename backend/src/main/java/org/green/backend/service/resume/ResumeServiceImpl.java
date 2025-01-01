@@ -17,14 +17,19 @@ public class ResumeServiceImpl implements ResumeService {
 
 
     private final ResumeDao resumeDao;
+
     private final FileService fileService;
     private final FileUploadUtil fileUploadUtil;
 
 
     @Override
-    public void insertResumeBase(ResumeDto resumeDto) {
+    public void insertResumeBase(int resumeId,ResumeDto resumeDto) throws IOException{
 
         resumeDao.insertResumeBase(resumeDto);
+        String resumeNum = String.valueOf(resumeId);
+        if(resumeDto.getResumeProfile() != null){
+        fileService.saveFile(resumeDto.getResumeProfile(), "30",resumeNum, "임시 가라값 박준택임");
+        }
     }
 
     @Override

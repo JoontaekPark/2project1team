@@ -5,9 +5,8 @@
 
 <mapper namespace="org.green.backend.repository.dao.resume.ResumeDao">
     <insert id="insertResumeBase">
-        insert into tbl_resume (resume_id,resume_title,resume_area,resume_main_yn,resume_memo,inst_id,inst_dt) value
-        (null,#{resume.resumeTitle},#{resume.resumeArea},
-        #{resume.resumeMainYn},#{resume.resumeMemo},#{resume.instId},now())
+        insert into tbl_resume (resume_id,resume_title,resume_area,inst_dt) value
+        (null,#{resume.resumeTitle},#{resume.resumeArea},now())
     </insert>
 
 

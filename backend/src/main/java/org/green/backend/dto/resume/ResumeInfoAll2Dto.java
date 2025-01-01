@@ -17,18 +17,19 @@ import java.util.List;
  */
 @Data
 public class ResumeInfoAll2Dto {
-    private Long resumeId;
-    // 이력서 제목
-    private String resumeTitle;
-    // 희망근무 지역(작성)
-    private String resumeArea;
-    // Y: 맞음, N: 아님
-    private String resumeMainYn;
-    // 메모
-    private String resumeMemo;
-    // 작성자 ID
-    private String instId;
+//    private Long resumeId;
+//    // 이력서 제목
+//    private String resumeTitle;
+//    // 희망근무 지역(작성)
+//    private String resumeArea;
+//    // Y: 맞음, N: 아님
+//    private String resumeMainYn;
+//    // 메모
+//    private String resumeMemo;
+//    // 작성자 ID
+//    private String instId;
 
+    private ResumeDto basicInfo;
     List<ResumeActiveDto> actives;
     List<ResumeCareerDto> careers;
     List<ResumeCertsDto> certs;
