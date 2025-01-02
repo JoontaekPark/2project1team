@@ -2,10 +2,7 @@ package org.green.backend.repository.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.green.backend.dto.board.BoardDetailDto;
-import org.green.backend.dto.board.BoardDto;
-import org.green.backend.dto.board.BoardListDto;
-import org.green.backend.dto.board.CommentDto;
+import org.green.backend.dto.board.*;
 
 import java.util.List;
 
@@ -31,4 +28,8 @@ public interface BoardDao {
     BoardDetailDto getBoardDetail(@Param("boardNum") Long boardNum);
     //1:1 문의 댓글
     List<CommentDto>getRepliesByBoardNum(@Param("boardNum") Long boardNum);
+    //1:1문의 댓글 등록
+    void insertComment(CommentDto commentDto);
+    //1:1문의 상태 관리
+    void updateBoardStatus(UpdateStatusRequestDto updateStatusRequestDto);
 }

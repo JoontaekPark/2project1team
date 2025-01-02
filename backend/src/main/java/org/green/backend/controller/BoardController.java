@@ -2,9 +2,7 @@ package org.green.backend.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.green.backend.dto.board.BoardDetailDto;
-import org.green.backend.dto.board.BoardDto;
-import org.green.backend.dto.board.BoardListDto;
+import org.green.backend.dto.board.*;
 import org.green.backend.service.BoardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -73,5 +71,24 @@ public class BoardController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(detail);
+    }
+    //1:1 문의 댓글 등록
+    @PostMapping("/comment")
+    public ResponseEntity<String> addReply(
+            @RequestBody CommentDto commentDto
+            ) {
+
+        boardService.addReply(commentDto);
+
+        return ResponseEntity.ok("댓글 등록 완료");
+    }
+    //1:1 문의 상태관리
+    @PutMapping("/updateStatus")
+    public ResponseEntity<String> updateStatus(
+            @RequestBody UpdateStatusRequestDto updateStatusRequestDto
+            ) {
+        boardService.updateBoardStatus(updateStatusRequestDto);
+
+        return ResponseEntity.ok("상태 변경 완료");
     }
 }

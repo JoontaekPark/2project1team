@@ -1,10 +1,7 @@
 package org.green.backend.service;
 
 import lombok.RequiredArgsConstructor;
-import org.green.backend.dto.board.BoardDetailDto;
-import org.green.backend.dto.board.BoardDto;
-import org.green.backend.dto.board.BoardListDto;
-import org.green.backend.dto.board.CommentDto;
+import org.green.backend.dto.board.*;
 import org.green.backend.repository.dao.BoardDao;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +44,17 @@ public class BoardService {
             List<CommentDto> replies = boardDao.getRepliesByBoardNum(boardNum);
             detail.setReplies(replies);
         }
+        System.out.println(detail);
 
         return detail;
+    }
+    //1:1문의 댓글 등록
+    public void addReply(CommentDto commentDto) {
+        System.out.println("댓글 등록 service" + commentDto);
+        boardDao.insertComment(commentDto);
+    }
+    //1:1문의 상태관리
+    public void updateBoardStatus(UpdateStatusRequestDto updateStatusRequestDto) {
+        boardDao.updateBoardStatus(updateStatusRequestDto);
     }
 }

@@ -19,22 +19,32 @@
     </select>
     <!-- 1:1 문의 기업용 리스트 조회  -->
     <select id="getCompanyBoardList" resultType="org.green.backend.dto.board.BoardListDto">
-        SELECT b.board_num, u.name AS userName, b.board_title, b.inst_dt
+        SELECT b.board_num, b.inst_id AS userName, b.board_title, b.inst_dt
         FROM tbl_board b
-        LEFT JOIN tbl_user u ON b.inst_id = u.id
         WHERE board_target = #{userId}
     </select>
 <!--  1:1 문의 상세 조회  -->
     <select id="getBoardDetail" resultType="org.green.backend.dto.board.BoardDetailDto">
-        SELECT board_num, board_title, board_content, inst_id, inst_dt
+        SELECT board_num, board_title, board_content, inst_id, inst_dt, board_status_cd
         FROM tbl_board
         WHERE board_num = #{boardNum}
     </select>
 <!--  답글 리스트 조회  -->
     <select id="getRepliesByBoardNum" resultType="org.green.backend.dto.board.CommentDto">
-        SELECT comment_num, boardNum, comment_content, inst_id, inst_dt
+        SELECT comment_num, board_num, comment_content, inst_id, inst_dt
         FROM tbl_comment
         WHERE board_num = #{boardNum}
         ORDER BY inst_dt ASC
     </select>
+    <!--1:1문의 답글 작성-->
+    <insert id="insertComment">
+        INSERT INTO tbl_comment(board_num, comment_content, inst_id)
+        VALUES(#{boardNum}, #{commentContent}, #{instId})
+    </insert>
+<!-- 1:1문의 상태관리   -->
+    <update id="updateBoardStatus">
+        UPDATE tbl_board
+        SET board_status_cd = #{boardStatusCd}
+        WHERE board_num = #{boardNum}
+    </update>
 </mapper>

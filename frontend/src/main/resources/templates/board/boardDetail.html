@@ -14,5 +14,15 @@
 
 <h2>답글</h2>
 <ul id="replyList"></ul>
+<p>상태: <span id="boardStatus"></span></p>
+<!-- 답변 버튼 -->
+<button onclick="openReplyForm()">답변하기</button>
+
+<!-- 답변 폼 -->
+<div id="replyForm" style="display: none;">
+    <textarea id="commentInput" placeholder="답변 내용을 입력하세요"></textarea>
+    <button id="commentSubmitButton">등록</button>
+</div>
+<a href="/board/list">목록</a>
 </body>
 </html>
