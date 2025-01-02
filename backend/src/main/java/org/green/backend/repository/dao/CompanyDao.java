@@ -48,5 +48,7 @@ public interface CompanyDao {
     public void saveEmployee(@Param("employee") EmployeeDto employee);
 
     public void saveHistory(@Param("history") HistoryDto history);
+
+    public List<StarDto> getStars(@Param("companyId") String companyId);
 }
 

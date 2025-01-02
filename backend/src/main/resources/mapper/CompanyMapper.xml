@@ -189,4 +189,14 @@
         ORDER BY a.job_notice_num
     </select>
 
+    <select id="getStars" resultType="org.green.backend.dto.company.StarDto">
+        SELECT b.*
+        FROM tbl_job_notice a
+        LEFT JOIN tbl_star b ON a.job_notice_num = b.job_notice_num
+        WHERE a.inst_id = #{companyId}
+        AND b.job_notice_num IS NOT NULL
+        ORDER BY b.inst_dt;
+
+    </select>
+
 </mapper>

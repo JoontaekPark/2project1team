@@ -81,6 +81,18 @@ public class CompanyServiceImpl implements CompanyService {
         return result;
     }
 
+    @Override
+    public List<ResponseJobNoticeDto> getJobNotices(String token) {
+        String id = jwtUtil.getId(token);
+        return companyDao.jobNotices(id);
+    }
+
+    @Override
+    public List<StarDto> getStars(String token) {
+        String companyId = jwtUtil.getId(token);
+        return companyDao.getStars(companyId);
+    }
+
     //    매출액 저장
     private void insertRevenue(List<RevenusDto> revenus, String id) {
 

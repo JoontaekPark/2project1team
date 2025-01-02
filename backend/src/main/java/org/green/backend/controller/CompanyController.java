@@ -1,14 +1,16 @@
 package org.green.backend.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.company.CompanyDto;
 import org.green.backend.dto.company.ResponseCompanyDto;
+import org.green.backend.dto.company.ResponseJobNoticeDto;
+import org.green.backend.dto.company.StarDto;
 import org.green.backend.service.company.CompanyService;
 import org.green.backend.utils.CookieUtil;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,5 +62,17 @@ public class CompanyController {
     @GetMapping("/company-info/extra/{companyId}")
     public Map<String, Object> companyInfoExtraDetail(@PathVariable String companyId) {
         return companyService.companyExtraInfo(companyId);
+    }
+
+    @GetMapping("/company-job-notice")
+    public List<ResponseJobNoticeDto> companyJobNotice(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        return companyService.getJobNotices(token);
+    }
+
+    @GetMapping("/company-job-star")
+    public List<StarDto> companyStar(HttpServletRequest request) {
+        String token = cookieUtil.getCookie(request, "Authorization");
+        return companyService.getStars(token);
     }
 }

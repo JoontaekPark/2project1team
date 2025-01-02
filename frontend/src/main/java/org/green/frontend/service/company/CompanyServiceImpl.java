@@ -1,8 +1,9 @@
-package org.green.frontend.service.company_info;
+package org.green.frontend.service.company;
 
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.company.CompanyDto;
 import org.green.frontend.dto.company.ResponseCompanyDto;
+import org.green.frontend.dto.company.ResponseJobNoticeDto;
 import org.green.frontend.global.common.ApiResponse;
 import org.green.frontend.utils.WebClientUtil;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,12 @@ public class CompanyServiceImpl implements CompanyService {
     public ResponseCompanyDto companyInfo(String companyId) throws Exception {
         ApiResponse<ResponseCompanyDto> response = webClientUtil.getApi("/api/v1/company-info/" + companyId, ResponseCompanyDto.class);
 
+        return response.getBody();
+    }
+
+    @Override
+    public List<ResponseJobNoticeDto> jobNoticeInfo() throws Exception {
+        ApiResponse<List> response = webClientUtil.getApi("/api/v1/company-job-notice", List.class);
         return response.getBody();
     }
 }
