@@ -31,6 +31,11 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/job-seeker")
+    public String jobSeeker(Model model) {
+        return "job_seeker_main";
+    }
+
     @GetMapping("/sign-up")
     public String signUpCheck() {
         return "sign_up/sign_up_check";
