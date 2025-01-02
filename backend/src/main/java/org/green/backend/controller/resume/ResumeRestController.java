@@ -160,10 +160,6 @@ public class ResumeRestController {
             resumeService.insertResumeBase(resumeId,basicInfo);
             System.out.println("기본 정보 사항 저장 완료 :" + basicInfo);
         }
-        
-
-
-
 
 
          // 활동사항 출력
