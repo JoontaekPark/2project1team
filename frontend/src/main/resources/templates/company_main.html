@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
+    <head>
+        <title>기업메인</title>
+        <link rel="stylesheet" href="/static/css/company_main.css">
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <div class="banner" layout:fragment="banner">
+            <div class="swiper-container banner-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://greenart.co.kr/upimage/mainBanner/20241114150907.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://hrdgn.greenart.co.kr/data/visual/%EC%98%A8%EB%9D%BC%EC%9D%B8%EC%BA%A0%ED%94%84-%EB%AC%B4%EB%A3%8C%EA%B0%95%EC%9D%98-%EB%B0%B0%EB%84%88.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://hrdgn.greenart.co.kr/data/visual/%EB%A9%94%EC%9D%B8-%EB%B0%B0%EB%84%88A_KDC.jpg">
+                    </div>
+                </div>
+
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+
+        </div>
+        <main layout:fragment="content">
+
+            <div class="content">
+                <!-- 채용중인 내 공고 -->
+                <div class="slider-section">
+                    <div class="swiper-container job-notice-swiper">
+                        <h2>채용중인 내 공고</h2>
+                        <div class="slider swiper-wrapper">
+                            <!-- 북마크가 활성화된 공고 카드 -->
+                            <th:block th:each="jobNotice : ${jobNoticeList}">
+                                <div class="job-card swiper-slide" th:attr="data-jobNoticeNum=${jobNotice.jobNoticeNum}">
+                                    <div class="job-header">
+                                        <div th:class="${'bookmark '}"></div>
+                                        <span class="deadline">D-3</span>
+                                    </div>
+                                    <img alt="채용 공고 이미지" th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"
+                                         onerror="this.src='/static/img/default_image.png'">
+                                    <div class="job-title" th:text="${jobNotice.jobNoticeTitle}">프론트엔드 개발자</div>
+                                    <div class="job-company" th:text="${jobNotice.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-location" th:text="${jobNotice.jobNoticeArea}"></div>
+                                </div>
+                            </th:block>
+
+                            <!-- 북마크가 비활성화된 공고 카드 -->
+
+                        </div>
+
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Navigation -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+
+                <!-- 차트 영역 -->
+                <div class="chart-section">
+                    <h2>별점 평균</h2>
+                    <div class="chart-placeholder">
+                        <canvas id="starChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <h2>채용 비율분포 (나이, 성별)</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <div class="chart-placeholder" style="flex: 1;" >
+                            <canvas id="ageChart"></canvas>
+                        </div>
+                        <div class="chart-placeholder" style="flex: 1;" >
+                            <canvas id="genderChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <h2>채용 비율분포 (기술스택별)</h2>
+                    <div class="chart-placeholder" >
+                        <canvas id="applyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
+
+<script type="module" src="/static/js/company_main.js"></script>

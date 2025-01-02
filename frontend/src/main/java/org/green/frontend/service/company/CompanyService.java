@@ -1,7 +1,10 @@
-package org.green.frontend.service.company_info;
+package org.green.frontend.service.company;
 
 import org.green.frontend.dto.company.CompanyDto;
 import org.green.frontend.dto.company.ResponseCompanyDto;
+import org.green.frontend.dto.company.ResponseJobNoticeDto;
+
+import java.util.List;
 
 /**
  * 패키지명        : org.green.frontend.service.company_info
@@ -20,5 +23,7 @@ public interface CompanyService {
     public CompanyDto getCompany() throws Exception;
 
     public ResponseCompanyDto companyInfo(String companyId) throws Exception;
+
+    public List<ResponseJobNoticeDto> jobNoticeInfo() throws Exception;
 
 }

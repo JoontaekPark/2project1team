@@ -189,4 +189,41 @@
         ORDER BY a.job_notice_num
     </select>
 
+    <select id="getStars" resultType="org.green.backend.dto.company.StarDto">
+        SELECT b.*
+        FROM tbl_job_notice a
+        LEFT JOIN tbl_star b ON a.job_notice_num = b.job_notice_num
+        WHERE a.inst_id = #{companyId}
+        AND b.job_notice_num IS NOT NULL
+        ORDER BY b.inst_dt;
+
+    </select>
+
+    <select id="getGenderByJobNoticeNum">
+        SELECT d.cd_nm
+        FROM tbl_apply_status a
+        LEFT JOIN tbl_resume b ON a.resume_id = b.resume_id
+        LEFT JOIN tbl_user c ON b.inst_id = c.id
+        LEFT JOIN tbl_codeinfo d ON c.gender_cd = d.cd AND d.up_cd = 'gender_cd'
+        WHERE a.job_notice_num = #{jobNoticeNum};
+    </select>
+
+    <select id="getAgeByJobNoticeNum">
+        SELECT TIMESTAMPDIFF(YEAR, c.birth, CURDATE()) AS age
+        FROM tbl_apply_status a
+        LEFT JOIN tbl_resume b ON a.resume_id = b.resume_id
+        LEFT JOIN tbl_user c ON b.inst_id = c.id
+        WHERE a.job_notice_num = #{jobNoticeNum};
+    </select>
+
+    <select id="getStackByJobNoticeNum">
+        SELECT c.cd_nm
+        FROM tbl_apply_status a
+        LEFT JOIN tbl_resume_stack b ON a.resume_id = b.resume_id
+        LEFT JOIN tbl_codeinfo c ON b.stack_cd = c.cd AND c.up_cd IN (SELECT cd FROM tbl_codeinfo WHERE up_cd = 'stack_cd')
+        WHERE a.job_notice_num = #{jobNoticeNum};
+    </select>
+
+
+
 </mapper>
