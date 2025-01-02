@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이력서 리스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .content {
+            margin-left: 200px; /* Adjust to match your sidebar width */
+            padding: 20px;
+        }
+
+        .resume-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .resume-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .resume-card .title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .resume-card .subtitle {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .resume-card .date {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .resume-card .star {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: gold;
+        }
+
+        .resume-card .new-resume {
+            font-size: 16px;
+            font-weight: bold;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .resume-card .new-resume:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .resume-card {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .resume-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <h1>김상준 님의 이력서</h1>
+
+    <div class="resume-container">
+        <!-- New Resume Card -->
+        <div class="resume-card">
+            <div class="new-resume" onclick="location.href='/new-resume';">새 이력서 작성</div>
+        </div>
+
+        <!-- Resume List Cards -->
+        <div class="resume-card" onclick="viewResumeDetail(1)">
+            <span class="star" onclick="setRepresentative(event, 1)">★</span>
+            <div class="title">이력서 제목1</div>
+            <div class="subtitle">메모 들어가나요..? (구현가능?)</div>
+            <div class="date">작성완료 2024.12.24</div>
+        </div>
+
+        <div class="resume-card" onclick="viewResumeDetail(2)">
+            <span class="star" onclick="setRepresentative(event, 2)">★</span>
+            <div class="title">이력서 제목1</div>
+            <div class="subtitle">메모 들어가나요..? (구현가능?)</div>
+            <div class="date">작성완료 2024.12.24</div>
+        </div>
+
+        <div class="resume-card" onclick="viewResumeDetail(3)">
+            <span class="star" onclick="setRepresentative(event, 3)">★</span>
+            <div class="title">이력서 제목1</div>
+            <div class="subtitle">메모 들어가나요..? (구현가능?)</div>
+            <div class="date">작성완료 2024.12.24</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function viewResumeDetail(resumeId) {
+        // Redirect to resume detail page with resumeId
+        window.location.href = `/resume/${resumeId}`;
+    }
+
+    function setRepresentative(event, resumeId) {
+        // Prevent triggering card click event
+        event.stopPropagation();
+
+        // Send request to set the representative resume (replace with your API call logic)
+        fetch(`/resume/${resumeId}/set-representative`, {
+            method: 'POST'
+        }).then(response => {
+            if (response.ok) {
+                alert('대표 이력서로 설정되었습니다.');
+            } else {
+                alert('설정 중 오류가 발생했습니다.');
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
