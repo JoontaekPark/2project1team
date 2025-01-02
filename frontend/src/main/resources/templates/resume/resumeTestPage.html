@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이력서 작성</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 1400px; /* 고정 너비 설정 */
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .header .info {
+            flex-grow: 1;
+            margin-right: 20px;
+        }
+
+        .header .info div {
+            position: relative;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #888;
+            cursor: text;
+        }
+
+        .header .info div input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+            background: transparent;
+        }
+
+        .header .info div input::placeholder {
+            color: #aaa;
+        }
+
+        .header .profile {
+            width: 180px; /* 크기 유지 */
+            height: 180px;
+            border-radius: 50%;
+            background-color: #f2f2f2;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .header .profile:hover {
+            background-color: #eaeaea;
+        }
+
+        .section {
+            margin-top: 50px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .section textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-button {
+            display: inline-block;
+            background-color: #ff69b4;
+            color: #fff;
+            padding: 12px 20px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+
+        .career-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .career-form input {
+            display: block;
+            margin: 15px 0;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 헤더 -->
+    <div class="header">
+        <!-- 입력 폼 -->
+        <div class="info">
+            <div>
+                <input type="text" placeholder="이름(필수)">
+            </div>
+            <div>
+                <input type="email" placeholder="이메일(필수)">
+            </div>
+            <div>
+                <input type="text" placeholder="연락처(필수)">
+            </div>
+        </div>
+        <!-- 프로필 사진 -->
+        <div class="profile">프로필 사진</div>
+    </div>
+
+    <!-- 간단 소개글 -->
+    <div class="section">
+        <div class="section-title">간단 소개글</div>
+        <textarea placeholder="간단 소개글 작성"></textarea>
+    </div>
+
+    <!-- 경력사항 -->
+    <div class="section">
+        <div class="section-title">경력사항</div>
+        <div id="career-container"></div>
+        <div class="add-button" onclick="addCareer()">+ 경력 추가</div>
+    </div>
+
+    <!-- 저장하기 -->
+    <div class="section">
+        <button onclick="submitForm()">저장하기</button>
+    </div>
+</div>
+
+<script>
+    // 경력 추가 버튼 클릭 시 동적으로 입력 폼 추가
+    function addCareer() {
+        const careerContainer = document.getElementById('career-container');
+        const careerForm = document.createElement('div');
+        careerForm.className = 'career-form';
+        careerForm.innerHTML = `
+                <input type="text" placeholder="YYYY.MM ~ YYYY.MM">
+                <input type="text" placeholder="기업명">
+                <input type="text" placeholder="부서명/직책">
+                <input type="text" placeholder="담당업무">
+            `;
+        careerContainer.appendChild(careerForm);
+    }
+
+    // 저장하기 버튼 클릭 시 데이터를 서버로 전송
+    function submitForm() {
+        const name = document.querySelector('.info div:nth-child(1) input').value;
+        const email = document.querySelector('.info div:nth-child(2) input').value;
+        const phone = document.querySelector('.info div:nth-child(3) input').value;
+        const introduction = document.querySelector('textarea').value;
+
+        const careers = [];
+        document.querySelectorAll('.career-form').forEach((form) => {
+            const inputs = form.querySelectorAll('input');
+            careers.push({
+                duration: inputs[0].value,
+                company: inputs[1].value,
+                department: inputs[2].value,
+                responsibilities: inputs[3].value,
+            });
+        });
+
+        // 데이터 전송
+        const data = {
+            name,
+            email,
+            phone,
+            introduction,
+            careers,
+        };
+
+        axios.post('http://localhost:8080/resume/regProc', data)
+            .then(response => {
+                console.log('성공:', response.data);
+                alert('저장 성공!');
+            })
+            .catch(error => {
+                console.error('에러:', error);
+                alert('저장 실패!');
+            });
+    }
+</script>
+</body>
+</html>
