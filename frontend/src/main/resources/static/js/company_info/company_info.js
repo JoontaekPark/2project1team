@@ -1,16 +1,16 @@
 import {api, utills} from '/static/js/common/module/common_module.js';
-import {ChartJs} from "/static/js/class/ChartJs.js";
+import {ChartJsApi} from "/static/js/class/ChartJs.js";
 import {KakaoMap} from "/static/js/class/KakaoMap.js";
 
 $(function () {
 
 
     const employee = document.getElementById('employeeChart');
-    const employeeChart = new ChartJs(employee, 'line', [], []);
+    const employeeChart = new ChartJsApi(employee, 'line', [], []);
     employeeChart.initializeChart();
 
     const revenue = document.getElementById('revenueChart');
-    const revenueChart = new ChartJs(revenue, 'line', [], []);
+    const revenueChart = new ChartJsApi(revenue, 'line', [], []);
     revenueChart.initializeChart();
 
     const addr = document.querySelector("#addr").innerHTML;
