@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ResumeService {
 
-    public void insertResumeBase(int resumeId,ResumeDto resumeDto) throws IOException;
+    public void insertResumeBase(String instId,int resumeId,ResumeDto resumeDto) throws IOException;
 
     public int getResumeId();
 
@@ -31,6 +31,10 @@ public interface ResumeService {
     public void insertResumePrtf(int resumeId,List<ResumePrtfDto> resumePrtfDto) throws IOException;
 
     public void insertResumeStack(int resumeId,List<ResumeStackDto> resumeStackDto);
+
+    public ResumeInfoAll2Dto getResumeDetail(int resumeId);
+
+    public ResumeInfoAll2Dto getResumeInfo(int resumeId);
 
 
 }

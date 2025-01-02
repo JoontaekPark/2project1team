@@ -2,15 +2,20 @@ package org.green.frontend.controller.resume;
 
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.common.UserDto;
 import org.green.frontend.dto.resume.ResumeDto;
+import org.green.frontend.dto.resume.ResumeInfoAll2Dto;
 import org.green.frontend.dto.resume.ResumeInfoAllDto;
+import org.green.frontend.global.common.ApiResponse;
 import org.green.frontend.service.JobNotice.JobNoticeService;
 import org.green.frontend.service.resumeService.ResumeService;
+import org.green.frontend.utils.WebClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -34,6 +39,7 @@ import java.util.List;
 
  private final ResumeService resumeService;
  private final JobNoticeService jobNoticeService;
+ private final WebClientUtil webClientUtil;
 
 
 
@@ -56,10 +62,14 @@ import java.util.List;
    return "/resume/resumeTestPage";
  }
 
+
  @RequestMapping("/resumeForm2")
  public String resumeForm2(Model model) throws Exception {
 
-  System.out.println("들어오는지 확인좀..ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ");
+  UserDto user = resumeService.getUser();
+  model.addAttribute("user", user);
+
+
   //자격증 합격여부(필기,실기,필기실기)
   List<CodeInfoDto> certResult = resumeService.certResult();
   model.addAttribute("certResults", certResult);
@@ -100,6 +110,23 @@ import java.util.List;
 
 
   return "/resume/resumeRegForm2";
+ }
+
+ @RequestMapping("/resumeDetail")
+ public String resumeDetail(Model model) throws Exception {
+
+
+  ApiResponse<ResumeInfoAll2Dto> response = webClientUtil.getApi("/resume/getResumeDetail2?resumeId=44", ResumeInfoAll2Dto.class);
+  ResumeInfoAll2Dto resumeInfo = response.getBody();
+  String instId = resumeInfo.getBasicInfo().getInstId();
+  ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/getLoginUser?instId="+instId, UserDto.class);
+  UserDto user = userResponse.getBody();
+  model.addAttribute("user", user);
+
+
+  System.out.println("FrontEnd ResumeController info : " + resumeInfo);
+  model.addAttribute("resume", resumeInfo);
+  return "/resume/resumeDetail";
  }
 
 

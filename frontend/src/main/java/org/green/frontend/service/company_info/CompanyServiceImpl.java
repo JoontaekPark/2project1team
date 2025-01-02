@@ -30,7 +30,7 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyDto getCompany() throws Exception {
 
         ApiResponse<CompanyDto> response = webClientUtil.getApi("/api/v1/company-info/edit", CompanyDto.class);
-
+//뒤에꺼 매개변수에 (url,반환타입)
         return response.getBody();
     }
 }

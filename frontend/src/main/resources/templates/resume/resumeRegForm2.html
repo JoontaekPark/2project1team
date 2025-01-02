@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+    <script src="/static/js/common/axios.js"></script>
     <title>이력서 작성</title>
     <style>
 
@@ -483,12 +483,12 @@
                 <button onclick="loadResume()" id="loadResumeBtn">불러오기</button>
             </div>
             <div class="personal-info">
-                <input type="text" id="name" name="name" placeholder="이름" readonly>
-                <input type="email" id="email" name="email" placeholder="이메일" readonly>
-                <input type="tel" id="phone" name="phone" placeholder="연락처" readonly>
-                <input type="text" id="area" name="area" placeholder="희망근무지역">
-
+                <input type="text" id="name" name="name" th:value="${user.name}" readonly>
+                <input type="text" id="phone" name="phone" th:value="${user.phone}" readonly>
+                <input type="text" id="email" name="email" th:value="${user.email}" readonly>
+                <input type="text" id="area" name="area" placeholder="희망근무지역(필수)">
             </div>
+
             <div class="active-section">
                 <h3>활동사항</h3>
 
@@ -1341,9 +1341,7 @@
             formData.append('basicInfo.resumeProfile', profilePhoto);
         }
 
-
-
-        axios.post('http://localhost:8080/resume/regProc2', formData)
+        api.post('/resume/regProc2', formData, {"Content-Type": "multipart/form-data"})
             .then(response => {
                 console.log('데이터 전송 성공:', response.data);
                 alert('이력서가 성공적으로 저장되었습니다.');
@@ -1352,6 +1350,16 @@
                 console.error('데이터 전송 오류:', error);
                 alert('데이터 저장 중 문제가 발생했습니다.');
             });
+
+        // axios.post('http://localhost:8080/resume/regProc2', formData)
+        //     .then(response => {
+        //         console.log('데이터 전송 성공:', response.data);
+        //         alert('이력서가 성공적으로 저장되었습니다.');
+        //     })
+        //     .catch(error => {
+        //         console.error('데이터 전송 오류:', error);
+        //         alert('데이터 저장 중 문제가 발생했습니다.');
+        //     });
     }
 
 

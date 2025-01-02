@@ -5,8 +5,8 @@
 
 <mapper namespace="org.green.backend.repository.dao.resume.ResumeDao">
     <insert id="insertResumeBase">
-        insert into tbl_resume (resume_id,resume_title,resume_area,inst_dt) value
-        (null,#{resume.resumeTitle},#{resume.resumeArea},now())
+        insert into tbl_resume (resume_id,resume_title,resume_area,inst_id,inst_dt) value
+        (null,#{resume.resumeTitle},#{resume.resumeArea},#{instId},now())
     </insert>
 
 
@@ -122,6 +122,274 @@
             (null, #{resumeId}, #{item.stackCd})
         </foreach>
     </insert>
+
+
+<!--
+    <select id="getResumeDetail" resultType="org.green.backend.dto.resume.ResumeInfoAll2Dto">
+        rb.resume_id, rb.resume_title, rb.resume_area, rb.resume_main_yn, rb.resume_memo, rb.inst_dt,
+        ra.resume_active_detail, ra.resume_active_str_date, ra.resume_active_end_date,
+        rc.resume_career_company_nm, rc.resume_career_join_dt, rc.resume_career_out_dt, rc.resume_career_dmpt, rc.resume_career_pstn, rc.resume_career_duties,
+        rj.resume_certs_dt,rj.resume_certs_nm,rj.resume_certs_place,rj.resume_certs_gbn_cd,
+        re.resume_education_gbn_cd,re.resume_education_school_nm,re.resume_education_major,re.resume_education_score,re.resume_education_indt,re.resume_education_outdt,re.resume_education_transfer_yn,re.resume_education_resion,
+        ri.resume_introduce_title,ri.resume_introduce_content,
+        rl.resume_loyalty_detail,
+        rm.resume_military_str_date,rm.resume_military_end_date,rm.resume_military_gbn_cd,rm.resume_military_rank_gbn_cd,rm.resume_military_type_gbn_cd,rm.resume_military_finish_gbn_cd,
+        rp.resume_prtf_str_date,rp.resume_prtf_end_date,rp.resume_prtf_url,rp.resume_prtf_cnt,rp.resume_prtf_content,
+        rs.stack_cd
+        FROM
+        tbl_resume rb
+        LEFT JOIN
+        tbl_resume_active ra ON rb.resume_id = ra.resume_id
+        LEFT JOIN
+        tbl_resume_career rc ON rb.resume_id = rc.resume_id
+        LEFT JOIN
+        tbl_resume_certs rj ON rb.resume_id = rj.resume_id
+        LEFT JOIN
+        tbl_resume_education re ON rb.resume_id = re.resume_id
+        LEFT JOIN
+        tbl_resume_introduce ri ON rb.resume_id = ri.resume_id
+        LEFT JOIN
+        tbl_resume_loyalty rl ON rb.resume_id = rl.resume_id
+        LEFT JOIN
+        tbl_resume_military rm ON rb.resume_id = rm.resume_id
+        LEFT JOIN
+        tbl_resume_prtf rp ON rb.resume_id = rp.resume_id
+        LEFT JOIN
+        tbl_resume_stack rs ON rb.resume_id = rs.resume_id
+        WHERE
+        rb.resume_id = #{resumeId};
+    </select>
+     !-->
+<!--
+    <resultMap id="ResumeInfoAll2DtoMap" type="org.green.backend.dto.resume.ResumeInfoAll2Dto">
+        <result property="resumeId" column="resume_id"/>
+        <result property="resumeTitle" column="resume_title"/>
+        <result property="resumeArea" column="resume_area"/>
+        <result property="resumeMainYn" column="resume_main_yn"/>
+        <result property="resumeMemo" column="resume_memo"/>
+        <result property="instId" column="inst_id"/>
+        <result property="instDt" column="inst_dt"/>
+
+        <result property="resumeActiveDetail" column="resume_active_detail"/>
+        <result property="resumeActiveStrDate" column="resume_active_str_date"/>
+        <result property="resumeActiveEndDate" column="resume_active_end_date"/>
+
+        <result property="resumeCareerCompanyNm" column="resume_career_company_nm"/>
+        <result property="resumeCareerJoinDt" column="resume_career_join_dt"/>
+        <result property="resumeCareerOutDt" column="resume_career_out_dt"/>
+        <result property="resumeCareerDmpt" column="resume_career_dmpt"/>
+        <result property="resumeCareerPstn" column="resume_career_pstn"/>
+        <result property="resumeCareerDuties" column="resume_career_duties"/>
+
+        <result property="resumeCertsDt" column="resume_certs_dt"/>
+        <result property="resumeCertsNm" column="resume_certs_nm"/>
+        <result property="resumeCertsPlace" column="resume_certs_place"/>
+        <result property="resumeCertsGbnCd" column="resume_certs_gbn_cd"/>
+
+        <result property="resumeEducationGbnCd" column="resume_education_gbn_cd"/>
+        <result property="resumeEducationSchoolNm" column="resume_education_school_nm"/>
+        <result property="resumeEducationMajor" column="resume_education_major"/>
+        <result property="resumeEducationScore" column="resume_education_score"/>
+        <result property="resumeEducationIndt" column="resume_education_indt"/>
+        <result property="resumeEducationOutdt" column="resume_education_outdt"/>
+        <result property="resumeEducationTransferYn" column="resume_education_transfer_yn"/>
+        <result property="resumeEducationResion" column="resume_education_resion"/>
+
+        <result property="resumeIntroduceTitle" column="resume_introduce_title"/>
+        <result property="resumeIntroduceContent" column="resume_introduce_content"/>
+
+        <result property="resumeLoyaltyDetail" column="resume_loyalty_detail"/>
+
+        <result property="resumeMilitaryStrDate" column="resume_military_str_date"/>
+        <result property="resumeMilitaryEndDate" column="resume_military_end_date"/>
+        <result property="resumeMilitaryGbnCd" column="resume_military_gbn_cd"/>
+        <result property="resumeMilitaryRankGbnCd" column="resume_military_rank_gbn_cd"/>
+        <result property="resumeMilitaryTypeGbnCd" column="resume_military_type_gbn_cd"/>
+        <result property="resumeMilitaryFinishGbnCd" column="resume_military_finish_gbn_cd"/>
+
+        <result property="resumePrtfStrDate" column="resume_prtf_str_date"/>
+        <result property="resumePrtfEndDate" column="resume_prtf_end_date"/>
+        <result property="resumePrtfUrl" column="resume_prtf_url"/>
+        <result property="resumePrtfCnt" column="resume_prtf_cnt"/>
+        <result property="resumePrtfContent" column="resume_prtf_content"/>
+
+        <result property="stackCd" column="stack_cd"/>
+    </resultMap>
+!-->
+<!--    <resultMap id="ResumeInfoAll2Map" type="org.green.backend.dto.resume.ResumeInfoAll2Dto">-->
+<!--        &lt;!&ndash; 기본 정보 매핑 &ndash;&gt;-->
+<!--        <association property="basicInfo" javaType="org.green.backend.dto.resume.ResumeDto">-->
+<!--            <id column="resume_id" property="resumeId"/>-->
+<!--            <result column="resume_title" property="resumeTitle"/>-->
+<!--            <result column="resume_area" property="resumeArea"/>-->
+<!--            <result column="resume_main_yn" property="resumeMainYn"/>-->
+<!--            <result column="resume_memo" property="resumeMemo"/>-->
+<!--            <result column="inst_id" property="instId"/>-->
+<!--            <result column="inst_dt" property="instDt"/>-->
+<!--        </association>-->
+
+<!--        &lt;!&ndash; 활동 리스트 매핑 &ndash;&gt;-->
+<!--        <collection property="actives" ofType="org.green.backend.dto.resume.ResumeActiveDto">-->
+<!--            <result column="resume_active_detail" property="resumeActiveDetail"/>-->
+<!--            <result column="resume_active_str_date" property="resumeActiveStrDate"/>-->
+<!--            <result column="resume_active_end_date" property="resumeActiveEndDate"/>-->
+<!--        </collection>-->
+
+<!--        &lt;!&ndash; 경력 리스트 매핑 &ndash;&gt;-->
+<!--        <collection property="careers" ofType="org.green.backend.dto.resume.ResumeCareerDto">-->
+<!--            <result column="resume_career_company_nm" property="resumeCareerCompanyNm"/>-->
+<!--            <result column="resume_career_join_dt" property="resumeCareerJoinDt"/>-->
+<!--            <result column="resume_career_out_dt" property="resumeCareerOutDt"/>-->
+<!--            <result column="resume_career_dmpt" property="resumeCareerDmpt"/>-->
+<!--            <result column="resume_career_pstn" property="resumeCareerPstn"/>-->
+<!--            <result column="resume_career_duties" property="resumeCareerDuties"/>-->
+<!--        </collection>-->
+
+<!--        &lt;!&ndash; 자격증 리스트 매핑 &ndash;&gt;-->
+<!--        <collection property="certs" ofType="org.green.backend.dto.resume.ResumeCertsDto">-->
+<!--            <result column="resume_certs_dt" property="resumeCertsDt"/>-->
+<!--            <result column="resume_certs_nm" property="resumeCertsNm"/>-->
+<!--            <result column="resume_certs_place" property="resumeCertsPlace"/>-->
+<!--            <result column="resume_certs_gbn_cd" property="resumeCertsGbnCd"/>-->
+<!--        </collection>-->
+
+<!--        &lt;!&ndash; 교육 리스트 매핑 &ndash;&gt;-->
+<!--        <collection property="educations" ofType="org.green.backend.dto.resume.ResumeEducationDto">-->
+<!--            <result column="resume_education_gbn_cd" property="resumeEducationGbnCd"/>-->
+<!--            <result column="resume_education_school_nm" property="resumeEducationSchoolNm"/>-->
+<!--            <result column="resume_education_major" property="resumeEducationMajor"/>-->
+<!--            <result column="resume_education_score" property="resumeEducationScore"/>-->
+<!--            <result column="resume_education_indt" property="resumeEducationIndt"/>-->
+<!--            <result column="resume_education_outdt" property="resumeEducationOutdt"/>-->
+<!--            <result column="resume_education_transfer_yn" property="resumeEducationTransferYn"/>-->
+<!--            <result column="resume_education_resion" property="resumeEducationResion"/>-->
+
+<!--        </collection>-->
+
+<!--        &lt;!&ndash; 자기소개 리스트 매핑 &ndash;&gt;-->
+<!--        <collection property="introduces" ofType="org.green.backend.dto.resume.ResumeIntroduceDto">-->
+<!--            <result column="resume_introduce_title" property="resumeIntroduceTitle"/>-->
+<!--            <result column="resume_introduce_content" property="resumeIntroduceContent"/>-->
+<!--        </collection>-->
+
+<!--        &lt;!&ndash; 우대사항 &ndash;&gt;-->
+<!--        <collection property="loyalties" ofType="org.green.backend.dto.resume.ResumeLoyaltyDto">-->
+<!--            <result column="resume_loyalty_detail" property="resumeLoyaltyDetail"/>-->
+<!--        </collection>-->
+
+<!--        &lt;!&ndash; 군복무 정보 리스트 매핑 &ndash;&gt;-->
+<!--        <collection property="militaries" ofType="org.green.backend.dto.resume.ResumeMilitaryDto">-->
+<!--            <result column="resume_military_str_date" property="resumeMilitaryStrDate"/>-->
+<!--            <result column="resume_military_end_date" property="resumeMilitaryEndDate"/>-->
+<!--            <result column="resume_military_gbn_cd" property="resumeMilitaryGbnCd"/>-->
+<!--            <result column="resume_military_rank_gbn_cd" property="resumeMilitaryRankGbnCd"/>-->
+<!--            <result column="resume_military_type_gbn_cd" property="resumeMilitaryTypeGbnCd"/>-->
+<!--            <result column="resume_military_finish_gbn_cd" property="resumeMilitaryFinishGbnCd"/>-->
+<!--        </collection>-->
+
+<!--        &lt;!&ndash; 포트폴리오 리스트 매핑 &ndash;&gt;-->
+<!--        <collection property="prtfs" ofType="org.green.backend.dto.resume.ResumePrtfDto">-->
+<!--            <result column="resume_prtf_str_date" property="resumePrtfStrDate"/>-->
+<!--            <result column="resume_prtf_end_date" property="resumePrtfEndDate"/>-->
+<!--            <result column="resume_prtf_url" property="resumePrtfUrl"/>-->
+<!--            <result column="resume_prtf_cnt" property="resumePrtfCnt"/>-->
+<!--            <result column="resume_prtf_content" property="resumePrtfContent"/>-->
+<!--        </collection>-->
+
+<!--        &lt;!&ndash; 기술 스택 리스트 매핑 &ndash;&gt;-->
+<!--        <collection property="stacks" ofType="org.green.backend.dto.resume.ResumeStackDto">-->
+<!--            <result column="stack_cd" property="stackCd"/>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+
+
+<!--    <select id="getResumeDetail" resultMap="ResumeInfoAll2Map">-->
+<!--        SELECT-->
+<!--        &#45;&#45; 이력서 기본정보-->
+<!--        rb.resume_id, rb.resume_title, rb.resume_area, rb.resume_main_yn, rb.resume_memo, rb.inst_id, rb.inst_dt,-->
+<!--        &#45;&#45; 이력서 활동사항-->
+<!--        ra.resume_active_detail, ra.resume_active_str_date, ra.resume_active_end_date,-->
+<!--        &#45;&#45; 이력서 경력사항-->
+<!--        rc.resume_career_company_nm, rc.resume_career_join_dt, rc.resume_career_out_dt, rc.resume_career_dmpt, rc.resume_career_pstn, rc.resume_career_duties,-->
+<!--        &#45;&#45; 이력서 자격증..c가 커리어로 사용중이라 j 쓸게요..-->
+<!--        rj.resume_certs_dt,rj.resume_certs_nm,rj.resume_certs_place,rj.resume_certs_gbn_cd,-->
+<!--        &#45;&#45; 이력서 학력사항-->
+<!--        re.resume_education_gbn_cd,re.resume_education_school_nm,re.resume_education_major,re.resume_education_score,re.resume_education_indt,re.resume_education_outdt,re.resume_education_transfer_yn,re.resume_education_resion,-->
+<!--        &#45;&#45; 이력서 자기소개사항-->
+<!--        ri.resume_introduce_title,ri.resume_introduce_content,-->
+<!--        &#45;&#45; 이력서 우대사항-->
+<!--        rl.resume_loyalty_detail,-->
+<!--        &#45;&#45; 이력서 병역사항-->
+<!--        rm.resume_military_str_date,rm.resume_military_end_date,rm.resume_military_gbn_cd,rm.resume_military_rank_gbn_cd,rm.resume_military_type_gbn_cd,rm.resume_military_finish_gbn_cd,-->
+<!--        &#45;&#45; 이력서 포트폴리오-->
+<!--        rp.resume_prtf_str_date,rp.resume_prtf_end_date,rp.resume_prtf_url,rp.resume_prtf_cnt,rp.resume_prtf_content,-->
+<!--        &#45;&#45; 이력서 기술스택-->
+<!--        rs.stack_cd-->
+<!--        &#45;&#45; 이력서 증명사진-->
+<!--        FROM-->
+<!--        tbl_resume rb-->
+<!--        LEFT JOIN-->
+<!--        tbl_resume_active ra ON rb.resume_id = ra.resume_id-->
+<!--        LEFT JOIN-->
+<!--        tbl_resume_career rc ON rb.resume_id = rc.resume_id-->
+<!--        LEFT JOIN-->
+<!--        tbl_resume_certs rj ON rb.resume_id = rj.resume_id-->
+<!--        LEFT JOIN-->
+<!--        tbl_resume_education re ON rb.resume_id = re.resume_id-->
+<!--        LEFT JOIN-->
+<!--        tbl_resume_introduce ri ON rb.resume_id = ri.resume_id-->
+<!--        LEFT JOIN-->
+<!--        tbl_resume_loyalty rl ON rb.resume_id = rl.resume_id-->
+<!--        LEFT JOIN-->
+<!--        tbl_resume_military rm ON rb.resume_id = rm.resume_id-->
+<!--        LEFT JOIN-->
+<!--        tbl_resume_prtf rp ON rb.resume_id = rp.resume_id-->
+<!--        LEFT JOIN-->
+<!--        tbl_resume_stack rs ON rb.resume_id = rs.resume_id-->
+<!--        WHERE-->
+<!--        rb.resume_id = #{resumeId};-->
+<!--    </select>-->
+
+    <select id="getResumeDto" resultType="org.green.backend.dto.resume.ResumeDto">
+        SELECT * FROM tbl_resume WHERE resume_id = #{resumeId}
+    </select>
+
+    <select id="getResumeActiveDto" resultType="org.green.backend.dto.resume.ResumeActiveDto">
+        SELECT * FROM tbl_resume_active WHERE resume_id = #{resumeId}
+    </select>
+
+    <select id="getResumeCareerDto" resultType="org.green.backend.dto.resume.ResumeCareerDto">
+        SELECT * FROM tbl_resume_career WHERE resume_id = #{resumeId}
+    </select>
+
+    <select id="getResumeCertsDto" resultType="org.green.backend.dto.resume.ResumeCertsDto">
+        SELECT * FROM tbl_resume_certs WHERE resume_id = #{resumeId}
+    </select>
+
+    <select id="getResumeEducationDto" resultType="org.green.backend.dto.resume.ResumeEducationDto">
+        SELECT * FROM tbl_resume_education WHERE resume_id = #{resumeId}
+    </select>
+
+    <select id="getResumeIntroduceDto" resultType="org.green.backend.dto.resume.ResumeIntroduceDto">
+        SELECT * FROM tbl_resume_introduce WHERE resume_id = #{resumeId}
+    </select>
+
+    <select id="getResumeLoyaltyDto" resultType="org.green.backend.dto.resume.ResumeLoyaltyDto">
+        SELECT * FROM tbl_resume_loyalty WHERE resume_id = #{resumeId}
+    </select>
+
+    <select id="getResumeMilitaryDto" resultType="org.green.backend.dto.resume.ResumeMilitaryDto">
+        SELECT * FROM tbl_resume_military WHERE resume_id = #{resumeId}
+
+    </select>
+
+    <select id="getResumePrtfDto" resultType="org.green.backend.dto.resume.ResumePrtfDto">
+        SELECT * FROM tbl_resume_prtf WHERE resume_id = #{resumeId}
+    </select>
+
+    <select id="getResumeStackDto" resultType="org.green.backend.dto.resume.ResumeStackDto">
+        SELECT * FROM tbl_resume_stack WHERE resume_id = #{resumeId}
+    </select>
 
 
 

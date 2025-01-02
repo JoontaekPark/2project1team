@@ -1,8 +1,13 @@
 package org.green.backend.controller.resume;
 
+import jakarta.servlet.http.HttpServletRequest;
+import org.green.backend.dto.common.UserDto;
 import org.green.backend.dto.resume.*;
+import org.green.backend.service.common.UserService;
 import org.green.backend.service.resume.ResumeService;
 import org.green.backend.dto.resume.ResumeInfoAllDto;
+import org.green.backend.utils.CookieUtil;
+import org.green.backend.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +36,14 @@ public class ResumeRestController {
 
     @Autowired
     private ResumeService resumeService;
+
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CookieUtil cookieUtil;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 /*
     @PostMapping("/regProc")
     public String regProc(@RequestBody ResumeInfoAllDto resumeDto){
@@ -149,15 +162,22 @@ public class ResumeRestController {
 
 
     @PostMapping("regProc2")
-    public String regProc2(@ModelAttribute ResumeInfoAll2Dto resumeDto) throws IOException {
+    public String regProc2(@ModelAttribute ResumeInfoAll2Dto resumeDto ,
+                           HttpServletRequest request) throws Exception {
+
+
+
 
         int resumeId2 = resumeService.getResumeId();
         int resumeId = resumeId2+1;
         ResumeDto basicInfo = resumeDto.getBasicInfo();
         //이름,이메일,전화번호는 나중에 추가
 
+        String token = cookieUtil.getCookie(request, "Authorization");
+        String instId = jwtUtil.getId(token);
+
         if (basicInfo != null) {
-            resumeService.insertResumeBase(resumeId,basicInfo);
+            resumeService.insertResumeBase(instId, resumeId, basicInfo);
             System.out.println("기본 정보 사항 저장 완료 :" + basicInfo);
         }
 
@@ -277,6 +297,36 @@ public class ResumeRestController {
     }
 
 
+
+    @GetMapping("getResumeDetail")
+    public ResumeInfoAll2Dto getResumeDetail(@RequestParam int resumeId) {
+
+
+
+        ResumeInfoAll2Dto resumeInfo = resumeService.getResumeDetail(resumeId);
+        System.out.println("Backend RestResumeController info : " + resumeInfo);
+        return resumeInfo;
+    }
+
+    @GetMapping("getResumeDetail2")
+    public ResumeInfoAll2Dto getResumeDetail2(@RequestParam int resumeId) {
+        ResumeInfoAll2Dto resumeInfo = resumeService.getResumeInfo(resumeId);
+        return resumeInfo;
+    }
+
+
+
+
+
+
+
+
+
+    @GetMapping("getLoginUser")
+    public UserDto getLoginUser(HttpServletRequest request) throws Exception{
+        String token = request.getHeader("Authorization");
+        return userService.userInfo(token);
+    }
 
 
 

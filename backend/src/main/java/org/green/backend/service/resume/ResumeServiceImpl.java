@@ -23,9 +23,9 @@ public class ResumeServiceImpl implements ResumeService {
 
 
     @Override
-    public void insertResumeBase(int resumeId,ResumeDto resumeDto) throws IOException{
+    public void insertResumeBase(String instId,int resumeId,ResumeDto resumeDto) throws IOException{
 
-        resumeDao.insertResumeBase(resumeDto);
+        resumeDao.insertResumeBase(instId,resumeDto);
         String resumeNum = String.valueOf(resumeId);
         if(resumeDto.getResumeProfile() != null){
         fileService.saveFile(resumeDto.getResumeProfile(), "30",resumeNum, "임시 가라값 박준택임");
@@ -93,6 +93,51 @@ public class ResumeServiceImpl implements ResumeService {
     public void insertResumeStack(int resumeId, List<ResumeStackDto> resumeStackDto) {
         resumeDao.insertResumeStack(resumeId, resumeStackDto);
     }
+
+
+    @Override
+    public ResumeInfoAll2Dto getResumeDetail(int resumeId) {
+
+        ResumeInfoAll2Dto resumeInfo = resumeDao.getResumeDetail(resumeId);
+        System.out.println("서비스 resumeInfo :" +resumeInfo);
+
+        return resumeInfo;
+    }
+
+    @Override
+    public ResumeInfoAll2Dto getResumeInfo(int resumeId) {
+        ResumeDto resumeBasic = resumeDao.getResumeDto(resumeId);
+        List<ResumeActiveDto> active = resumeDao.getResumeActiveDto(resumeId);
+        List<ResumeCareerDto> career = resumeDao.getResumeCareerDto(resumeId);
+        List<ResumeCertsDto> certs = resumeDao.getResumeCertsDto(resumeId);
+        List<ResumeEducationDto> education = resumeDao.getResumeEducationDto(resumeId);
+        List<ResumeIntroduceDto> introduce = resumeDao.getResumeIntroduceDto(resumeId);
+        List<ResumeLoyaltyDto> loyalty = resumeDao.getResumeLoyaltyDto(resumeId);
+        List<ResumeMilitaryDto> military = resumeDao.getResumeMilitaryDto(resumeId);
+        List<ResumePrtfDto> prtf = resumeDao.getResumePrtfDto(resumeId);
+        List<ResumeStackDto> stack = resumeDao.getResumeStackDto(resumeId);
+
+        ResumeInfoAll2Dto resumeInfo = new ResumeInfoAll2Dto();
+        resumeInfo.setBasicInfo(resumeBasic);
+        resumeInfo.setActives(active);
+        resumeInfo.setCareers(career);
+        resumeInfo.setCerts(certs);
+        resumeInfo.setEducations(education);
+        resumeInfo.setIntroduces(introduce);
+        resumeInfo.setLoyalties(loyalty);
+        resumeInfo.setMilitaries(military);
+        resumeInfo.setPrtfs(prtf);
+        resumeInfo.setStacks(stack);
+
+
+
+
+        return resumeInfo;
+    }
+
+
+    //-----------------------------
+
 
 
 }

@@ -35,5 +35,7 @@ public class ResumeDto {
 
         //이력서에 들어가는 사진 뽑느라 만듦
         private MultipartFile resumeProfile;
+
+
     }
 

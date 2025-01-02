@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Mapper
 public interface ResumeDao {
-    public void insertResumeBase(@Param("resume") ResumeDto resumeDto);
+    public void insertResumeBase(@Param("instId")String instId,@Param("resume") ResumeDto resumeDto);
 
     public int getResumeId();
 
@@ -40,6 +40,19 @@ public interface ResumeDao {
     public void insertResumePrtf(@Param("resumeId") int resumeId, @Param("resume")  List<ResumePrtfDto> resumePrtfDto);
 
     public void insertResumeStack(@Param("resumeId") int resumeId, @Param("resume") List<ResumeStackDto> resumeStackDto);
+
+    public ResumeInfoAll2Dto getResumeDetail(int resumeId);
+
+    public ResumeDto getResumeDto(int resumeId);
+    public List<ResumeActiveDto> getResumeActiveDto(int resumeId);
+    public List<ResumeCareerDto> getResumeCareerDto(int resumeId);
+    public List<ResumeCertsDto> getResumeCertsDto(int resumeId);
+    public List<ResumeEducationDto> getResumeEducationDto(int resumeId);
+    public List<ResumeIntroduceDto> getResumeIntroduceDto(int resumeId);
+    public List<ResumeLoyaltyDto> getResumeLoyaltyDto(int resumeId);
+    public List<ResumeMilitaryDto> getResumeMilitaryDto(int resumeId);
+    public List<ResumePrtfDto> getResumePrtfDto(int resumeId);
+    public List<ResumeStackDto> getResumeStackDto(int resumeId);
 
 }
 
