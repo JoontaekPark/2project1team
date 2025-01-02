@@ -18,6 +18,7 @@ public class TestController {
         return "main";
     }
 
+
     @GetMapping("/test1")
     public String test1() {
         return "example_no_aside";

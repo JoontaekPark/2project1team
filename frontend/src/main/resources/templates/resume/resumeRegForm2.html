@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>이력서 작성</title>
+    <style>
+
+        .modal {
+            display: none; /* 기본적으로 숨김 */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4); /* 배경 흐림 효과 */
+        }
+
+        /* 모달 내부 컨텐츠 */
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border: none;
+            border-radius: 12px;
+            width: 400px; /* 너비 조정 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+            font-family: Arial, sans-serif;
+            color: #333;
+            position: relative;
+        }
+
+        /* 닫기 버튼 */
+        .modal-content .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #aaa;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-content .close:hover {
+            color: black;
+        }
+
+        /* 제목 스타일 */
+        .modal-content h3 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #FF0083;
+        }
+
+        /* 입력 필드 스타일 */
+        .modal-content input,
+        .modal-content select,
+        .modal-content textarea {
+            width: 90%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .modal-content input:focus,
+        .modal-content select:focus,
+        .modal-content textarea:focus {
+            border-color: #FF0083;
+            outline: none;
+        }
+
+        /* 파일 업로드 및 URL 스타일 */
+        #uploadFile,
+        #portfolioUrl {
+            display: none;
+        }
+
+        #uploadType {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        /* 버튼 스타일 */
+        .modal-content button {
+            width: 100%;
+            padding: 12px;
+            background-color: #FF0083;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: #e5007a;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .stack-btn {
+            margin: 5px;
+            color: #FFFFFF;
+            padding: 10px 15px;
+            background-color: #FF0083;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .stack-btn:hover {
+            background-color: #d6d6d6;
+        }
+
+        .stack-btn.selected {
+            background-color: #ffcccc;
+            cursor: not-allowed;
+        }
+
+        .selected-stack-btn {
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: #c8e6c9;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .selected-stack-btn:hover {
+            background-color: #b0d3b3;
+        }
+
+        .stack-container, .selected-stacks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            margin-top: 60px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+        }
+
+        .header {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .title-row {
+
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .left-section {
+            flex: 1;
+        }
+
+        .right-section {
+            position: absolute;
+            left: 800px;
+            top: 0;
+            width: 160px;
+            height:160px;
+        }
+
+        .photo-container {
+            width: 160px;
+            height: 160px; /* 높이를 160px로 수정하여 정사각형 형태로 만들기 */
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 숨기기 */
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 이미지를 컨테이너 크기에 맞게 잘라서 꽉 채우기 */
+        }
+
+        .title-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .personal-info {
+            display: grid;
+            gap: 10px;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #resume-title {
+            font-size: 24px;
+            padding: 12px;
+            border: none;
+            border-bottom: 2px solid #eee;
+            width: 400px;
+            outline: none;
+        }
+
+        .personal-info input {
+            border: none;
+            border-bottom: 1px solid #eee;
+            padding: 8px 4px;
+            outline: none;
+            width: 250px;
+        }
+
+        input:hover, input:focus {
+            border-bottom-color: #666;
+        }
+
+        .introduction-section {
+            margin-top: 30px;
+            max-width: 1000px;
+        }
+
+        .intro-tips {
+            background-color: #E7E4F8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 14px;
+            max-width: 700px;
+        }
+
+        .intro-tips ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+
+        .intro-tips li {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+
+        .intro-textarea {
+            width: 70%;
+            min-height: 120px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            resize: vertical;
+            outline: none;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .intro-textarea:focus {
+            border-color: #666;
+        }
+
+        .career-section,
+        .certificate-section,
+        .education-section,
+        .self-intro-section,
+        .preference-section,
+        .military-section,
+        .portfolio-section,
+        .skills-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        h3 {
+            margin-bottom: 25px;
+            font-size: 20px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-container {
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        input, select, textarea {
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #FF0083;
+            box-shadow: 0 0 0 3px rgba(255, 0, 131, 0.1);
+            outline: none;
+        }
+
+        .add-btn {
+            background-color: #FF0083;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .add-btn:hover {
+            background-color: #e5007a;
+            transform: translateY(-1px);
+        }
+
+        .delete-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .delete-btn {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #ff0000;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            resize: vertical;
+            line-height: 1.5;
+            font-family: inherit;
+        }
+
+        select {
+            background-color: white;
+            cursor: pointer;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="date"] {
+            font-family: inherit;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            input, select {
+                width: 100%;
+            }
+        }
+
+        /* 불러오기 버튼 스타일 */
+        .title-row button {
+            background-color: #FF0083;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .title-row button:hover {
+            background-color: #e5007a;
+        }
+
+        /* 경력사항 추가 버튼 스타일 */
+        .add-career-btn {
+            background-color: #FF0083;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .add-career-btn:hover {
+            background-color: #e5007a;
+        }
+
+        /* 삭제 버튼 스타일 */
+        .delete-career-btn {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .delete-career-btn:hover {
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="left-section">
+            <div class="title-row">
+                <input type="text" id="resume-title" placeholder="이력서 제목">
+                <button onclick="loadResume()" id="loadResumeBtn">불러오기</button>
+            </div>
+            <div class="personal-info">
+                <input type="text" id="name" name="name" placeholder="이름" readonly>
+                <input type="email" id="email" name="email" placeholder="이메일" readonly>
+                <input type="tel" id="phone" name="phone" placeholder="연락처" readonly>
+                <input type="text" id="area" name="area" placeholder="희망근무지역">
+
+            </div>
+            <div class="active-section">
+                <h3>활동사항</h3>
+
+
+                <div class="intro-tips">
+                    💡 활동사항 작성 팁
+                    <ul>
+                        <li>대외활동 및 수상경험 등 여러가지 경험들을 작성해주세요!</li>
+                    </ul>
+                </div>
+                <button type="button" onclick="addActiveForm()" class="add-btn">
+                    + 활동사항 추가
+                </button>
+                <div id="active-forms-container">
+                    <!-- 여기에 활동사항 폼이 동적으로 추가됩니다 -->
+                </div>
+            </div>
+
+
+
+
+
+            <div class="career-section">
+                <h3>경력사항</h3>
+
+
+                <div class="intro-tips">
+                    💡 경력사항 작성 팁
+                    <ul>
+                        <li>담당하신 업무 중 우선순위가 높은 업무를 선별하여 최신순으로 작성해주세요.</li>
+                        <li>신입의 경우, 직무와 관련된 대외활동, 인턴, 계약직 경력 등이 있다면 작성해주세요.</li>
+                        <li>업무 또는 활동 시 담당했던 업무를 자세하게 작성해주세요!</li>
+                    </ul>
+                </div>
+
+
+
+                <button type="button" onclick="addCareerForm()" class="add-career-btn">
+                    + 경력사항 추가
+                </button>
+                <div id="career-forms-container">
+                    <!-- 여기에 경력사항 폼이 동적으로 추가됩니다 -->
+                </div>
+            </div>
+            <div class="certificate-section">
+                <h3>자격증</h3>
+
+
+                <div class="intro-tips">
+                    💡 자격증 작성 팁
+                    <ul>
+                        <li>지원하는 회사에서 요구하는 경우가 아니라면 운전면허증과 같은 자격증은 생략하는 것이 좋습니다!</li>
+                    </ul>
+                </div>
+
+
+                <button type="button" onclick="addCertificateForm()" class="add-btn">
+                    + 자격증 추가
+                </button>
+                <div id="cert-forms-container"></div>
+            </div>
+            <div class="education-section">
+                <h3>학력사항</h3>
+                <div class="intro-tips">
+                    💡 학력사항 작성 팁
+                    <ul>
+                        <li>최신순으로 작성해주세요.</li>
+                    </ul>
+                </div>
+                <button type="button" onclick="addEducationForm()" class="add-btn">
+                    + 학력사항 추가
+                </button>
+                <div id="education-forms-container"></div>
+            </div>
+            <div class="self-intro-section">
+                <h3>자기소개</h3>
+                <div class="intro-tips">
+                    💡 자기소개 작성 팁
+                    <ul>
+                        <li>솔직하게 자신의 장점을 어필할 수 있는 공간이에요!</li>
+                        <li>지원동기나 성격의 장단점 등등 자유롭게 작성해보세요!</li>
+                    </ul>
+                </div>
+                <button type="button" onclick="addSelfIntroForm()" class="add-btn">
+                    + 자기소개 추가
+                </button>
+                <div id="self-intro-forms-container"></div>
+            </div>
+            <div class="preference-section">
+                <h3>우대사항</h3>
+                <div class="intro-tips">
+                    💡 우대사항 작성 팁
+                    <ul>
+                        <li>국가유공자, 기초수급자 등 본인에게 맞는 항목을 작성하시면 됩니다!</li>
+                    </ul>
+                </div>
+                <button type="button" onclick="addPreferenceForm()" class="add-btn">
+                    + 우대사항 추가
+                </button>
+                <div id="preference-forms-container"></div>
+            </div>
+            <div class="military-section">
+                <h3>병역사항</h3>
+                <div class="intro-tips">
+                    💡 병역사항 작성 팁
+                    <ul>
+                        <li>본인이 복무한 병역사항을 작성하시면 됩니다!</li>
+                    </ul>
+                </div>
+
+                <button type="button" onclick="addMilitaryForm()" class="add-btn">
+                    + 병역사항 추가
+                </button>
+                <div id="military-forms-container"></div>
+            </div>
+
+
+
+
+            <div class="portfolio-section">
+                <h3>포트폴리오</h3>
+
+                <div class="intro-tips">
+                    💡 포트폴리오 작성 팁
+                    <ul>
+                        <li>깃헙, 노션 등으로 작성한 포트폴리오, 파일 등 업무 성과를 보여줄 수 있는 링크가 있다면 작성해주세요.</li>
+                    </ul>
+                </div>
+                <!-- 버튼 클릭 시 모달 열기 -->
+                <button type="button" onclick="openPortfolioModal()" class="add-btn">
+                    + 포트폴리오 추가
+                </button>
+                <div id="portfolio-forms-container">
+                    <!-- 입력된 데이터를 표시하는 영역 -->
+                </div>
+            </div>
+
+            <!-- 모달 창 -->
+            <div id="portfolio-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closePortfolioModal()">&times;</span>
+                    <h3>포트폴리오 및 기타 문서 추가</h3>
+                    <form id="portfolio-form">
+                        <label for="uploadType">업로드 형태</label>
+                        <select id="uploadType" onchange="toggleUploadField()">
+
+                            <option value="url">URL</option>
+                            <option value="file">파일</option>
+                        </select>
+                        <input type="file" id="resumePrtfFile" hidden>
+                        <input type="text" id="resumePrtfUrl" placeholder="https://www.example.com" style="display: none;">
+                        <label for="startDate">작업 기간</label>
+                        <input type="date" id="resumePrtfStrDate">
+                        <input type="date" id="resumePrtfEndDate">
+                        <label for="resumePrtfCnt">작업 인원</label>
+                        <input type="number" id="resumePrtfCnt" min="1" placeholder="작업 인원수">
+                        <label for="resumePrtfContent">작업 내용</label>
+                        <textarea id="resumePrtfContent" placeholder="작업 내용을 입력하세요"></textarea>
+                        <button type="button" onclick="savePortfolio()">저장</button>
+                    </form>
+                </div>
+            </div>
+
+
+
+
+            <div class="skills-section">
+                <h3>기술스택</h3>
+                <div class="intro-tips">
+                    💡 기술스택 작성 팁
+                    <ul>
+                        <li>개발 스택, 디자인 툴, 마케팅 툴 등 가지고 있는 직무와 관련된 스킬을 추가해보세요.</li>
+                        <li>데이터 분석 툴이나 협업 툴 등의 사용해본 경험이 있으신 툴들도 추가해보세요.</li>
+                    </ul>
+                </div>
+                <th:block th:each="stack : ${jobNoticeStackGbnCdList}">
+                    <button class="stack-btn" th:value="${stack.cd}" th:text="${stack.cdNm}">
+                    </button>
+                </th:block>
+            </div>
+            <h4>선택된 기술 스택</h4>
+            <div id="selected-stacks" class="selected-stacks"></div>
+        </div>
+
+
+        <div class="right-section">
+            <div class="photo-container" onclick="uploadPhoto()">
+                <img id="profile-photo" src="/uploads/person-icon.jpeg" alt="증명사진" style="width: 100%; height: 100%;">
+
+                <input type="file" id="photo-input" hidden accept="image/*">
+            </div>
+        </div>
+    </div>
+</div>
+
+<button onclick="submitFormData()" class="add-btn">이력서 저장</button>
+
+
+
+
+
+
+
+
+
+
+<script th:inline="javascript">
+
+    const formData = new FormData();
+
+
+    function uploadPhoto() {
+        document.getElementById('photo-input').click();
+    }
+
+    document.getElementById('photo-input').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profile-photo').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function loadResume() {
+        // 여기에 이력서 불러오기 로직을 구현하시면 됩니다
+        alert('이력서 불러오기 기능은 아직 구현되지 않았습니다.');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const stackButtons = document.querySelectorAll(".stack-btn");
+        const selectedContainer = document.getElementById("selected-stacks");
+
+        // 버튼 클릭 이벤트 등록
+        stackButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const selectedCd = button.value;
+                const selectedName = button.textContent;
+
+                // 이미 선택된 버튼인지 확인
+                if (button.classList.contains("selected")) return;
+
+                // 선택된 버튼 숨기기
+                button.classList.add("selected");
+
+                // 선택된 기술 스택을 아래 리스트에 버튼으로 추가
+                const stackButton = document.createElement("button");
+                stackButton.className = "selected-stack-btn";
+                stackButton.value = selectedCd;
+                stackButton.innerText = selectedName;
+
+                // 선택된 버튼을 클릭하면 다시 원래 위치로 복원
+                stackButton.addEventListener("click", () => {
+                    // 아래 리스트에서 제거
+                    stackButton.remove();
+
+                    // 원래 버튼 다시 보이게 하기
+                    button.classList.remove("selected");
+                });
+
+                selectedContainer.appendChild(stackButton);
+
+                // 선택된 영역으로 스크롤 이동
+                selectedContainer.scrollIntoView({ behavior: "smooth", block: "center" });
+            });
+        });
+    });
+
+
+
+    let activeCount = 0;
+    function addActiveForm() {
+        activeCount++;
+        const container = document.getElementById('active-forms-container');
+        const form = document.createElement('div');
+        form.className = 'form-container';
+        form.id = `active-${activeCount}`;
+
+        form.innerHTML = `
+                <div class="form-row">
+                    <input type="text"
+                        placeholder="시작연월을 입력해주세요."
+                        onfocus="(this.type='month')"
+                        onblur="if(!this.value) this.type='text'"
+                        name="actives[${activeCount}].resumeActiveStrDate">
+                    <input type="text"
+                        placeholder="종료연월을 입력해주세요."
+                        onfocus="(this.type='month')"
+                        onblur="if(!this.value) this.type='text'"
+                        name="actives[${activeCount}].resumeActiveEndDate">
+                </div>
+                <div class="form-row">
+                    <textarea placeholder="활동 상세 내용" name="actives[${activeCount}].resumeActiveDetail"
+                        style="width: 100%; min-height: 150px;"></textarea>
+                </div>
+
+                <div class="delete-btn-container">
+                    <button type="button" class="delete-career-btn" onclick="deleteForm('actives-${activeCount}')">삭제</button>
+                </div>
+            `;
+        container.appendChild(form);
+    }
+
+
+
+
+
+
+
+    let careerCount = 0;
+    function addCareerForm() {
+        careerCount++;
+        const container = document.getElementById('career-forms-container');
+        const form = document.createElement('div');
+        form.className = 'form-container';
+        form.id = `career-${careerCount}`;
+
+        form.innerHTML = `
+                <div class="form-row">
+                    <input type="text"
+                        placeholder="입사연월을 입력하세요"
+                        onfocus="(this.type='month')"
+                        onblur="if(!this.value) this.type='text'"
+                        name="careers[${careerCount}].resumeCareerJoinDt">
+                    <input type="text"
+                        placeholder="퇴사연월을 입력하세요"
+                        onfocus="(this.type='month')"
+                        onblur="if(!this.value) this.type='text'"
+                        name="careers[${careerCount}].resumeCareerOutDt">
+                </div>
+                <div class="form-row">
+                    <input type="text" placeholder="회사명" name="careers[${careerCount}].resumeCareerCompanyNm">
+
+                </div>
+                <div class="form-row">
+                <input type="text" placeholder="부서명" name="careers[${careerCount}].resumeCareerDmpt">
+                </div>
+                <div class="form-row">
+                <input type="text" placeholder="직책" name="careers[${careerCount}].resumeCareerPstn">
+                </div>
+                <div class="form-row">
+                <input type="text" placeholder="담당업무" name="careers[${careerCount}].resumeCareerDuties">
+                </div>
+
+                <div class="delete-btn-container">
+                    <button type="button" class="delete-career-btn" onclick="deleteForm('career-${careerCount}')">삭제</button>
+                </div>
+            `;
+
+        container.appendChild(form);
+    }
+
+    let certCount = 0;
+    function addCertificateForm() {
+        certCount++;
+        const container = document.getElementById('cert-forms-container');
+        const form = document.createElement('div');
+        form.className = 'form-container';
+        form.id = `certs-${certCount}`;
+
+
+        // 자격증 옵션 동적 생성
+
+
+        const certResults = /*[[${certResults}]]*/ [];
+        let certOptions = '<option value="">합격여부</option>';
+        certResults.forEach(cert => {
+            certOptions += `<option value="${cert.cd}">${cert.cdNm}</option>`;
+        });
+
+
+
+
+        form.innerHTML = `
+                <div class="form-row">
+                    <input type="text" placeholder="자격증명" name="certs[${certCount}].resumeCertsNm">
+                    <input type="text" placeholder="발급기관" name="certs[${certCount}].resumeCertsPlace">
+                </div>
+                <div class="form-row">
+                    <input
+                          type="date"
+                            placeholder="취득일을 입력하세요"
+                            name="certs[${certCount}].resumeCertsDt"
+                            required
+                            onfocus="this.type='date'"
+                            onblur="if(!this.value) this.type='date';"
+                        />
+
+                       <select name="certs[${certCount}].resumeCertsGbnCd">
+                            ${certOptions}
+                       </select>
+                </div>
+                <div class="delete-btn-container">
+                    <button type="button" class="delete-career-btn" onclick="deleteForm('certs-${certCount}')">삭제</button>
+                </div>
+            `;
+
+        container.appendChild(form);
+    }
+
+    let educationCount = 0;
+
+    function addEducationForm() {
+        educationCount++;
+        const container = document.getElementById('education-forms-container');
+        const form = document.createElement('div');
+        form.className = 'form-container';
+        form.id = `education-${educationCount}`;
+
+        const certResults = /*[[${educationLevels}]]*/ [];
+
+
+
+
+        let educationLevel = '<option value="">학력구분</option>';
+        certResults.forEach(level => {
+            educationLevel += `<option value="${level.cd}">${level.cdNm}</option>`;
+        });
+
+        form.innerHTML = `
+                <div class="form-row">
+
+                    <select name="educations[${educationCount}].resumeEducationGbnCd">
+                            ${educationLevel}
+                       </select>
+
+
+                    </select>
+                    <input type="text" placeholder="학교이름" name="educations[${educationCount}].resumeEducationSchoolNm" style="flex: 2;">
+                </div>
+                <div class="form-row">
+                    <input type="text" placeholder="전공" name="educations[${educationCount}].resumeEducationMajor">
+                    <input type="text" placeholder="학점" name="educations[${educationCount}].resumeEducationScore">
+                    <input type="text" placeholder="지역" name="educations[${educationCount}].resumeEducationResion">
+                </div>
+                <div class="form-row">
+                    <input type="text"
+                        placeholder="입학일을 입력하세요"
+                        onfocus="(this.type='date')"
+                        onblur="if(!this.value) this.type='text'"
+                        name="educations[${educationCount}].resumeEducationIndt">
+                    <input type="text"
+                        placeholder="졸업일을 입력하세요"
+                        onfocus="(this.type='date')"
+                        onblur="if(!this.value) this.type='text'"
+                        name="educations[${educationCount}].resumeEducationOutdt">
+                </div>
+                <div class="form-row">
+                    <select name="educations[${educationCount}].resumeEducationTransferYn">
+                        <option value="">편입여부</option>
+                        <option value="Y">예</option>
+                        <option value="N">아니오</option>
+                    </select>
+                </div>
+                <div class="delete-btn-container">
+                    <button type="button" class="delete-career-btn" onclick="deleteForm('education-${educationCount}')">삭제</button>
+                </div>
+            `;
+
+        container.appendChild(form);
+    }
+
+    // 포트폴리오와 기술스택 카운터 초기화
+    let portfolioCount = 0;
+    let skillCount = 0;
+
+    // 공통 삭제 함수
+    function deleteForm(id) {
+        const formToDelete = document.getElementById(id);
+        if (formToDelete) {
+            formToDelete.remove();
+        }
+    }
+
+    // 포트폴리오 폼 추가
+    //     function addPortfolioForm() {
+    //         portfolioCount++;
+    //         const container = document.getElementById('portfolio-forms-container');
+    //         const form = document.createElement('div');
+    //         form.className = 'form-container';
+    //         form.id = `portfolio-${portfolioCount}`;
+    //
+    //         form.innerHTML = `
+    //                 <div class="form-row">
+    //
+    //                     <input type="number" placeholder="작업인원수" name="prtfs[${educationCount}].resumePrtfCnt" style="flex: 1;">
+    //                 </div>
+    //                 <div class="form-row">
+    //                     <input type="text"
+    //                         placeholder="시작날짜"
+    //                         onfocus="(this.type='date')"
+    //                         onblur="if(!this.value) this.type='text'"
+    //                         name="prtfs[${educationCount}].resumePrtfStrDate">
+    //                     <input type="text"
+    //                         placeholder="종료날짜"
+    //                         onfocus="(this.type='date')"
+    //                         onblur="if(!this.value) this.type='text'"
+    //                         name="prtfs[${educationCount}].resumePrtfEndDate">
+    //                 </div>
+    // <!--                경림이 수정함-->
+    //                 <div class="form-row">
+    //                     <input type="file" name="prtfs[${portfolioCount}].resumePrtfFile">
+    //                 </div>
+    // <!--                경림이 수정 끝-->
+    //                 <div class="form-row">
+    //                     <input type="url" placeholder="URL (선택사항)" name="prtfs[${educationCount}].resumePrtfUrl" style="width: 100%;">
+    //                 </div>
+    //                 <div class="form-row">
+    //                     <textarea placeholder="작업내용" name="prtfs[${educationCount}].resumePrtfContent"
+    //                         style="width: 100%; min-height: 100px;"></textarea>
+    //                 </div>
+    //                 <div class="delete-btn-container">
+    //                     <button type="button" class="delete-career-btn" onclick="deleteForm('portfolio-${portfolioCount}')">삭제</button>
+    //                 </div>
+    //             `;
+    //
+    //         container.appendChild(form);
+    //     }
+
+
+
+
+    // 자기소개 폼 추가
+    let selfIntroCount = 0;
+    function addSelfIntroForm() {
+        selfIntroCount++;
+        const container = document.getElementById('self-intro-forms-container');
+        const form = document.createElement('div');
+        form.className = 'form-container';
+        form.id = `self-intro-${selfIntroCount}`;
+
+        form.innerHTML = `
+                <div class="form-row">
+                    <input type="text" placeholder="자기소개 제목" name="introduces[${selfIntroCount}].resumeIntroduceTitle" style="width: 100%;">
+                </div>
+                <div class="form-row">
+                    <textarea placeholder="자기소개 내용" name="introduces[${selfIntroCount}].resumeIntroduceContent"
+                        style="width: 100%; min-height: 150px;"></textarea>
+                </div>
+                <div class="delete-btn-container">
+                    <button type="button" class="delete-career-btn" onclick="deleteForm('self-intro-${selfIntroCount}')">삭제</button>
+                </div>
+            `;
+
+        container.appendChild(form);
+    }
+
+    // 우대사항 폼 추가
+    let preferenceCount = 0;
+    function addPreferenceForm() {
+        preferenceCount++;
+        const container = document.getElementById('preference-forms-container');
+        const form = document.createElement('div');
+        form.className = 'form-container';
+        form.id = `preference-${preferenceCount}`;
+
+        form.innerHTML = `
+                <div class="form-row">
+                    <textarea placeholder="우대사항 내용" name="loyalties[${preferenceCount}].resumeLoyaltyDetail"
+                        style="width: 100%; min-height: 100px;"></textarea>
+                </div>
+                <div class="delete-btn-container">
+                    <button type="button" class="delete-career-btn" onclick="deleteForm('preference-${preferenceCount}')">삭제</button>
+                </div>
+            `;
+
+        container.appendChild(form);
+    }
+
+    // 병역사항 폼 추가
+    let militaryCount = 0;
+    function addMilitaryForm() {
+        militaryCount++;
+        const container = document.getElementById('military-forms-container');
+        const form = document.createElement('div');
+        form.className = 'form-container';
+        form.id = `military-${militaryCount}`;
+
+        //병역구분코드
+        const militaryStatus = /*[[${militaryStatus}]]*/ [];
+        let mStatusOption = '<option value="">병역구분</option>';
+        militaryStatus.forEach(mStatus => {
+            mStatusOption += `<option value="${mStatus.cd}">${mStatus.cdNm}</option>`;
+        });
+
+        //계급구분코드
+        const militaryRank = /*[[${militaryRank}]]*/ [];
+        let mRankOption = '<option value="">계급</option>';
+        militaryRank.forEach(mRank => {
+            mRankOption += `<option value="${mRank.cd}">${mRank.cdNm}</option>`;
+        });
+
+        //군별구분코드
+        const militaryType = /*[[${militaryType}]]*/ [];
+        let mTypeOption = '<option value="">군별</option>';
+        militaryType.forEach(mType => {
+            mTypeOption += `<option value="${mType.cd}">${mType.cdNm}</option>`;
+        });
+
+        //전역구분코드
+        const militaryFinish = /*[[${militaryFinish}]]*/ [];
+        let mFinishOption = '<option value="">전역형태</option>';
+        militaryFinish.forEach(mFinish => {
+            mFinishOption += `<option value="${mFinish.cd}">${mFinish.cdNm}</option>`;
+        });
+
+
+        form.innerHTML = `
+                <div class="form-row">
+                    <select name="militaries[${militaryCount}].resumeMilitaryGbnCd">
+                         ${mStatusOption}
+                    </select>
+                   <select name="militaries[${militaryCount}].resumeMilitaryRankGbnCd">
+                         ${mRankOption}
+                    </select>
+                </div>
+                <div class="form-row">
+                    <select name="militaries[${militaryCount}].resumeMilitaryTypeGbnCd">
+                         ${mTypeOption}
+                    </select>
+                    <select name="militaries[${militaryCount}].resumeMilitaryFinishGbnCd">
+                         ${mFinishOption}
+                    </select>
+                </div>
+                <div class="form-row">
+                    <input type="text"
+                        placeholder="입대일자를 입력하세요"
+                        onfocus="(this.type='date')"
+                        onblur="if(!this.value) this.type='text'"
+                        name="militaries[${militaryCount}].resumeMilitaryStrDate">
+                    <input type="text"
+                        placeholder="전역일자를 입력하세요"
+                        onfocus="(this.type='date')"
+                        onblur="if(!this.value) this.type='text'"
+                        name="militaries[${militaryCount}].resumeMilitaryEndDate">
+                </div>
+                <div class="delete-btn-container">
+                    <button type="button" class="delete-career-btn" onclick="deleteForm('military-${militaryCount}')">삭제</button>
+                </div>
+            `;
+
+        container.appendChild(form);
+    }
+
+
+
+
+
+
+
+
+
+    // 포폴 모달 열기
+    function openPortfolioModal() {
+        document.getElementById("portfolio-modal").style.display = "block";
+    }
+
+    // 모달 닫기
+    function closePortfolioModal() {
+        document.getElementById("portfolio-modal").style.display = "none";
+    }
+
+    // 업로드 형태에 따라 필드 표시 전환
+    function toggleUploadField() {
+        const uploadType = document.getElementById("uploadType").value;
+        const resumePrtfFile = document.getElementById("resumePrtfFile");
+        const resumePrtfUrl = document.getElementById("resumePrtfUrl");
+
+        if (uploadType === "file") {
+            resumePrtfFile.style.display = "block";
+            resumePrtfUrl.style.display = "none";
+        } else {
+            resumePrtfFile.style.display = "none";
+            resumePrtfUrl.style.display = "block";
+        }
+    }
+
+
+    let prtfCount = 0;
+    function savePortfolio() {
+        const uploadType = document.getElementById("uploadType").value;
+        const resumePrtfUrl = document.getElementById("resumePrtfUrl").value;
+        const resumePrtfFile = document.getElementById("resumePrtfFile").files[0];
+        const resumePrtfStrDate = document.getElementById("resumePrtfStrDate").value;
+        const resumePrtfEndDate = document.getElementById("resumePrtfEndDate").value;
+        const resumePrtfCnt = document.getElementById("resumePrtfCnt").value;
+        const resumePrtfContent = document.getElementById("resumePrtfContent").value;
+
+
+
+        prtfCount++;
+        const container = document.getElementById("portfolio-forms-container");
+        const entry = document.createElement("div");
+        entry.className = "form-container portfolio-entry"; // form-container 클래스 추가
+        entry.id = `portfolio-${prtfCount}`; // 고유 ID 추가
+
+
+        entry.innerHTML = `
+        <div class="form-row">
+            <input type="hidden" name="prtfs[${prtfCount}].resumePrtfCnt" value="${resumePrtfCnt}">
+            <input type="hidden" name="prtfs[${prtfCount}].resumePrtfStrDate" value="${resumePrtfStrDate}">
+            <input type="hidden" name="prtfs[${prtfCount}].resumePrtfEndDate" value="${resumePrtfEndDate}">
+            <input type="hidden" name="prtfs[${prtfCount}].resumePrtfUrl" value="${resumePrtfUrl}">
+            <textarea name="prtfs[${prtfCount}].resumePrtfContent" style="display: none;">${resumePrtfContent}</textarea>
+        </div>
+        <p>${uploadType === "url" ? "URL: " + resumePrtfUrl : "파일: " + (resumePrtfFile ? resumePrtfFile.name : "없음")}</p>
+        <p>작업 기간: ${resumePrtfStrDate} ~ ${resumePrtfEndDate}</p>
+        <p>작업 인원: ${resumePrtfCnt}명</p>
+        <p>작업 내용: ${resumePrtfContent}</p>
+        <div class="delete-btn-container">
+            <button type="button" class="delete-career-btn" onclick="deleteForm('portfolio-${prtfCount}')">삭제</button>
+        </div>
+    `;
+
+        container.appendChild(entry);
+        closePortfolioModal();
+    }
+
+
+
+
+
+    //----------------axios 전송--------------------
+    function submitFormData() {
+
+
+        // 전체 데이터를 수집할 객체
+        const resumeData = {
+            personalInfo: {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                area: document.getElementById('area').value,
+            },
+            actives: [],
+            careers: [],
+            certs: [],
+            educations: [],
+            introduces: [],
+            loyalties: [],
+            militaries: [],
+            prtfs: [],
+            stacks: [],
+        };
+
+        //활동사항 수집
+        document.querySelectorAll('#active-forms-container .form-container').forEach((form, index) => {
+            // FormData에 직접 추가
+            formData.append(`actives[${index}].resumeActiveStrDate`, form.querySelector(`input[name="actives[${index + 1}].resumeActiveStrDate"]`).value);
+            formData.append(`actives[${index}].resumeActiveEndDate`, form.querySelector(`input[name="actives[${index + 1}].resumeActiveEndDate"]`).value);
+            formData.append(`actives[${index}].resumeActiveDetail`, form.querySelector(`textarea[name="actives[${index + 1}].resumeActiveDetail"]`).value);
+        });
+
+// 경력사항 수집
+        document.querySelectorAll('#career-forms-container .form-container').forEach((form, index) => {
+            formData.append(`careers[${index}].resumeCareerJoinDt`, form.querySelector(`input[name="careers[${index + 1}].resumeCareerJoinDt"]`).value);
+            formData.append(`careers[${index}].resumeCareerOutDt`, form.querySelector(`input[name="careers[${index + 1}].resumeCareerOutDt"]`).value);
+            formData.append(`careers[${index}].resumeCareerCompanyNm`, form.querySelector(`input[name="careers[${index + 1}].resumeCareerCompanyNm"]`).value);
+            formData.append(`careers[${index}].resumeCareerDmpt`, form.querySelector(`input[name="careers[${index + 1}].resumeCareerDmpt"]`).value);
+            formData.append(`careers[${index}].resumeCareerPstn`, form.querySelector(`input[name="careers[${index + 1}].resumeCareerPstn"]`).value);
+            formData.append(`careers[${index}].resumeCareerDuties`, form.querySelector(`input[name="careers[${index + 1}].resumeCareerDuties"]`).value);
+        });
+
+// 자격증 수집
+        document.querySelectorAll('#cert-forms-container .form-container').forEach((form, index) => {
+            formData.append(`certs[${index}].resumeCertsNm`, form.querySelector(`input[name="certs[${index + 1}].resumeCertsNm"]`).value);
+            formData.append(`certs[${index}].resumeCertsPlace`, form.querySelector(`input[name="certs[${index + 1}].resumeCertsPlace"]`).value);
+            formData.append(`certs[${index}].resumeCertsDt`, form.querySelector(`input[name="certs[${index + 1}].resumeCertsDt"]`).value);
+            formData.append(`certs[${index}].resumeCertsGbnCd`, form.querySelector(`select[name="certs[${index + 1}].resumeCertsGbnCd"]`).value);
+        });
+
+// 학력사항 수집
+        document.querySelectorAll('#education-forms-container .form-container').forEach((form, index) => {
+            formData.append(`educations[${index}].resumeEducationGbnCd`, form.querySelector(`select[name="educations[${index + 1}].resumeEducationGbnCd"]`).value);
+            formData.append(`educations[${index}].resumeEducationSchoolNm`, form.querySelector(`input[name="educations[${index + 1}].resumeEducationSchoolNm"]`).value);
+            formData.append(`educations[${index}].resumeEducationMajor`, form.querySelector(`input[name="educations[${index + 1}].resumeEducationMajor"]`).value);
+            formData.append(`educations[${index}].resumeEducationScore`, form.querySelector(`input[name="educations[${index + 1}].resumeEducationScore"]`).value);
+            formData.append(`educations[${index}].resumeEducationResion`, form.querySelector(`input[name="educations[${index + 1}].resumeEducationResion"]`).value);
+            formData.append(`educations[${index}].resumeEducationIndt`, form.querySelector(`input[name="educations[${index + 1}].resumeEducationIndt"]`).value);
+            formData.append(`educations[${index}].resumeEducationOutdt`, form.querySelector(`input[name="educations[${index + 1}].resumeEducationOutdt"]`).value);
+            formData.append(`educations[${index}].resumeEducationTransferYn`, form.querySelector(`select[name="educations[${index + 1}].resumeEducationTransferYn"]`).value);
+        });
+
+// 자기소개 수집
+        document.querySelectorAll('#self-intro-forms-container .form-container').forEach((form, index) => {
+            formData.append(`introduces[${index}].resumeIntroduceTitle`, form.querySelector(`input[name="introduces[${index + 1}].resumeIntroduceTitle"]`).value);
+            formData.append(`introduces[${index}].resumeIntroduceContent`, form.querySelector(`textarea[name="introduces[${index + 1}].resumeIntroduceContent"]`).value);
+        });
+
+// 우대사항 수집
+        document.querySelectorAll('#preference-forms-container .form-container').forEach((form, index) => {
+            formData.append(`loyalties[${index}].resumeLoyaltyDetail`, form.querySelector(`textarea[name="loyalties[${index + 1}].resumeLoyaltyDetail"]`).value);
+        });
+
+// 병역사항 수집
+        document.querySelectorAll('#military-forms-container .form-container').forEach((form, index) => {
+            formData.append(`militaries[${index}].resumeMilitaryGbnCd`, form.querySelector(`select[name="militaries[${index + 1}].resumeMilitaryGbnCd"]`).value);
+            formData.append(`militaries[${index}].resumeMilitaryRankGbnCd`, form.querySelector(`select[name="militaries[${index + 1}].resumeMilitaryRankGbnCd"]`).value);
+            formData.append(`militaries[${index}].resumeMilitaryTypeGbnCd`, form.querySelector(`select[name="militaries[${index + 1}].resumeMilitaryTypeGbnCd"]`).value);
+            formData.append(`militaries[${index}].resumeMilitaryFinishGbnCd`, form.querySelector(`select[name="militaries[${index + 1}].resumeMilitaryFinishGbnCd"]`).value);
+            formData.append(`militaries[${index}].resumeMilitaryStrDate`, form.querySelector(`input[name="militaries[${index + 1}].resumeMilitaryStrDate"]`).value);
+            formData.append(`militaries[${index}].resumeMilitaryEndDate`, form.querySelector(`input[name="militaries[${index + 1}].resumeMilitaryEndDate"]`).value);
+        });
+
+
+
+        // 포트폴리오 수집
+        document.querySelectorAll('#portfolio-forms-container .form-container').forEach((form, index) => {
+            // const fileInput = form.querySelector('input[type="file"]');
+
+            let fileTest = document.getElementById("resumePrtfFile").files[0]
+
+            const resumePrtfFile = fileTest ? fileTest : null;
+            console.log(resumePrtfFile);
+            // const resumePrtfFile = fileInput ? fileTest : null;
+
+
+            formData.append(`prtfs[${index}].resumePrtfCnt`, form.querySelector(`input[name="prtfs[${index + 1}].resumePrtfCnt"]`).value);
+            formData.append(`prtfs[${index}].resumePrtfStrDate`, form.querySelector(`input[name="prtfs[${index + 1}].resumePrtfStrDate"]`).value);
+            formData.append(`prtfs[${index}].resumePrtfEndDate`, form.querySelector(`input[name="prtfs[${index + 1}].resumePrtfEndDate"]`).value);
+            formData.append(`prtfs[${index}].resumePrtfUrl`, form.querySelector(`input[name="prtfs[${index + 1}].resumePrtfUrl"]`).value);
+            formData.append(`prtfs[${index}].resumePrtfContent`, form.querySelector(`textarea[name="prtfs[${index + 1}].resumePrtfContent"]`).value);
+
+            // 파일이 있는 경우 추가
+            if (resumePrtfFile) {
+                formData.append(`prtfs[${index}].resumePrtfFile`, resumePrtfFile);
+            }
+        });
+
+// 기술스택 수집
+        document.querySelectorAll('#selected-stacks .selected-stack-btn').forEach((button, index) => {
+            formData.append(`stacks[${index}].stackCd`, button.value); // 기술 코드
+            formData.append(`stacks[${index}].stackName`, button.textContent); // 기술 이름
+        });
+
+
+
+
+
+        const resumeTitle = document.getElementById('resume-title').value;
+        formData.append('basicInfo.resumeTitle',resumeTitle);
+
+        const area = document.getElementById('resume-title').value;
+        formData.append('basicInfo.resumeArea',area);
+        //-------------이력서 증명사진-----------------
+        const profilePhoto = document.getElementById('photo-input').files[0];
+        if (profilePhoto) {
+            formData.append('basicInfo.resumeProfile', profilePhoto);
+        }
+
+
+
+        axios.post('http://localhost:8080/resume/regProc2', formData)
+            .then(response => {
+                console.log('데이터 전송 성공:', response.data);
+                alert('이력서가 성공적으로 저장되었습니다.');
+            })
+            .catch(error => {
+                console.error('데이터 전송 오류:', error);
+                alert('데이터 저장 중 문제가 발생했습니다.');
+            });
+    }
+
+
+
+</script>
+</body>
+</html>
+
