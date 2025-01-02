@@ -4,9 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.company.CompanyDto;
+import org.green.backend.dto.company.ResponseCompanyDto;
 import org.green.backend.service.company.CompanyService;
 import org.green.backend.utils.CookieUtil;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.backend.controller
@@ -43,5 +46,19 @@ public class CompanyController {
         String token = request.getHeader("Authorization");
 
         return companyService.getCompany(token);
+    }
+
+    @GetMapping("/company-info/{companyId}")
+    public ResponseCompanyDto companyInfoDetail(@PathVariable String companyId,
+                                                HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization");
+
+        return companyService.companyInfo(companyId, token);
+    }
+
+    @GetMapping("/company-info/extra/{companyId}")
+    public Map<String, Object> companyInfoExtraDetail(@PathVariable String companyId) {
+        return companyService.companyExtraInfo(companyId);
     }
 }

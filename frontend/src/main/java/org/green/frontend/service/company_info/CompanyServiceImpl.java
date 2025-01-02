@@ -2,6 +2,7 @@ package org.green.frontend.service.company_info;
 
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.company.CompanyDto;
+import org.green.frontend.dto.company.ResponseCompanyDto;
 import org.green.frontend.global.common.ApiResponse;
 import org.green.frontend.utils.WebClientUtil;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,13 @@ public class CompanyServiceImpl implements CompanyService {
 
         ApiResponse<CompanyDto> response = webClientUtil.getApi("/api/v1/company-info/edit", CompanyDto.class);
 //뒤에꺼 매개변수에 (url,반환타입)
+        return response.getBody();
+    }
+
+    @Override
+    public ResponseCompanyDto companyInfo(String companyId) throws Exception {
+        ApiResponse<ResponseCompanyDto> response = webClientUtil.getApi("/api/v1/company-info/" + companyId, ResponseCompanyDto.class);
+
         return response.getBody();
     }
 }

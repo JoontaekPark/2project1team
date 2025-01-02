@@ -1,6 +1,9 @@
 package org.green.backend.service.company;
 
 import org.green.backend.dto.company.CompanyDto;
+import org.green.backend.dto.company.ResponseCompanyDto;
+
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.backend.service.company
@@ -19,8 +22,11 @@ public interface CompanyService {
 
     public CompanyDto getCompany(String token);
 
+    public ResponseCompanyDto companyInfo(String companyId, String token);
+
     public void save(CompanyDto company);
 
     public void update(CompanyDto company, String token);
 
+    public Map<String, Object> companyExtraInfo(String companyId);
 }
