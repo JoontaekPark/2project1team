@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="org.green.backend.repository.dao.CompanyDao">
     <insert id="save">
         INSERT INTO tbl_company (
@@ -124,6 +124,69 @@
                 company_detail
         FROM tbl_company
         WHERE id = #{id}
+    </select>
+
+    <select id="companyInfo" resultType="org.green.backend.dto.company.ResponseCompanyDto">
+
+        SELECT  a.id,
+                a.`name`,
+                a.birth,
+                a.email,
+                a.phone,
+                a.zip_cd,
+                a.addr,
+                a.addr_detail,
+                b.ceo_name,
+                b.homepage,
+                b.company_type_cd,
+                c.cd_nm AS company_type_nm,
+                b.company_industry,
+                b.company_detail,
+                d.file_new_name,
+                d.file_old_name,
+                d.file_ext,
+                d.file_url,
+                COUNT(DISTINCT e.inst_id) AS like_cnt,
+                SUM(CASE
+                        WHEN e.inst_id = #{id} THEN 1
+                        ELSE 0
+                    END ) AS like_yn,
+                AVG(g.star) AS star
+        FROM tbl_user a
+        LEFT JOIN tbl_company b ON a.id = b.id
+        LEFT JOIN tbl_codeinfo c ON b.company_type_cd = c.cd AND c.up_cd = 'company_type_cd'
+        LEFT JOIN ( SELECT DISTINCT file_ref_id, file_new_name, file_old_name, file_ext, file_url
+                    FROM tbl_file
+                    WHERE file_gbn_cd = '10') d ON a.id = d.file_ref_id
+        LEFT JOIN ( SELECT target, inst_id
+                    FROM tbl_like
+                    WHERE like_gbn_cd = '10') e ON a.id = e.target
+        LEFT JOIN tbl_job_notice f ON a.id = f.inst_id
+        LEFT JOIN tbl_star g ON f.job_notice_num = g.job_notice_num
+        WHERE a.id = #{companyId}
+        GROUP BY a.id;
+        ;
+
+    </select>
+
+    <select id="jobNotices" resultType="org.green.backend.dto.company.ResponseJobNoticeDto">
+        SELECT  a.job_notice_num,
+                a.job_notice_title,
+                a.job_notice_area,
+                a.job_notice_career_gbn_cd,
+                b.cd_nm AS 'job_notice_career_gbn_nm',
+                DATEDIFF(a.job_notice_end_date, NOW()) AS left_dt,
+                IFNULL(c.file_new_name, '') AS 'file_new_name',
+                IFNULL(c.file_old_name, '') AS 'file_old_name',
+                IFNULL(c.file_ext, '') AS 'file_ext',
+                IFNULL(c.file_url, '') AS 'file_url'
+        FROM tbl_job_notice a
+        LEFT JOIN tbl_codeinfo b ON a.job_notice_career_gbn_cd = b.cd AND b.up_cd = 'job_notice_career_gbn_cd'
+        LEFT JOIN tbl_file c ON a.job_notice_num = c.file_ref_id AND c.file_gbn_cd = '40'
+        WHERE a.inst_id = #{companyId}
+        AND a.job_notice_end_date >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+        GROUP BY a.job_notice_num
+        ORDER BY a.job_notice_num
     </select>
 
 </mapper>

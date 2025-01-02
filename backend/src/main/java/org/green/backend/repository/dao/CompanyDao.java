@@ -2,10 +2,7 @@ package org.green.backend.repository.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.green.backend.dto.company.CompanyDto;
-import org.green.backend.dto.company.EmployeeDto;
-import org.green.backend.dto.company.HistoryDto;
-import org.green.backend.dto.company.RevenusDto;
+import org.green.backend.dto.company.*;
 
 import java.util.List;
 
@@ -29,6 +26,10 @@ public interface CompanyDao {
     public void update(@Param("company") CompanyDto company);
 
     public CompanyDto get(@Param("id") String id);
+
+    public ResponseCompanyDto companyInfo(@Param("companyId") String companyId, @Param("id") String id);
+
+    public List<ResponseJobNoticeDto> jobNotices(@Param("companyId") String companyId);
 
     public List<RevenusDto> getRevenuses(@Param("id") String id);
 

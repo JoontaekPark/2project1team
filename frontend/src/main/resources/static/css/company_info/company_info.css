@@ -1,0 +1,233 @@
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.header .rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: #777;
+    padding-bottom: 10px;
+}
+
+.header .rating div {
+    height: 100%;
+    border: 1px solid #c5c5c5;
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    border-radius: 10px;
+}
+
+.header .rating span:last-child {
+    margin-left: 10px;
+}
+
+.header .rating span:last-child {
+    margin-left: 10px;
+}
+
+.header .rating .star {
+    color: #ffa500;
+}
+
+.header img {
+    width: 200px;
+    height: 200px;
+    background: #f3f3f3;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+}
+
+.header .info {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.header .info .company-name-wrap{
+    display: flex;
+}
+
+.header .info .company-name-wrap .name-wrap{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    font-size: 0.8rem;
+    justify-content: center;
+    color: #555;
+}
+
+.header .info .company-name-wrap .company-name {
+    display: flex;
+    flex-direction: column;
+}
+
+.header .info .company-name-wrap .name {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.header .info .company-name-wrap .type {
+    color: #555;
+    font-size: 0.7rem;
+}
+
+.header .info p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.header .info a {
+    color: #0066cc;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.description {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 18px;
+    color: #FF0083;
+    margin-bottom: 15px;
+    border-left: 4px solid #FF0083;
+    padding-left: 10px;
+    font-weight: 700;
+}
+
+.job-listings {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.job-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.job-card img {
+    width: 100px;
+    height: 100px;
+    background: #eee;
+    border-radius: 5px;
+}
+
+.job-card .details {
+    height: 100%;
+    flex: 1;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.job-card .details div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.job-card .details div:first-child{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.history {
+    margin-bottom: 30px;
+}
+
+.history .year {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.history .history-item {
+    display: flex;
+    padding-bottom: 10px;
+}
+
+.history span {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.history .list {
+    padding-left: 10px;
+}
+.history .list div{
+    display: flex;
+    padding-bottom: 5px;
+}
+
+.history .month {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.history .text {
+    flex: 1;
+    padding-left: 10px;
+}
+
+.charts {
+    margin-bottom: 30px;
+}
+
+.chart {
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.map {
+    margin-bottom: 20px;
+}
+
+.map img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.map p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+#addrMap{
+    width: 100%;
+    height: 300px;
+}
