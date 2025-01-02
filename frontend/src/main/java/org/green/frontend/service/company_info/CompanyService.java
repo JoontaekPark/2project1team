@@ -1,6 +1,7 @@
 package org.green.frontend.service.company_info;
 
 import org.green.frontend.dto.company.CompanyDto;
+import org.green.frontend.dto.company.ResponseCompanyDto;
 
 /**
  * 패키지명        : org.green.frontend.service.company_info
@@ -17,5 +18,7 @@ import org.green.frontend.dto.company.CompanyDto;
 public interface CompanyService {
 
     public CompanyDto getCompany() throws Exception;
+
+    public ResponseCompanyDto companyInfo(String companyId) throws Exception;
 
 }

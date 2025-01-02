@@ -5,6 +5,7 @@ export class ChartJs {
 
     /**
      * @typedef {Object} Dataset
+     * @property {string} [type='line'] - 생성할 차트의 타입입니다. 기본값은 'line'입니다. bar, line 등..
      * @property {string} label - 데이터셋의 레이블로, 범례와 툴팁에 표시됩니다.
      * @property {number[]} data - 차트에 표시될 데이터 값들의 배열입니다.
      * @property {string} [backgroundColor] - 데이터셋의 배경색을 지정합니다.
@@ -13,6 +14,7 @@ export class ChartJs {
      *
      * {
      *   label: 'Test1',
+     *   type: 'line',
      *   data: [12, 19, 3, 5, 2, 3],
      *   backgroundColor: 'rgba(75, 192, 192, 0.2)',
      *   borderColor: 'rgba(75, 192, 192, 1)',

@@ -226,3 +226,8 @@
     color: #555;
     margin-top: 10px;
 }
+
+#addrMap{
+    width: 100%;
+    height: 300px;
+}

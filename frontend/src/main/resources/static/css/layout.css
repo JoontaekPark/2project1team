@@ -11,7 +11,7 @@
 }
 
 main{
-    min-height: calc(100vh - 350px);
+    min-height: calc(100vh - 210px);
     padding: 50px 0 50px 0;
     width: 100%;
     max-width: 1400px;
