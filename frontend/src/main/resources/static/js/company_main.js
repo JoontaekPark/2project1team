@@ -40,7 +40,7 @@ $(function () {
 
             for (let star of res.body) {
                 if (!datasetsData[star.instDt]) {
-                    datasetsData[star.instDt] = { cnt: 0, value: 0 };
+                    datasetsData[star.instDt] = {cnt: 0, value: 0};
                 }
                 datasetsData[star.instDt].cnt += 1;
                 datasetsData[star.instDt].value =
@@ -67,5 +67,95 @@ $(function () {
             starChart.updateData(labels, datasets);
         })
         .catch(error => console.error(error));
+
+    $(document).on("click", ".job-card", function () {
+        func.jobNoticeClickEvent(this, genderChart, ageChart, applyChart);
+    })
+
+
 });
+
+const func = {
+    jobNoticeClickEvent: (ele, genderChart, ageChart, applyChart) => {
+
+        let jobNoticeNum = ele.dataset.jobnoticenum;
+
+        api.get('/api/v1/company-main/' + jobNoticeNum)
+            .then(res => {
+
+                const result = {
+                    stacks: func.transformToLabelValue(func.countOccurrences(res.body.stack)),
+                    genders: func.transformToLabelValue(func.countOccurrences(res.body.gender)),
+                    ages: func.transformToLabelValue(func.countOccurrences(res.body.age))
+                };
+
+                const datasets = {
+                    stack: [
+                        {
+                            type: 'line',
+                            label: '기술스택',
+                            data: result.stacks.map((stack) => {
+                                return stack.value
+                            }),
+                            borderWidth: 1
+                        },
+                    ],
+                    gender: [
+                        {
+                            label: '성별',
+                            data: result.genders.map((gender) => {
+                                return gender.value
+                            }),
+                            borderWidth: 1
+                        },
+                        
+                    ],
+                    age: [
+                        {
+                            label: '나이',
+                            data: result.ages.map((age) => {
+                                return age.value
+                            }),
+                            borderWidth: 1
+                        },
+                        
+                    ],
+                };
+
+
+                const labels = {
+                    stack: result.stacks.map((stack) => {
+                        return stack.label
+                    }),
+                    gender: result.genders.map((gender) => {
+                        return gender.label
+                    }),
+                    age: result.ages.map((age) => {
+                        return age.label
+                    }),
+                }
+
+                console.log(labels);
+                console.log(datasets);
+
+                genderChart.updateData(labels.gender, datasets.gender);
+                ageChart.updateData(labels.age, datasets.age);
+                applyChart.updateData(labels.stack, datasets.stack);
+
+            })
+            .catch(error => console.error(error));
+    },
+
+    countOccurrences: (array) => {
+        return array.filter(item => item !== null) // Remove null values
+            .reduce((acc, curr) => {
+                acc[curr] = (acc[curr] || 0) + 1;
+                return acc;
+            }, {});
+    },
+
+    transformToLabelValue: (occurrences) => {
+        return Object.entries(occurrences).map(([label, value]) => ({label, value}));
+    }
+}
 

@@ -75,4 +75,9 @@ public class CompanyController {
         String token = cookieUtil.getCookie(request, "Authorization");
         return companyService.getStars(token);
     }
+
+    @GetMapping("/company-main/{jobNoticeNum}")
+    public Map<String, Object> companyMain(@PathVariable("jobNoticeNum") int jobNoticeNum) {
+        return companyService.companyMain(jobNoticeNum);
+    }
 }

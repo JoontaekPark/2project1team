@@ -36,4 +36,6 @@ public interface CompanyService {
     public List<ResponseJobNoticeDto> getJobNotices(String token);
 
     public List<StarDto> getStars(String token);
+
+    public Map<String, Object> companyMain(int jobNoticeNum);
 }
