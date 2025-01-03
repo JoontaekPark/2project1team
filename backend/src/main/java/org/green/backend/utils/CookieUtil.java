@@ -67,4 +67,20 @@ public class CookieUtil {
 
         return null;
     }
+
+    /**
+     * 쿠키 삭제
+     *
+     * @param key key
+     * @return ResponseCookie
+     */
+    public ResponseCookie deleteCookie(String key) {
+        return ResponseCookie.from(key, "")
+                .httpOnly(true)
+                .secure(secure)
+                .sameSite(sameSite)
+                .path("/")
+                .maxAge(0) // 쿠키 삭제
+                .build();
+    }
 }
