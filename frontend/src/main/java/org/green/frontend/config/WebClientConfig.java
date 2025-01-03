@@ -70,7 +70,6 @@ public class WebClientConfig implements WebMvcConfigurer {
         String absolutePath = projectPath + File.separator + "frontend" + File.separator + "uploads" + File.separator;
 
         log.info("File access path configured: file:///{}", absolutePath);
-        System.out.println(absolutePath);
         //클라이언트가 /uploads/ 로 시작하는 URL로 요청할 때 이 핸들러가 동작
         //이 핸들러는 실제 파일시스템의 uploads 폴더로 매핑
         registry.addResourceHandler("/uploads/**")
@@ -79,7 +78,6 @@ public class WebClientConfig implements WebMvcConfigurer {
                 // 첫 번째 /: 프로토콜과 호스트 구분
                 // 두 번째, 세 번째 //: 호스트가 없음을 나타냄 (로컬 파일시스템)
                 .addResourceLocations("file:///" + absolutePath);
-        System.out.println("file:///" + absolutePath);
 
     }
 

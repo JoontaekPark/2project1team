@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.common.FileDto;
 import org.green.backend.dto.common.SignInDto;
+import org.green.backend.dto.common.StarDto;
 import org.green.backend.dto.common.UserDto;
 import org.green.backend.dto.company.CompanyDto;
 import org.green.backend.dto.company.ResponseJobNoticeDto;
@@ -155,6 +156,23 @@ public class UserServicImpl implements UserService {
         result.put("shortJobNotices", shortJobNotices);
 
         return result;
+    }
+
+    @Override
+    public List<ResponseJobNoticeDto> passJobNotice(String token) {
+
+        String id = jwtUtil.getId(token);
+
+        return userDao.passJobNotice(id);
+    }
+
+    @Override
+    public void star(String token, StarDto star) {
+
+        String id = jwtUtil.getId(token);
+        star.setId(id);
+
+        userDao.insertStar(star);
     }
 
 }

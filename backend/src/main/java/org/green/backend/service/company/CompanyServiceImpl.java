@@ -46,7 +46,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public ResponseCompanyDto companyInfo(String companyId, String token) {
 
-        String id = jwtUtil.getId(token);
+        String id = "";
+
+        if (token != null) {
+            id = jwtUtil.getId(token);
+        }
 
         ResponseCompanyDto company = companyDao.companyInfo(companyId, id);
         company.setHistories(companyDao.getHistories(companyId));
