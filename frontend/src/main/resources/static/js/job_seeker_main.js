@@ -1,4 +1,4 @@
-import {api, utills} from '/static/js/common/module/common_module.js';
+import {api, utills, sessionStorage} from '/static/js/common/module/common_module.js';
 import {ChartJsApi} from "/static/js/class/ChartJs.js";
 import {SwiperApi} from "/static/js/class/SwiperApi.js";
 
@@ -16,7 +16,26 @@ $(function () {
         loop: true
     });
 
+    $(document).on("click", ".bookmark", function () {
 
+        let param = {
+            target: this.closest(".job-card").dataset.jobnoticenum,
+            likeGbnCd: "30",
+            likedStatus: this.classList.contains("on"),
+        }
+
+        if (confirm(param.likedStatus ? "채용공고를 스크랩 취소 하시겠습니까?" : "채용공고를 스크랩 하시겠습니까?")) {
+
+            api.post("/api/v1/like", param)
+                .then(data => {
+                    location.reload();
+                })
+                .catch(error => console.error(error));
+
+        }
+
+
+    });
 
 
 });

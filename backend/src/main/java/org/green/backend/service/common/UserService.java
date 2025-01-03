@@ -4,6 +4,7 @@ import org.green.backend.dto.common.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.backend.service.common
@@ -28,5 +29,7 @@ public interface UserService {
     int checkPw(String token, String password);
 
     UserDto userInfo(String id) throws Exception;
+
+    Map<String, Object> userMain(String token) throws Exception;
 
 }

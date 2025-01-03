@@ -9,6 +9,7 @@ import org.green.backend.utils.CookieUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.backend.controller.common
@@ -59,6 +60,12 @@ public class UserController {
 
         System.out.println(user);
         return userService.edit(user, fileChk);
+    }
+
+    @GetMapping("/api/v1/user-main")
+    public Map<String, Object> userInfoMain(HttpServletRequest request) throws Exception {
+        String token = request.getHeader("Authorization");
+        return userService.userMain(token);
     }
 
 }

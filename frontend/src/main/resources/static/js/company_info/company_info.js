@@ -76,6 +76,54 @@ $(function () {
         })
         .catch(error => console.error(error));
 
+    $(document).on("click", ".bookmark", function () {
+
+        let param = {
+            target: this.closest(".job-card").dataset.jobnoticenum,
+            likeGbnCd: "30",
+            likedStatus: this.classList.contains("on"),
+        }
+
+        if (confirm(param.likedStatus ? "채용공고를 스크랩 취소 하시겠습니까?" : "채용공고를 스크랩 하시겠습니까?")) {
+
+            api.post("/api/v1/like", param)
+                .then(data => {
+                    location.reload();
+                })
+                .catch(error => console.error(error));
+
+        }
+
+
+    });
+
+    $(document).on("click", ".fa-heart", function () {
+
+        let param = {
+            target: document.querySelector("input[name=companyId]").value,
+            likeGbnCd: "10",
+            likedStatus: this.classList.contains("fas"),
+        }
+
+        if (confirm(param.likedStatus ? "관심기업을 취소 하시겠습니까?" : "관심기업을 등록 하시겠습니까?")) {
+
+            api.post("/api/v1/like", param)
+                .then(data => {
+                    location.reload();
+                })
+                .catch(error => console.error(error));
+
+        }
+    })
+
+    $(document).on("click", ".modal-close-btn", function (){
+        document.querySelector(".modal-container").classList.remove("on");
+    });
+
+    document.querySelector(".star").parentElement.addEventListener("click", function (){
+        document.querySelector(".modal-container").classList.add("on");
+    })
+
 });
 
 const func = {}

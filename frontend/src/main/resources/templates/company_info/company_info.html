@@ -9,6 +9,96 @@
     </head>
     <body>
         <main layout:fragment="content">
+            <div class="modal-container">
+                <div class="modal-step-one modal-wrap">
+                    <div class="modal-title">
+                        합격한 내 채용공고
+                    </div>
+                    <div class="modal-content">
+                        <div class="modal-notice-item">
+                            <div class="img">
+                                <img src="/static/img/default_image.png">
+                            </div>
+                            <div class="detail">
+                                <div class="data">제목</div>
+                                <div class="data">
+                                    <div>신입 . 경력</div>
+                                    <div>D-20</div>
+                                </div>
+                                <div class="data">주소</div>
+                            </div>
+                        </div>
+                        <div class="modal-notice-item">
+                            <div class="img">
+                                <img src="/static/img/default_image.png">
+                            </div>
+                            <div class="detail">
+                                <div class="data">제목</div>
+                                <div class="data">
+                                    <div>신입 . 경력</div>
+                                    <div>D-20</div>
+                                </div>
+                                <div class="data">주소</div>
+                            </div>
+                        </div>
+                        <div class="modal-notice-item">
+                            <div class="img">
+                                <img src="/static/img/default_image.png">
+                            </div>
+                            <div class="detail">
+                                <div class="data">제목</div>
+                                <div class="data">
+                                    <div>신입 . 경력</div>
+                                    <div>D-20</div>
+                                </div>
+                                <div class="data">주소</div>
+                            </div>
+                        </div>
+                        <div class="modal-notice-item">
+                            <div class="img">
+                                <img src="/static/img/default_image.png">
+                            </div>
+                            <div class="detail">
+                                <div class="data">제목</div>
+                                <div class="data">
+                                    <div>신입 . 경력</div>
+                                    <div>D-20</div>
+                                </div>
+                                <div class="data">주소</div>
+                            </div>
+                        </div>
+                        <div class="modal-notice-item">
+                            <div class="img">
+                                <img src="/static/img/default_image.png">
+                            </div>
+                            <div class="detail">
+                                <div class="data">제목</div>
+                                <div class="data">
+                                    <div>신입 . 경력</div>
+                                    <div>D-20</div>
+                                </div>
+                                <div class="data">주소</div>
+                            </div>
+                        </div>
+                        <div class="modal-notice-item">
+                            <div class="img">
+                                <img src="/static/img/default_image.png">
+                            </div>
+                            <div class="detail">
+                                <div class="data">제목</div>
+                                <div class="data">
+                                    <div>신입 . 경력</div>
+                                    <div>D-20</div>
+                                </div>
+                                <div class="data">주소</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-btn">
+                        <button class="modal-close-btn">취소</button>
+                    </div>
+                </div>
+            </div>
             <input type="hidden" th:value="${companyInfo.id}" name="companyId">
             <div class="container">
                 <!-- Header Section -->
@@ -20,7 +110,7 @@
                                 <span th:text="${companyInfo.star}">3</span>
                             </div>
                             <div>
-                                <span th:value="${companyInfo.likeYn > 0 ? '♥' : '♡'}">♥</span>
+                                <span ><i th:class="${(companyInfo.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"></i></span>
                                 <span th:text="${companyInfo.likeCnt}">99+</span>
                             </div>
                         </div>
@@ -58,7 +148,7 @@
                     <div class="section-title">채용중인 공고</div>
                     <div class="job-listings">
                         <th:block th:each="jobNotice : ${companyInfo.jobNotices}">
-                            <div class="job-card">
+                            <div class="job-card" th:attr="data-jobNoticeNum=${jobNotice.jobNoticeNum}">
                                                                 <img alt="Job Icon"
                                                                      th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"
                                                                 onerror="this.src='/static/img/default_image.png'">
@@ -71,7 +161,7 @@
                                     </div>
                                     <div th:text="${jobNotice.jobNoticeArea}">부산광역시 부산진구 중앙대로 749</div>
                                 </div>
-                                <span>★</span>
+                                <span th:class="${'bookmark ' + (jobNotice.likeYn > 0 ? 'on' : '')}"></span>
                             </div>
                         </th:block>
                     </div>
@@ -138,6 +228,7 @@
                     <p th:text="${'(' + companyInfo.zipCd + ') ' + companyInfo.addr + ' ' + companyInfo.addrDetail}">서울특별시 서초구 강남대로407, 13층(오퍼스407)</p>
                 </div>
             </div>
+
         </main>
     </body>
 </html>
