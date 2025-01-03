@@ -42,4 +42,7 @@ public interface ResumeService {
     //이력서 작성한 유저정보 들고오기
     public UserDto getResumeUser(String instId);
 
+    //로그인한 유저의 이력서 리스트 들고오기
+    public List<ResumeDto> getResumeList(String instId);
+
 }

@@ -66,7 +66,8 @@ public interface ResumeDao {
     //이력서 작성한 유저정보 들고오기
     public UserDto getResumeUser(String instId);
 
-
+    //로그인 되있는 이력서 리스트 들고오기
+    public List<ResumeDto> getResumeList(String instId);
 
 }
 

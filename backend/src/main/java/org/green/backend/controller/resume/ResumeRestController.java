@@ -327,6 +327,13 @@ public class ResumeRestController {
     }
 
 
+    @GetMapping("getResumeList")
+    public List<ResumeDto> getResumeList(HttpServletRequest request,@RequestParam String instId) throws Exception{
+        List<ResumeDto> resumes = resumeService.getResumeList(instId);
+        return resumes;
+    }
+
+
 
 
     @GetMapping("getCodeInfo")

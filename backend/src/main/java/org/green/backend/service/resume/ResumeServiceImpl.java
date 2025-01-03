@@ -151,6 +151,12 @@ public class ResumeServiceImpl implements ResumeService {
         return user;
     }
 
+    @Override
+    public List<ResumeDto> getResumeList(String instId) {
+        List<ResumeDto> resumes = resumeDao.getResumeList(instId);
+        return resumes;
+    }
+
 //    @Override
 //    public FileDto getResumeFilePhoto(int resumeId) {
 //        FileDto resumePhoto = resumeDao.getResumeFilePhoto(resumeId);

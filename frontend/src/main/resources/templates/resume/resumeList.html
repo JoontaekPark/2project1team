@@ -6,7 +6,7 @@
     <title>이력서 리스트</title>
     <link rel="stylesheet" href="/static/css/layout.css">
     <style>
-        /* 기존 CSS 유지 */
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -15,7 +15,7 @@
         }
 
         .content {
-            margin-left: 200px; /* Adjust to match your sidebar width */
+            margin-left: 200px;
             padding: 20px;
         }
 
@@ -58,6 +58,19 @@
             color: gold;
         }
 
+        .star {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .main-resume {
+            color: gold; /* 대표 이력서 선택 시 색상 */
+        }
+
+        .non-main-resume {
+            color: gray; /* 비대표 이력서 색상 */
+        }
+
         .resume-card .new-resume {
             font-size: 16px;
             font-weight: bold;
@@ -80,13 +93,49 @@
                 width: 100%;
             }
         }
+        .resumeSetting {
+            position: absolute;
+            top: 65px;
+            right: 10px;
+            cursor: pointer;
+            display: flex
+        ;
+            flex-direction: column;
+        }
+        .dot {
+            font-size: 16px;
+            line-height: 7px;
+        }
+        .menu {
+            position: absolute;
+            top: 0;
+            right: 40px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ddd;
+            padding: 10px;
+            display: none;
+            z-index: 10;
+        }
+
+        .menu button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .menu button:hover {
+            background-color: #e1e1e1;
+        }
     </style>
 </head>
 <body>
 
 <header th:replace="~{fragment/header :: userHeader}"></header>
 
-<!-- Layout -->
 <div class="layout">
     <aside th:replace="~{fragment/aside :: asideUser}" layout:fragment="sidebar"></aside>
     <main layout:fragment="content">
@@ -95,15 +144,25 @@
             <div class="resume-container">
                 <!-- New Resume Card -->
                 <div class="resume-card">
-                    <div class="new-resume" onclick="location.href='/new-resume';">새 이력서 작성</div>
+                    <div class="new-resume" onclick="window.location.href='/resume/resumeForm2';">새 이력서 작성</div>
                 </div>
 
                 <!-- Resume List Cards -->
-                <div class="resume-card" onclick="viewResumeDetail(${resume.id})">
-                    <span class="star" onclick="setRepresentative(event, ${resume.resumeId})">★</span>
-                    <div class="title">이력서 제목</div>
-                    <div class="subtitle">메모</div>
-                    <div class="date">날짜</div>
+                <div class="resume-card" th:each="resume : ${resumes}">
+                    <span class="star" th:if="${resume.resumeMainYn == 'Y'}">★</span>
+                    <span class="star"
+                          th:if="${resume.resumeMainYn == 'N'}"
+                          th:onclick="'f(' + ${resume.resumeId} + ', \'' + ${resume.resumeTitle} + '\')'">☆</span>
+
+
+                    <div class="title" th:text="${resume.resumeTitle}">이력서 제목</div>
+                    <div class="subtitle" th:text="${resume.resumeMemo}">메모</div>
+                    <div class="date" th:text="${resume.instDt}">날짜</div>
+                    <div class="resumeSetting">
+                        <div class="dot">•</div>
+                        <div class="dot">•</div>
+                        <div class="dot">•</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,28 +171,14 @@
 
 <footer th:replace="~{fragment/footer :: footer}"></footer>
 
-<script>
-    function viewResumeDetail(resumeId) {
-        // Redirect to resume detail page with resumeId
-        window.location.href = `/resume/${resumeId}`;
-    }
 
-    function setRepresentative(event, resumeId) {
-        // Prevent triggering card click event
-        event.stopPropagation();
-
-        // Send request to set the representative resume (replace with your API call logic)
-        fetch(`/resume/${resumeId}/set-representative`, {
-            method: 'POST'
-        }).then(response => {
-            if (response.ok) {
-                alert('대표 이력서로 설정되었습니다.');
-            } else {
-                alert('설정 중 오류가 발생했습니다.');
-            }
-        });
-    }
-</script>
 
 </body>
 </html>
+
+<script>
+    function f(resumeId, resumeTitle) {
+        console.log("Resume ID:", resumeId);
+        console.log("Resume Title:", resumeTitle);
+    }
+</script>

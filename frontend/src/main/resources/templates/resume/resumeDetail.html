@@ -381,7 +381,8 @@
                         </a>
                     </div>
 
-                    <button th:if="${}" class="invite-btn"><b>제안하기</b></button>
+                    <!-- 이거 기능 나중에 구현 버튼만 있음 -->
+                    <button th:if="${session.user.userGbnCd == '20'}" class="invite-btn"><b>제안하기</b></button>
                 </div>
             </div>
         </div>

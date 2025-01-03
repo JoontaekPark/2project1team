@@ -509,6 +509,10 @@ SELECT DISTINCT
 	b.inst_id = #{instId}
     </select>
 
+    <select id="getResumeList" resultType="org.green.backend.dto.resume.ResumeDto">
+        SELECT * FROM tbl_resume where inst_id = #{instId}
+    </select>
+
 
 
 
