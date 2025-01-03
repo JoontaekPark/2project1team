@@ -4,6 +4,7 @@ import org.green.frontend.dto.common.CodeInfoDto;
 import org.green.frontend.dto.common.UserDto;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.frontend.service.common
@@ -22,5 +23,7 @@ public interface UserService {
     List<CodeInfoDto> genderInfo() throws Exception;
 
     UserDto userInfo() throws Exception;
+
+    Map<String, Object> getJobNotices() throws Exception;
 
 }

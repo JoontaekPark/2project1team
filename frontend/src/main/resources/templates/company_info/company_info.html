@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
+    <head>
+        <title>Example with Aside</title>
+        <link rel="stylesheet" href="/static/css/company_info/company_info.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <main layout:fragment="content">
+            <input type="hidden" th:value="${companyInfo.id}" name="companyId">
+            <div class="container">
+                <!-- Header Section -->
+                <div class="header">
+                    <div class="info">
+                        <div class="rating">
+                            <div>
+                                <span class="star">★</span>
+                                <span th:text="${companyInfo.star}">3</span>
+                            </div>
+                            <div>
+                                <span ><i th:class="${(companyInfo.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"></i></span>
+                                <span th:text="${companyInfo.likeCnt}">99+</span>
+                            </div>
+                        </div>
+                        <div class="company-name-wrap">
+                            <div class="company-name">
+                                <span class="type" th:text="${companyInfo.companyTypeNm}">중견기업</span>
+                                <span class="name" th:text="${companyInfo.name}">회사명</span>
+                            </div>
+                            <div class="name-wrap">
+                                <div th:text="${companyInfo.ceoName}">대표자명</div>
+                                <div th:text="${companyInfo.birth}">2년차 (2023)</div>
+                            </div>
+                        </div>
+                        <p th:text="${companyInfo.companyIndustry}">IT, 콘텐츠</p>
+                        <p>
+                            <span id="zipCd" th:text="${companyInfo.zipCd}">47282</span>
+                            <span id="addr" th:text="${companyInfo.addr}">부산광역시 부산진구 중앙대로 749</span>
+                        </p>
+                        <p id="addrDetail" th:text="${companyInfo.addrDetail}">4층, 그래컴퓨터 아카데미</p>
+                        <a th:href="${'http://' + companyInfo.homepage}" target="_blank"
+                           th:text="${companyInfo.homepage}">https://www.naver.com/</a>
+                    </div>
+                    <img alt="Company Logo"
+                         th:src="${companyInfo.fileUrl + companyInfo.fileNewName + companyInfo.fileExt}">
+                </div>
+
+                <!-- Description Section -->
+                <div class="description" th:text="${companyInfo.companyDetail}">
+                    기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다.
+                    기업 설명입니다. 기업 설명입니다. 기업 설명입니다. 기업 설명입니다.
+                </div>
+
+                <!-- Job Listings Section -->
+                <div>
+                    <div class="section-title">채용중인 공고</div>
+                    <div class="job-listings">
+                        <th:block th:each="jobNotice : ${companyInfo.jobNotices}">
+                            <div class="job-card" th:attr="data-jobNoticeNum=${jobNotice.jobNoticeNum}">
+                                                                <img alt="Job Icon"
+                                                                     th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"
+                                                                onerror="this.src='/static/img/default_image.png'">
+                                <div class="details">
+                                    <div class="detail-title" th:text="${jobNotice.jobNoticeTitle}">DevOps 엔지니어 (신입)
+                                    </div>
+                                    <div>
+                                        <span th:text="${jobNotice.jobNoticeCareerGbnNm}">신입 · 정직</span>
+                                        <span th:text="${'D-' + jobNotice.leftDt}"></span>
+                                    </div>
+                                    <div th:text="${jobNotice.jobNoticeArea}">부산광역시 부산진구 중앙대로 749</div>
+                                </div>
+                                <span th:class="${'bookmark ' + (jobNotice.likeYn > 0 ? 'on' : '')}"></span>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+
+                <!-- History Section -->
+                <div class="history">
+                    <div class="section-title">연혁</div>
+                    <div th:if="${companyInfo.histories != null and !companyInfo.histories.isEmpty()}">
+                        <div th:each="history : ${companyInfo.histories}">
+                            <!-- 월별 항목 -->
+                            <div class="history-item">
+                                <div class="list">
+                                    <div>
+                                        <span class="month"
+                                              th:text="${history.historyDate.year + '년 ' + (history.historyDate.monthValue < 10 ? '0' : '') + history.historyDate.monthValue + '월'}">01월</span>
+                                        <span class="text" th:text="${history.historyContent}">연혁내용입니다.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${companyInfo.histories == null or companyInfo.histories.isEmpty()}">
+                        <p>등록된 연혁이 없습니다.</p>
+                    </div>
+
+
+                    <!--                    <div class="history-item">-->
+                    <!--                        <div class="year">2024</div>-->
+                    <!--                        <div class="list">-->
+                    <!--                            <div>-->
+                    <!--                                <span class="month">01월</span>-->
+                    <!--                                <span class="text">연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다.</span>-->
+                    <!--                            </div>-->
+                    <!--                            <div>-->
+                    <!--                                <span class="month">02월</span>-->
+                    <!--                                <span class="text">연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다.</span>-->
+                    <!--                            </div>-->
+                    <!--                            <div>-->
+                    <!--                                <span class="month">03월</span>-->
+                    <!--                                <span class="text">연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다. 연혁내용입니다.</span>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts">
+                    <div class="section-title">사원수</div>
+                    <div class="chart">
+                        <canvas id="employeeChart"></canvas>
+                    </div>
+                    <div class="section-title">매출액 (백만원)</div>
+                    <div class="chart">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Map Section -->
+                <div class="map">
+                    <div class="section-title">위치</div>
+                    <div id="addrMap">
+                    </div>
+                    <p th:text="${'(' + companyInfo.zipCd + ') ' + companyInfo.addr + ' ' + companyInfo.addrDetail}">서울특별시 서초구 강남대로407, 13층(오퍼스407)</p>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d4dd57c356ac27ab027eb5ff93078bc&libraries=services"></script>
+<script type="module" src="/static/js/company_info/company_info.js"></script>
+

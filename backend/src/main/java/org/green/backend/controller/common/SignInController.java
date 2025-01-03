@@ -45,4 +45,10 @@ public class SignInController {
         return signInService.loginInfo(token);
     }
 
+    @PostMapping("/sign-out")
+    public void signOut(HttpServletResponse response) {
+        ResponseCookie cookie = cookieUtil.deleteCookie("Authorization");
+        response.addHeader("Set-Cookie", cookie.toString());
+    }
+
 }
