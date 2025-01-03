@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
+    <head>
+        <title>구직자메인</title>
+        <link rel="stylesheet" href="/static/css/job_seeker_main.css">
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <div class="banner" layout:fragment="banner">
+            <div class="swiper-container banner-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://greenart.co.kr/upimage/mainBanner/20241114150907.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://hrdgn.greenart.co.kr/data/visual/%EC%98%A8%EB%9D%BC%EC%9D%B8%EC%BA%A0%ED%94%84-%EB%AC%B4%EB%A3%8C%EA%B0%95%EC%9D%98-%EB%B0%B0%EB%84%88.jpg">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://hrdgn.greenart.co.kr/data/visual/%EB%A9%94%EC%9D%B8-%EB%B0%B0%EB%84%88A_KDC.jpg">
+                    </div>
+                </div>
+
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+
+        </div>
+        <main layout:fragment="content">
+
+            <div class="content">
+
+                <div class="menu-container">
+                    <div class="card">
+                        <div class="icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>이력서</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <p>헤드헌팅</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <p>1:1 문의</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <p>1:1 문의</p>
+                    </div>
+                </div>
+                <!-- 채용중인 내 공고 -->
+                <div class="slider-section">
+                    <div class="swiper-container job-notice-swiper">
+                        <h2>인기 채용공고</h2>
+                        <div class="slider swiper-wrapper">
+                            <th:block th:each="pop : ${jobNotices.get('popJobNotices')}">
+                                <div class="job-card swiper-slide" th:attr="data-jobNoticeNum=${pop.jobNoticeNum}">
+                                    <div class="job-header">
+                                        <div th:class="${'bookmark ' + (pop.likeYn > 0 ? 'on' : '') }"></div>
+                                        <span class="deadline" th:text="${'D' + pop.leftDt}">D-3</span>
+                                    </div>
+                                    <img alt="채용 공고 이미지" th:src="${pop.fileUrl + pop.fileNewName + pop.fileExt}"
+                                         onerror="this.src='/static/img/default_image.png'">
+                                    <div class="job-title" th:text="${pop.jobNoticeTitle}">프론트엔드 개발자</div>
+                                    <div class="job-company" th:text="${pop.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-location" th:text="${pop.jobNoticeArea}"></div>
+                                </div>
+                            </th:block>
+
+                        </div>
+
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Navigation -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+
+                <div class="slider-section">
+                    <div class="swiper-container job-notice-swiper">
+                        <h2>마감임박 공고</h2>
+                        <div class="slider swiper-wrapper">
+                            <th:block th:each="short : ${jobNotices.get('shortJobNotices')}">
+                                <div class="job-card swiper-slide" th:attr="data-jobNoticeNum=${short.jobNoticeNum}">
+                                    <div class="job-header">
+                                        <div th:class="${'bookmark ' + (short.likeYn > 0 ? 'on' : '') }"></div>
+                                        <span class="deadline" th:text="${'D' + short.leftDt}">D-3</span>
+                                    </div>
+                                    <img alt="채용 공고 이미지" th:src="${short.fileUrl + short.fileNewName + short.fileExt}"
+                                         onerror="this.src='/static/img/default_image.png'">
+                                    <div class="job-title" th:text="${short.jobNoticeTitle}">프론트엔드 개발자</div>
+                                    <div class="job-company" th:text="${short.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-location" th:text="${short.jobNoticeArea}"></div>
+                                </div>
+                            </th:block>
+                        </div>
+
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Navigation -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+
+                <div class="slider-section">
+                    <div class="swiper-container job-notice-swiper">
+                        <h2>관심기업 채용공고</h2>
+                        <div class="slider swiper-wrapper">
+                            <th:block th:each="like : ${jobNotices.get('likeJobNotices')}">
+                                <div class="job-card swiper-slide" th:attr="data-jobNoticeNum=${like.jobNoticeNum}">
+                                    <div class="job-header">
+                                        <div th:class="${'bookmark ' + (like.likeYn > 0 ? 'on' : '')}"></div>
+                                        <span class="deadline" th:text="${'D' + like.leftDt}">D-3</span>
+                                    </div>
+                                    <img alt="채용 공고 이미지" th:src="${like.fileUrl + like.fileNewName + like.fileExt}"
+                                         onerror="this.src='/static/img/default_image.png'">
+                                    <div class="job-title" th:text="${like.jobNoticeTitle}">프론트엔드 개발자</div>
+                                    <div class="job-company" th:text="${like.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-location" th:text="${like.jobNoticeArea}"></div>
+                                </div>
+                            </th:block>
+
+                        </div>
+
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Navigation -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+
+
+            </div>
+        </main>
+    </body>
+</html>
+
+<script type="module" src="/static/js/job_seeker_main.js"></script>
