@@ -1,3 +1,22 @@
+.bookmark {
+    width: 20px; /* 북마크의 너비 */
+    height: 20px; /* 북마크의 높이 */
+    background-color: orange; /* 북마크 활성화 시 오렌지 색 */
+    mask: url('/static/img/no_bookmark_icon.svg') no-repeat center / contain;
+    -webkit-mask: url('/static/img/no_bookmark_icon.svg') no-repeat center / contain;
+}
+
+/* 북마크 활성화 상태 */
+.bookmark.on {
+    background-color: orange; /* 북마크 활성화 시 오렌지 색 */
+    mask: url('/static/img/bookmark_icon.svg') no-repeat center / contain;
+    -webkit-mask: url('/static/img/bookmark_icon.svg') no-repeat center / contain;
+}
+
+.fa-heart{
+    color: red;
+}
+
 .container {
     width: 100%;
     max-width: 900px;

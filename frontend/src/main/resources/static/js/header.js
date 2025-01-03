@@ -10,7 +10,7 @@ $(function () {
                 axios.post('/session')
                     .then(res => {
                         sessionStorage.remove("user");
-                        location.reload();
+                        location.href = "/sign-in"
                     })
                     .catch(error => {
                         console.error(error);

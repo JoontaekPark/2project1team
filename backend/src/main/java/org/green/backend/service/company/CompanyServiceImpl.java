@@ -50,7 +50,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         ResponseCompanyDto company = companyDao.companyInfo(companyId, id);
         company.setHistories(companyDao.getHistories(companyId));
-        company.setJobNotices(companyDao.jobNotices(companyId));
+        company.setJobNotices(companyDao.jobNotices(companyId, id));
 
         return company;
     }
@@ -84,7 +84,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<ResponseJobNoticeDto> getJobNotices(String token) {
         String id = jwtUtil.getId(token);
-        return companyDao.jobNotices(id);
+        return companyDao.jobNotices(id, id);
     }
 
     @Override

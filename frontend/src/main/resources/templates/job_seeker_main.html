@@ -7,7 +7,6 @@
         <link rel="stylesheet" href="/static/css/job_seeker_main.css">
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body>
@@ -78,7 +77,7 @@
                                     <img alt="채용 공고 이미지" th:src="${pop.fileUrl + pop.fileNewName + pop.fileExt}"
                                          onerror="this.src='/static/img/default_image.png'">
                                     <div class="job-title" th:text="${pop.jobNoticeTitle}">프론트엔드 개발자</div>
-                                    <div class="job-company" th:text="${pop.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-company" th:text="${pop.name}">빛썸</div>
                                     <div class="job-location" th:text="${pop.jobNoticeArea}"></div>
                                 </div>
                             </th:block>
@@ -106,7 +105,7 @@
                                     <img alt="채용 공고 이미지" th:src="${short.fileUrl + short.fileNewName + short.fileExt}"
                                          onerror="this.src='/static/img/default_image.png'">
                                     <div class="job-title" th:text="${short.jobNoticeTitle}">프론트엔드 개발자</div>
-                                    <div class="job-company" th:text="${short.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-company" th:text="${short.name}">빛썸</div>
                                     <div class="job-location" th:text="${short.jobNoticeArea}"></div>
                                 </div>
                             </th:block>
@@ -120,7 +119,7 @@
                     </div>
                 </div>
 
-                <div class="slider-section">
+                <div class="slider-section" th:if="${session.user != null}">
                     <div class="swiper-container job-notice-swiper">
                         <h2>관심기업 채용공고</h2>
                         <div class="slider swiper-wrapper">
@@ -133,7 +132,7 @@
                                     <img alt="채용 공고 이미지" th:src="${like.fileUrl + like.fileNewName + like.fileExt}"
                                          onerror="this.src='/static/img/default_image.png'">
                                     <div class="job-title" th:text="${like.jobNoticeTitle}">프론트엔드 개발자</div>
-                                    <div class="job-company" th:text="${like.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-company" th:text="${like.name}">빛썸</div>
                                     <div class="job-location" th:text="${like.jobNoticeArea}"></div>
                                 </div>
                             </th:block>
