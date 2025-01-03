@@ -42,29 +42,26 @@
                         </div>
                         <p>이력서</p>
                     </div>
+
                     <div class="card">
                         <div class="icon">
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-crown"></i>
                         </div>
-                        <p>이력서</p>
+                        <p>헤드헌팅</p>
                     </div>
+
                     <div class="card">
                         <div class="icon">
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-gem"></i>
                         </div>
-                        <p>이력서</p>
+                        <p>1:1 문의</p>
                     </div>
+
                     <div class="card">
                         <div class="icon">
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-award"></i>
                         </div>
-                        <p>이력서</p>
-                    </div>
-                    <div class="card">
-                        <div class="icon">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p>이력서</p>
+                        <p>1:1 문의</p>
                     </div>
                 </div>
                 <!-- 채용중인 내 공고 -->
@@ -72,20 +69,19 @@
                     <div class="swiper-container job-notice-swiper">
                         <h2>인기 채용공고</h2>
                         <div class="slider swiper-wrapper">
-                            <!-- 북마크가 활성화된 공고 카드 -->
-                                <div class="job-card swiper-slide" >
+                            <th:block th:each="pop : ${jobNotices.get('popJobNotices')}">
+                                <div class="job-card swiper-slide" th:attr="data-jobNoticeNum=${pop.jobNoticeNum}">
                                     <div class="job-header">
-                                        <div th:class="${'bookmark '}"></div>
-                                        <span class="deadline">D-3</span>
+                                        <div th:class="${'bookmark ' + (pop.likeYn > 0 ? 'on' : '') }"></div>
+                                        <span class="deadline" th:text="${'D' + pop.leftDt}">D-3</span>
                                     </div>
-                                    <img alt="채용 공고 이미지" src="asdasdf"
+                                    <img alt="채용 공고 이미지" th:src="${pop.fileUrl + pop.fileNewName + pop.fileExt}"
                                          onerror="this.src='/static/img/default_image.png'">
-                                    <div class="job-title">프론트엔드 개발자</div>
-                                    <div class="job-company">빛썸</div>
-                                    <div class="job-location"></div>
+                                    <div class="job-title" th:text="${pop.jobNoticeTitle}">프론트엔드 개발자</div>
+                                    <div class="job-company" th:text="${pop.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-location" th:text="${pop.jobNoticeArea}"></div>
                                 </div>
-
-                            <!-- 북마크가 비활성화된 공고 카드 -->
+                            </th:block>
 
                         </div>
 
@@ -101,21 +97,19 @@
                     <div class="swiper-container job-notice-swiper">
                         <h2>마감임박 공고</h2>
                         <div class="slider swiper-wrapper">
-                            <!-- 북마크가 활성화된 공고 카드 -->
-                            <div class="job-card swiper-slide" >
-                                <div class="job-header">
-                                    <div th:class="${'bookmark '}"></div>
-                                    <span class="deadline">D-3</span>
+                            <th:block th:each="short : ${jobNotices.get('shortJobNotices')}">
+                                <div class="job-card swiper-slide" th:attr="data-jobNoticeNum=${short.jobNoticeNum}">
+                                    <div class="job-header">
+                                        <div th:class="${'bookmark ' + (short.likeYn > 0 ? 'on' : '') }"></div>
+                                        <span class="deadline" th:text="${'D' + short.leftDt}">D-3</span>
+                                    </div>
+                                    <img alt="채용 공고 이미지" th:src="${short.fileUrl + short.fileNewName + short.fileExt}"
+                                         onerror="this.src='/static/img/default_image.png'">
+                                    <div class="job-title" th:text="${short.jobNoticeTitle}">프론트엔드 개발자</div>
+                                    <div class="job-company" th:text="${short.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-location" th:text="${short.jobNoticeArea}"></div>
                                 </div>
-                                <img alt="채용 공고 이미지" src="asdasdf"
-                                     onerror="this.src='/static/img/default_image.png'">
-                                <div class="job-title">프론트엔드 개발자</div>
-                                <div class="job-company">빛썸</div>
-                                <div class="job-location"></div>
-                            </div>
-
-                            <!-- 북마크가 비활성화된 공고 카드 -->
-
+                            </th:block>
                         </div>
 
                         <!-- Add Pagination -->
@@ -130,20 +124,19 @@
                     <div class="swiper-container job-notice-swiper">
                         <h2>관심기업 채용공고</h2>
                         <div class="slider swiper-wrapper">
-                            <!-- 북마크가 활성화된 공고 카드 -->
-                            <div class="job-card swiper-slide" >
-                                <div class="job-header">
-                                    <div th:class="${'bookmark '}"></div>
-                                    <span class="deadline">D-3</span>
+                            <th:block th:each="like : ${jobNotices.get('likeJobNotices')}">
+                                <div class="job-card swiper-slide" th:attr="data-jobNoticeNum=${like.jobNoticeNum}">
+                                    <div class="job-header">
+                                        <div th:class="${'bookmark ' + (like.likeYn > 0 ? 'on' : '')}"></div>
+                                        <span class="deadline" th:text="${'D' + like.leftDt}">D-3</span>
+                                    </div>
+                                    <img alt="채용 공고 이미지" th:src="${like.fileUrl + like.fileNewName + like.fileExt}"
+                                         onerror="this.src='/static/img/default_image.png'">
+                                    <div class="job-title" th:text="${like.jobNoticeTitle}">프론트엔드 개발자</div>
+                                    <div class="job-company" th:text="${like.jobNoticeCareerGbnNm}">빛썸</div>
+                                    <div class="job-location" th:text="${like.jobNoticeArea}"></div>
                                 </div>
-                                <img alt="채용 공고 이미지" src="asdasdf"
-                                     onerror="this.src='/static/img/default_image.png'">
-                                <div class="job-title">프론트엔드 개발자</div>
-                                <div class="job-company">빛썸</div>
-                                <div class="job-location"></div>
-                            </div>
-
-                            <!-- 북마크가 비활성화된 공고 카드 -->
+                            </th:block>
 
                         </div>
 
