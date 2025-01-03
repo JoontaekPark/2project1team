@@ -238,7 +238,12 @@
 
             <div class="form">
                 <p><span class="red-point">* </span> 근무형태</p>
-                <input type="text" id="jobNoticeWorkGbnCd" placeholder="근무형태를 입력하세요">
+                <select id="jobNoticeWorkGbnCd">
+                    <option selected>근무형태 선택</option>
+                    <th:block th:each="work : ${jobNoticeWorkGbnCdList}">
+                        <option th:value="${work.cd}" th:text="${work.cdNm}"></option>
+                    </th:block>
+                </select>
             </div>
         </div>
 
@@ -476,7 +481,7 @@
         })
             .then(response => {
                 alert('공고 등록이 완료되었습니다.');
-                location.href="/main";
+                location.href = "/main";
             })
             .catch(error => {
                 console.log("실패: " + error);

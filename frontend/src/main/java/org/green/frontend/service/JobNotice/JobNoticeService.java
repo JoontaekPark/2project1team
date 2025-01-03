@@ -1,5 +1,7 @@
 package org.green.frontend.service.JobNotice;
 
+import org.green.frontend.dto.JobNotice.ApplyStatusResponseDto;
+import org.green.frontend.dto.JobNotice.JobNoticeResponseDto;
 import org.green.frontend.dto.common.CodeInfoDto;
 
 import java.util.List;
@@ -13,7 +15,13 @@ public interface JobNoticeService {
 
     List<CodeInfoDto> educationInfo() throws Exception;
 
+    List<CodeInfoDto> workTypeInfo() throws Exception;
+
     List<CodeInfoDto> stackInfo() throws Exception;
 
+    List<CodeInfoDto> applyInfo() throws Exception;
 
+    JobNoticeResponseDto getJobNoticeDetail(Integer jobNoticeNum) throws Exception;
+
+    List<ApplyStatusResponseDto> getApplyStatusList(Integer jobNoticeNum) throws Exception;
 }
