@@ -114,8 +114,14 @@ $(function () {
                 .catch(error => console.error(error));
 
         }
+    })
 
+    $(document).on("click", ".modal-close-btn", function (){
+        document.querySelector(".modal-container").classList.remove("on");
+    });
 
+    document.querySelector(".star").parentElement.addEventListener("click", function (){
+        document.querySelector(".modal-container").classList.add("on");
     })
 
 });
