@@ -20,7 +20,7 @@
                                 <span th:text="${companyInfo.star}">3</span>
                             </div>
                             <div>
-                                <span th:value="${companyInfo.likeYn > 0 ? '♥' : '♡'}">♥</span>
+                                <span ><i th:class="${(companyInfo.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"></i></span>
                                 <span th:text="${companyInfo.likeCnt}">99+</span>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                     <div class="section-title">채용중인 공고</div>
                     <div class="job-listings">
                         <th:block th:each="jobNotice : ${companyInfo.jobNotices}">
-                            <div class="job-card">
+                            <div class="job-card" th:attr="data-jobNoticeNum=${jobNotice.jobNoticeNum}">
                                                                 <img alt="Job Icon"
                                                                      th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"
                                                                 onerror="this.src='/static/img/default_image.png'">
@@ -71,7 +71,7 @@
                                     </div>
                                     <div th:text="${jobNotice.jobNoticeArea}">부산광역시 부산진구 중앙대로 749</div>
                                 </div>
-                                <span>★</span>
+                                <span th:class="${'bookmark ' + (jobNotice.likeYn > 0 ? 'on' : '')}"></span>
                             </div>
                         </th:block>
                     </div>

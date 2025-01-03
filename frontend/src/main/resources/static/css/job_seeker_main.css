@@ -86,6 +86,7 @@
 /* 북마크 스타일 */
 /* 북마크 스타일 */
 .bookmark {
+    cursor: pointer;
     width: 20px; /* 북마크의 너비 */
     height: 20px; /* 북마크의 높이 */
     background-color: orange; /* 북마크 활성화 시 오렌지 색 */
