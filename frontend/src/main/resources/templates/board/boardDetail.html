@@ -5,7 +5,9 @@
     <title>1:1문의 상세</title>
 </head>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="/static/board/board.js" defer></script>
+<script src="/static/js/common/axios.js"></script> <!-- api 정의된 파일 -->
+<script src="/static/js/board/board.js" defer></script> <!-- board.js -->
+
 <body>
 <h1 id="boardTitle"></h1>
 <p>내용: <span id="boardContent"></span></p>
@@ -14,7 +16,6 @@
 
 <h2>답글</h2>
 <ul id="replyList"></ul>
-<p>상태: <span id="boardStatus"></span></p>
 <!-- 답변 버튼 -->
 <button onclick="openReplyForm()">답변하기</button>
 

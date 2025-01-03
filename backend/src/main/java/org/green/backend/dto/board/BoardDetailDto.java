@@ -21,6 +21,7 @@ public class BoardDetailDto {
     private String boardContent;   // 내용
     private String instId;         // 작성자 ID
     private String instDt;         // 작성 날짜
+    private String boardTarget;
     private String boardStatusCd;
     private List<CommentDto> replies; // 답글 리스트
 }

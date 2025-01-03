@@ -11,21 +11,23 @@
     </insert>
     <!-- 1:1 문의 구직자용 리스트 조회  -->
     <select id="getUserBoardList" resultType="org.green.backend.dto.board.BoardListDto">
-        SELECT b.board_num, u.name AS targetName, b.board_title, b.inst_dt
+        SELECT b.board_num, u.name AS targetName, b.board_title, b.inst_dt, b.board_status_cd
         FROM tbl_board b
         LEFT JOIN tbl_user u ON b.board_target = u.id
         WHERE
         b.inst_id = #{userId}
+        ORDER BY b.inst_dt DESC
     </select>
     <!-- 1:1 문의 기업용 리스트 조회  -->
     <select id="getCompanyBoardList" resultType="org.green.backend.dto.board.BoardListDto">
-        SELECT b.board_num, b.inst_id AS userName, b.board_title, b.inst_dt
+        SELECT b.board_num, b.inst_id AS userName, b.board_title, b.inst_dt, b.board_status_cd
         FROM tbl_board b
         WHERE board_target = #{userId}
+        ORDER BY b.inst_dt DESC
     </select>
 <!--  1:1 문의 상세 조회  -->
     <select id="getBoardDetail" resultType="org.green.backend.dto.board.BoardDetailDto">
-        SELECT board_num, board_title, board_content, inst_id, inst_dt, board_status_cd
+        SELECT board_num, board_title, board_content, inst_id, inst_dt, board_status_cd, board_target
         FROM tbl_board
         WHERE board_num = #{boardNum}
     </select>

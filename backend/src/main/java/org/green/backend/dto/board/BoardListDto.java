@@ -18,5 +18,6 @@ public class BoardListDto {
     private String targetName;   // 기업명 (구직자용)
     private String userName;     // 구직자명 (기업용)
     private String boardTitle;   // 제목
+    private String boardStatusCd;
     private String instDt;       // 등록 날짜
 }

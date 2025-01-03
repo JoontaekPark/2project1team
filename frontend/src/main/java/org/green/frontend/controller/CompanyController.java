@@ -3,6 +3,7 @@ package org.green.frontend.controller;
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.common.CodeInfoDto;
 import org.green.frontend.dto.company.CompanyDto;
+import org.green.frontend.dto.company.ResponseCompanyDto;
 import org.green.frontend.service.common.CodeInfoService;
 import org.green.frontend.service.company_info.CompanyService;
 import org.green.frontend.utils.DateUtil;
@@ -44,9 +45,14 @@ public class CompanyController {
         return "company_info/company_info_edit";
     }
 
-    @GetMapping("/company-info/{id}")
-    public String companyInfo(@PathVariable String id) {
-        return "company_info";
+    @GetMapping("/company-info/{companyId}")
+    public String companyInfo(@PathVariable String companyId,
+                              Model model) throws Exception {
+        ResponseCompanyDto companyInfo = companyService.companyInfo(companyId);
+        System.out.println(companyInfo);
+        model.addAttribute("companyInfo", companyInfo);
+
+        return "company_info/company_info";
     }
 
 }

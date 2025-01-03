@@ -1,15 +1,14 @@
 package org.green.backend.service.company;
 
 import lombok.RequiredArgsConstructor;
-import org.green.backend.dto.company.CompanyDto;
-import org.green.backend.dto.company.EmployeeDto;
-import org.green.backend.dto.company.HistoryDto;
-import org.green.backend.dto.company.RevenusDto;
+import org.green.backend.dto.company.*;
 import org.green.backend.repository.dao.CompanyDao;
 import org.green.backend.utils.JWTUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.backend.service.company
@@ -45,6 +44,18 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public ResponseCompanyDto companyInfo(String companyId, String token) {
+
+        String id = jwtUtil.getId(token);
+
+        ResponseCompanyDto company = companyDao.companyInfo(companyId, id);
+        company.setHistories(companyDao.getHistories(companyId));
+        company.setJobNotices(companyDao.jobNotices(companyId));
+
+        return company;
+    }
+
+    @Override
     public void save(CompanyDto company) {
         companyDao.save(company);
     }
@@ -61,7 +72,16 @@ public class CompanyServiceImpl implements CompanyService {
         insertEmployee(company.getEmployee(), id);
     }
 
-//    매출액 저장
+    @Override
+    public Map<String, Object> companyExtraInfo(String companyId) {
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("employees", companyDao.getEmployees(companyId));
+        result.put("revenuses", companyDao.getRevenuses(companyId));
+        return result;
+    }
+
+    //    매출액 저장
     private void insertRevenue(List<RevenusDto> revenus, String id) {
 
         companyDao.deleteRevenue(id);
