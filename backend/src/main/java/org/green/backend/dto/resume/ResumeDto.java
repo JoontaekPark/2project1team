@@ -1,6 +1,7 @@
 package org.green.backend.dto.resume;
 
 import lombok.Data;
+import org.green.backend.dto.common.FileDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -35,6 +36,8 @@ public class ResumeDto {
 
         //이력서에 들어가는 사진 뽑느라 만듦
         private MultipartFile resumeProfile;
+
+        private FileDto resumeFile;
 
 
     }

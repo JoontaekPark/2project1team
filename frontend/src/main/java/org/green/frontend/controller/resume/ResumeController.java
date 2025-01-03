@@ -117,15 +117,12 @@ import java.util.List;
  public String resumeDetail(Model model) throws Exception {
 
 
-  ApiResponse<ResumeInfoAll2Dto> response = webClientUtil.getApi("/resume/getResumeDetail2?resumeId=44", ResumeInfoAll2Dto.class);
+  ApiResponse<ResumeInfoAll2Dto> response = webClientUtil.getApi("/resume/getResumeDetail2?resumeId=50", ResumeInfoAll2Dto.class);
   ResumeInfoAll2Dto resumeInfo = response.getBody();
   String instId = resumeInfo.getBasicInfo().getInstId();
-  ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/getLoginUser?instId="+instId, UserDto.class);
+  ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/getResumeUser?instId="+instId, UserDto.class);
   UserDto user = userResponse.getBody();
   model.addAttribute("user", user);
-
-
-  System.out.println("FrontEnd ResumeController info : " + resumeInfo);
   model.addAttribute("resume", resumeInfo);
   return "/resume/resumeDetail";
  }

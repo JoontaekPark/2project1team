@@ -298,19 +298,11 @@ public class ResumeRestController {
 
 
 
-    @GetMapping("getResumeDetail")
-    public ResumeInfoAll2Dto getResumeDetail(@RequestParam int resumeId) {
-
-
-
-        ResumeInfoAll2Dto resumeInfo = resumeService.getResumeDetail(resumeId);
-        System.out.println("Backend RestResumeController info : " + resumeInfo);
-        return resumeInfo;
-    }
-
     @GetMapping("getResumeDetail2")
     public ResumeInfoAll2Dto getResumeDetail2(@RequestParam int resumeId) {
+
         ResumeInfoAll2Dto resumeInfo = resumeService.getResumeInfo(resumeId);
+
         return resumeInfo;
     }
 
@@ -326,6 +318,12 @@ public class ResumeRestController {
     public UserDto getLoginUser(HttpServletRequest request) throws Exception{
         String token = request.getHeader("Authorization");
         return userService.userInfo(token);
+    }
+
+    @GetMapping("getResumeUser")
+    public UserDto getResumeUser(HttpServletRequest request,String instId) throws Exception{
+        UserDto user = resumeService.getResumeUser(instId);
+        return user;
     }
 
 

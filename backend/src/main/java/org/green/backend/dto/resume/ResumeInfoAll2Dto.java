@@ -1,6 +1,7 @@
 package org.green.backend.dto.resume;
 
 import lombok.Data;
+import org.green.backend.dto.common.FileDto;
 
 import java.util.List;
 

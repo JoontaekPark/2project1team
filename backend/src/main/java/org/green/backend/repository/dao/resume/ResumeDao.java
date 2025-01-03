@@ -2,6 +2,8 @@ package org.green.backend.repository.dao.resume;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.green.backend.dto.common.FileDto;
+import org.green.backend.dto.common.UserDto;
 import org.green.backend.dto.resume.*;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public interface ResumeDao {
 
     public int getResumeId();
 
+    public int getResumePrtfNum();
+
     public void insertResumeActive(@Param("resumeId") int resumeId, @Param("resume") List<ResumeActiveDto> resumeActiveDto);
 
     public void insertResumeCareer(@Param("resumeId") int resumeId, @Param("resume") List<ResumeCareerDto> resumeCareerDto);
@@ -37,11 +41,13 @@ public interface ResumeDao {
 
     public void insertResumeMilitary(@Param("resumeId") int resumeId, @Param("resume")  List<ResumeMilitaryDto> resumeMilitaryDto);
 
-    public void insertResumePrtf(@Param("resumeId") int resumeId, @Param("resume")  List<ResumePrtfDto> resumePrtfDto);
+    public void insertResumePrtf(@Param("resumeId") int resumeId, @Param("resume")  ResumePrtfDto resumePrtfDto);
 
     public void insertResumeStack(@Param("resumeId") int resumeId, @Param("resume") List<ResumeStackDto> resumeStackDto);
 
     public ResumeInfoAll2Dto getResumeDetail(int resumeId);
+
+    //이력서 상세보기 데이터들고오기
 
     public ResumeDto getResumeDto(int resumeId);
     public List<ResumeActiveDto> getResumeActiveDto(int resumeId);
@@ -53,6 +59,14 @@ public interface ResumeDao {
     public List<ResumeMilitaryDto> getResumeMilitaryDto(int resumeId);
     public List<ResumePrtfDto> getResumePrtfDto(int resumeId);
     public List<ResumeStackDto> getResumeStackDto(int resumeId);
+
+    //이력서 상세보기 파일들고오기
+    public FileDto getResumeFilePhoto(int resumeId);
+
+    //이력서 작성한 유저정보 들고오기
+    public UserDto getResumeUser(String instId);
+
+
 
 }
 

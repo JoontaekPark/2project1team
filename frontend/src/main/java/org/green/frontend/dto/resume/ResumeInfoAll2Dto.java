@@ -2,6 +2,7 @@ package org.green.frontend.dto.resume;
 
 import lombok.Data;
 import lombok.ToString;
+import org.green.frontend.dto.common.FileDto;
 
 import java.util.List;
 

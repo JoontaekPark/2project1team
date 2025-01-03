@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/fragment/main_layout_with_aside}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이력서 리스트</title>
+    <link rel="stylesheet" href="/static/css/layout.css">
     <style>
+        /* 기존 CSS 유지 */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -82,38 +84,33 @@
 </head>
 <body>
 
-<div class="content">
-    <h1>김상준 님의 이력서</h1>
+<header th:replace="~{fragment/header :: userHeader}"></header>
 
-    <div class="resume-container">
-        <!-- New Resume Card -->
-        <div class="resume-card">
-            <div class="new-resume" onclick="location.href='/new-resume';">새 이력서 작성</div>
-        </div>
+<!-- Layout -->
+<div class="layout">
+    <aside th:replace="~{fragment/aside :: asideUser}" layout:fragment="sidebar"></aside>
+    <main layout:fragment="content">
+        <div class="content">
+            <h1>이력서 리스트</h1>
+            <div class="resume-container">
+                <!-- New Resume Card -->
+                <div class="resume-card">
+                    <div class="new-resume" onclick="location.href='/new-resume';">새 이력서 작성</div>
+                </div>
 
-        <!-- Resume List Cards -->
-        <div class="resume-card" onclick="viewResumeDetail(1)">
-            <span class="star" onclick="setRepresentative(event, 1)">★</span>
-            <div class="title">이력서 제목1</div>
-            <div class="subtitle">메모 들어가나요..? (구현가능?)</div>
-            <div class="date">작성완료 2024.12.24</div>
+                <!-- Resume List Cards -->
+                <div class="resume-card" onclick="viewResumeDetail(${resume.id})">
+                    <span class="star" onclick="setRepresentative(event, ${resume.resumeId})">★</span>
+                    <div class="title">이력서 제목</div>
+                    <div class="subtitle">메모</div>
+                    <div class="date">날짜</div>
+                </div>
+            </div>
         </div>
-
-        <div class="resume-card" onclick="viewResumeDetail(2)">
-            <span class="star" onclick="setRepresentative(event, 2)">★</span>
-            <div class="title">이력서 제목1</div>
-            <div class="subtitle">메모 들어가나요..? (구현가능?)</div>
-            <div class="date">작성완료 2024.12.24</div>
-        </div>
-
-        <div class="resume-card" onclick="viewResumeDetail(3)">
-            <span class="star" onclick="setRepresentative(event, 3)">★</span>
-            <div class="title">이력서 제목1</div>
-            <div class="subtitle">메모 들어가나요..? (구현가능?)</div>
-            <div class="date">작성완료 2024.12.24</div>
-        </div>
-    </div>
+    </main>
 </div>
+
+<footer th:replace="~{fragment/footer :: footer}"></footer>
 
 <script>
     function viewResumeDetail(resumeId) {

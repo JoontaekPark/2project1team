@@ -14,6 +14,12 @@
         select max(resume_id) from tbl_resume
     </select>
 
+    <select id="getResumePrtfNum" resultType="_int">
+        select max(resume_prtf_num) from tbl_resume_prtf
+    </select>
+
+
+
 
     <insert id="insertResumeActive">
         insert into tbl_resume_active
@@ -109,9 +115,7 @@
         insert into tbl_resume_prtf
         (resume_prtf_num, resume_id, resume_prtf_str_date, resume_prtf_end_date, resume_prtf_url, resume_prtf_cnt, resume_prtf_content)
         values
-        <foreach collection="resume" item="item" separator=",">
-            (null, #{resumeId}, #{item.resumePrtfStrDate}, #{item.resumePrtfEndDate}, #{item.resumePrtfUrl}, #{item.resumePrtfCnt}, #{item.resumePrtfContent})
-        </foreach>
+            (null, #{resumeId}, #{resume.resumePrtfStrDate}, #{resume.resumePrtfEndDate}, #{resume.resumePrtfUrl}, #{resume.resumePrtfCnt}, #{resume.resumePrtfContent})
     </insert>
 
     <insert id="insertResumeStack">
@@ -350,6 +354,8 @@
 <!--        rb.resume_id = #{resumeId};-->
 <!--    </select>-->
 
+
+    <!-- 이력서 상세보기 데이터 파트-->
     <select id="getResumeDto" resultType="org.green.backend.dto.resume.ResumeDto">
         SELECT * FROM tbl_resume WHERE resume_id = #{resumeId}
     </select>
@@ -363,11 +369,33 @@
     </select>
 
     <select id="getResumeCertsDto" resultType="org.green.backend.dto.resume.ResumeCertsDto">
-        SELECT * FROM tbl_resume_certs WHERE resume_id = #{resumeId}
+        SELECT a.resume_certs_num,
+        a.resume_id,
+        a.resume_certs_dt,
+        a.resume_certs_nm,
+        a.resume_certs_place,
+        a.resume_certs_gbn_cd,
+        b.cd_nm AS certsResult
+        FROM tbl_resume_certs a
+        LEFT JOIN tbl_codeinfo b ON b.cd = a.resume_certs_gbn_cd AND b.up_cd='resume_certs_gbn_cd'
+        WHERE resume_id= #{resumeId}
     </select>
 
     <select id="getResumeEducationDto" resultType="org.green.backend.dto.resume.ResumeEducationDto">
-        SELECT * FROM tbl_resume_education WHERE resume_id = #{resumeId}
+        SELECT a.resume_education_num,
+        a.resume_id,
+        resume_education_gbn_cd,
+        a.resume_education_school_nm,
+        a.resume_education_major,
+        a.resume_education_score,
+        a.resume_education_indt,
+        a.resume_education_outdt,
+        a.resume_education_transfer_yn,
+        a.resume_education_resion,
+        b.cd_nm AS educationType
+        FROM tbl_resume_education a
+        LEFT JOIN tbl_codeinfo b ON b.cd = a.resume_education_gbn_cd AND b.up_cd='resume_education_gbn_cd'
+        WHERE resume_id = #{resumeId}
     </select>
 
     <select id="getResumeIntroduceDto" resultType="org.green.backend.dto.resume.ResumeIntroduceDto">
@@ -379,17 +407,110 @@
     </select>
 
     <select id="getResumeMilitaryDto" resultType="org.green.backend.dto.resume.ResumeMilitaryDto">
-        SELECT * FROM tbl_resume_military WHERE resume_id = #{resumeId}
+        SELECT
+        a.resume_military_num,
+        a.resume_id,
+        a.resume_military_str_date,
+        a.resume_military_end_date,
+        a.resume_military_gbn_cd,
+        a.resume_military_rank_gbn_cd,
+        a.resume_military_type_gbn_cd,
+        a.resume_military_finish_gbn_cd,
+        b1.cd_nm AS militaryNm,
+        b2.cd_nm AS militaryRankNm,
+        b3.cd_nm AS militaryTypeNm,
+        b4.cd_nm AS militaryFinishNm
+        FROM
+        tbl_resume_military a
+        LEFT JOIN tbl_codeinfo b1
+        ON b1.cd = a.resume_military_gbn_cd
+        AND b1.up_cd = 'resume_military_gbn_cd'
+        LEFT JOIN tbl_codeinfo b2
+        ON b2.cd = a.resume_military_rank_gbn_cd
+        AND b2.up_cd = 'resume_military_rank_gbn_cd'
+        LEFT JOIN tbl_codeinfo b3
+        ON b3.cd = a.resume_military_type_gbn_cd
+        AND b3.up_cd = 'resume_military_type_gbn_cd'
+        LEFT JOIN tbl_codeinfo b4
+        ON b4.cd = a.resume_military_finish_gbn_cd
+        AND b4.up_cd = 'resume_military_finish_gbn_cd'
+        WHERE
+        a.resume_id =#{resumeId}
 
     </select>
 
     <select id="getResumePrtfDto" resultType="org.green.backend.dto.resume.ResumePrtfDto">
-        SELECT * FROM tbl_resume_prtf WHERE resume_id = #{resumeId}
+        SELECT
+        rp.resume_prtf_num,
+        rp.resume_id,
+        rp.resume_prtf_str_date,
+        rp.resume_prtf_end_date,
+        rp.resume_prtf_url,
+        rp.resume_prtf_cnt,
+        rp.resume_prtf_content,
+        rf.file_no,
+        rf.file_gbn_cd,
+        rf.file_ref_id,
+        rf.file_new_name,
+        rf.file_old_name,
+        rf.file_ext,
+        rf.file_size,
+        rf.file_url,
+        rf.inst_id,
+        rf.inst_dt
+        FROM
+        tbl_resume_prtf rp
+        LEFT JOIN
+        tbl_file rf ON rp.resume_prtf_num = rf.file_ref_id
+        WHERE
+        rp.resume_id = #{resumeId}
     </select>
 
     <select id="getResumeStackDto" resultType="org.green.backend.dto.resume.ResumeStackDto">
-        SELECT * FROM tbl_resume_stack WHERE resume_id = #{resumeId}
+
+
+        SELECT  a.resume_stack_num,
+        a.resume_id,
+        a.stack_cd,
+        b.cd_nm AS stack_nm
+        FROM tbl_resume_stack a
+        LEFT JOIN tbl_codeinfo b ON b.cd = a.stack_cd AND b.up_cd IN(SELECT cd FROM tbl_codeinfo WHERE up_cd = 'stack_cd')
+        WHERE resume_id = #{resumeId}
     </select>
+
+    <!-- 이력서 상세보기 파일 파트 -->
+    <!-- 이력서 상세보기 파일 파트 -->
+    <!-- 이력서 상세보기 파일 파트 -->
+
+
+    <!-- 여기는 이력서 증명사진 -->
+    <select id="getResumeFilePhoto" resultType="org.green.backend.dto.common.FileDto">
+        SELECT * FROM tbl_file where file_gbn_cd = 30 AND file_ref_id = #{resumeId}
+    </select>
+
+    <select id="getResumeUser" resultType="org.green.backend.dto.common.UserDto">
+SELECT DISTINCT
+		 a.id,
+		 a.pw,
+		 a.`name`,
+		 a.birth,
+		 a.email,
+		 a.phone,
+		 a.gender_cd,
+		 a.zip_cd,
+		 a.addr,
+		 a.addr_detail,
+		 a.use_yn,
+		 a.user_gbn_cd,
+		 b.inst_id
+	FROM tbl_user a
+	LEFT JOIN tbl_resume b ON a.id = b.inst_id
+	WHERE
+	b.inst_id = #{instId}
+    </select>
+
+
+
 
 
 

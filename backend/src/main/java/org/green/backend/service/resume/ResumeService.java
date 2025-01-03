@@ -1,6 +1,7 @@
 package org.green.backend.service.resume;
 
 import org.apache.ibatis.annotations.Param;
+import org.green.backend.dto.common.FileDto;
 import org.green.backend.dto.common.UserDto;
 import org.green.backend.dto.resume.*;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ public interface ResumeService {
     public void insertResumeBase(String instId,int resumeId,ResumeDto resumeDto) throws IOException;
 
     public int getResumeId();
+
 
     public void insertResumeActive(int resumeId, List<ResumeActiveDto> resumeActiveDto);
 
@@ -36,5 +38,8 @@ public interface ResumeService {
 
     public ResumeInfoAll2Dto getResumeInfo(int resumeId);
 
+
+    //이력서 작성한 유저정보 들고오기
+    public UserDto getResumeUser(String instId);
 
 }
