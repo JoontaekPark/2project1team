@@ -106,7 +106,8 @@
                 IFNULL(c.file_old_name, '') AS file_old_name  ,
                 IFNULL(c.file_ext, '') AS file_ext  ,
                 IFNULL(c.file_url, '') AS file_url,
-                IF(e.target IS NULL, 0, 1) AS likeYn
+                IF(e.target IS NULL, 0, 1) AS likeYn,
+                d.name
         FROM tbl_job_notice a
         LEFT JOIN tbl_codeinfo b ON a.job_notice_career_gbn_cd = b.cd AND b.up_cd = 'job_notice_career_gbn_cd'
         LEFT JOIN tbl_file c ON a.job_notice_num = c.file_ref_id AND c.file_gbn_cd = '40'
@@ -130,7 +131,8 @@
                 IFNULL(d.file_old_name, '') AS file_old_name,
                 IFNULL(d.file_ext, '') AS file_ext,
                 IFNULL(d.file_url, '') AS file_url,
-                IF(f.target IS NULL, 0, 1) AS likeYn
+                IF(f.target IS NULL, 0, 1) AS likeYn,
+                e.name
         FROM tbl_like a
         LEFT JOIN tbl_job_notice b ON a.target = b.inst_id
         LEFT JOIN tbl_codeinfo c ON b.job_notice_career_gbn_cd = c.cd AND c.up_cd = 'job_notice_career_gbn_cd'
@@ -156,7 +158,8 @@
                 IFNULL(c.file_old_name, '') AS file_old_name,
                 IFNULL(c.file_ext, '') AS file_ext,
                 IFNULL(c.file_url, '') AS file_url,
-                IF(e.target IS NULL, 0, 1) AS likeYn
+                IF(e.target IS NULL, 0, 1) AS likeYn,
+                d.name
         FROM tbl_job_notice a
         LEFT JOIN tbl_codeinfo b ON a.job_notice_career_gbn_cd = b.cd AND b.up_cd = 'job_notice_career_gbn_cd'
         LEFT JOIN tbl_file c ON a.job_notice_num = c.file_ref_id AND c.file_gbn_cd = '40'

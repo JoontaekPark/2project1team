@@ -23,6 +23,7 @@ public class ResponseJobNoticeDto {
     private String jobNoticeArea;         // 공고 지역
     private String jobNoticeCareerGbnCd;  // 경력 구분 코드
     private String jobNoticeCareerGbnNm;  // 경력 구분 이름
+    private String name; // 회사명
 
     // 스크랩 여부 0, 1
     private int likeYn;
