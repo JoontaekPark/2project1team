@@ -1,9 +1,12 @@
 package org.green.backend.service.common;
 
+import org.green.backend.dto.common.StarDto;
 import org.green.backend.dto.common.UserDto;
+import org.green.backend.dto.company.ResponseJobNoticeDto;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,5 +34,9 @@ public interface UserService {
     UserDto userInfo(String id) throws Exception;
 
     Map<String, Object> userMain(String token) throws Exception;
+
+    List<ResponseJobNoticeDto> passJobNotice(String token);
+
+    void star(String token, StarDto star);
 
 }

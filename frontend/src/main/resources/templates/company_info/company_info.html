@@ -6,95 +6,36 @@
         <title>Example with Aside</title>
         <link rel="stylesheet" href="/static/css/company_info/company_info.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script type="text/javascript"
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d4dd57c356ac27ab027eb5ff93078bc&libraries=services"></script>
     </head>
     <body>
         <main layout:fragment="content">
             <div class="modal-container">
-                <div class="modal-step-one modal-wrap">
+                <div class="modal-step-one modal-wrap on">
                     <div class="modal-title">
-                        합격한 내 채용공고
+                        합격한 채용공고 (별점 작성)
                     </div>
                     <div class="modal-content">
-                        <div class="modal-notice-item">
-                            <div class="img">
-                                <img src="/static/img/default_image.png">
-                            </div>
-                            <div class="detail">
-                                <div class="data">제목</div>
-                                <div class="data">
-                                    <div>신입 . 경력</div>
-                                    <div>D-20</div>
-                                </div>
-                                <div class="data">주소</div>
-                            </div>
-                        </div>
-                        <div class="modal-notice-item">
-                            <div class="img">
-                                <img src="/static/img/default_image.png">
-                            </div>
-                            <div class="detail">
-                                <div class="data">제목</div>
-                                <div class="data">
-                                    <div>신입 . 경력</div>
-                                    <div>D-20</div>
-                                </div>
-                                <div class="data">주소</div>
-                            </div>
-                        </div>
-                        <div class="modal-notice-item">
-                            <div class="img">
-                                <img src="/static/img/default_image.png">
-                            </div>
-                            <div class="detail">
-                                <div class="data">제목</div>
-                                <div class="data">
-                                    <div>신입 . 경력</div>
-                                    <div>D-20</div>
-                                </div>
-                                <div class="data">주소</div>
-                            </div>
-                        </div>
-                        <div class="modal-notice-item">
-                            <div class="img">
-                                <img src="/static/img/default_image.png">
-                            </div>
-                            <div class="detail">
-                                <div class="data">제목</div>
-                                <div class="data">
-                                    <div>신입 . 경력</div>
-                                    <div>D-20</div>
-                                </div>
-                                <div class="data">주소</div>
-                            </div>
-                        </div>
-                        <div class="modal-notice-item">
-                            <div class="img">
-                                <img src="/static/img/default_image.png">
-                            </div>
-                            <div class="detail">
-                                <div class="data">제목</div>
-                                <div class="data">
-                                    <div>신입 . 경력</div>
-                                    <div>D-20</div>
-                                </div>
-                                <div class="data">주소</div>
-                            </div>
-                        </div>
-                        <div class="modal-notice-item">
-                            <div class="img">
-                                <img src="/static/img/default_image.png">
-                            </div>
-                            <div class="detail">
-                                <div class="data">제목</div>
-                                <div class="data">
-                                    <div>신입 . 경력</div>
-                                    <div>D-20</div>
-                                </div>
-                                <div class="data">주소</div>
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-btn">
+                        <button class="modal-close-btn">취소</button>
+                    </div>
+                </div>
+
+                <div class="modal-step-two modal-wrap" data-jobNoticeNum="">
+                    <div class="modal-title">
+                        별점
+                    </div>
+                    <div class="modal-content">
+                        <span class="rating-star">
+                          ★★★★★
+                          <span>★★★★★</span>
+                          <input type="range" id="rating-star" value="1" step="1" min="0" max="10">
+                        </span>
+                    </div>
+                    <div class="modal-btn">
+                        <button class="modal-save-btn">저장</button>
                         <button class="modal-close-btn">취소</button>
                     </div>
                 </div>
@@ -110,7 +51,8 @@
                                 <span th:text="${companyInfo.star}">3</span>
                             </div>
                             <div>
-                                <span ><i th:class="${(companyInfo.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"></i></span>
+                                <span><i
+                                        th:class="${(companyInfo.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"></i></span>
                                 <span th:text="${companyInfo.likeCnt}">99+</span>
                             </div>
                         </div>
@@ -149,9 +91,9 @@
                     <div class="job-listings">
                         <th:block th:each="jobNotice : ${companyInfo.jobNotices}">
                             <div class="job-card" th:attr="data-jobNoticeNum=${jobNotice.jobNoticeNum}">
-                                                                <img alt="Job Icon"
-                                                                     th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"
-                                                                onerror="this.src='/static/img/default_image.png'">
+                                <img alt="Job Icon"
+                                     th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"
+                                     onerror="this.src='/static/img/default_image.png'">
                                 <div class="details">
                                     <div class="detail-title" th:text="${jobNotice.jobNoticeTitle}">DevOps 엔지니어 (신입)
                                     </div>
@@ -225,7 +167,8 @@
                     <div class="section-title">위치</div>
                     <div id="addrMap">
                     </div>
-                    <p th:text="${'(' + companyInfo.zipCd + ') ' + companyInfo.addr + ' ' + companyInfo.addrDetail}">서울특별시 서초구 강남대로407, 13층(오퍼스407)</p>
+                    <p th:text="${'(' + companyInfo.zipCd + ') ' + companyInfo.addr + ' ' + companyInfo.addrDetail}">
+                        서울특별시 서초구 강남대로407, 13층(오퍼스407)</p>
                 </div>
             </div>
 
@@ -233,6 +176,5 @@
     </body>
 </html>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5d4dd57c356ac27ab027eb5ff93078bc&libraries=services"></script>
 <script type="module" src="/static/js/company_info/company_info.js"></script>
 
