@@ -2,6 +2,9 @@ package org.green.backend.dto.JobNotice;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +19,7 @@ public class ApplyStatusResponseDto {
     private String name;               // 지원자 이름 (tbl_user)
     private String genderCd;           // 지원자 성별 코드 (tbl_user)
     private String resumeTitle;        // 이력서 제목 (tbl_resume)
-    private String instDt;             // 지원한 날짜 (tbl_apply_status)
+    private LocalDateTime instDt;             // 지원한 날짜 (tbl_apply_status)
     private String applyGbnCd;
     private String applyGbnName;         // 합불 여부 코드 (tbl_apply_status)
 

@@ -38,7 +38,7 @@
                 </div>
                 <div class="bottom-right">
                     <p th:text="'조회수 : '+${jobNotice.vCnt}"></p>
-                    <p th:text="'작성일 : '+${jobNotice.instDt}"></p>
+                    <p th:text="'작성일 : '+ ${@dateUtil.formatYearMonthDay(jobNotice.instDt)}"></p>
                 </div>
             </div>
         </div>
@@ -152,7 +152,7 @@
                                th:text="${applyStatus.genderCd}+'&nbsp;|&nbsp;'+${applyStatus.resumeTitle}"></p>
                         </div>
                         <div id="apply-right">
-                            <p id="apply-dt" th:text="'작성일 : '+${applyStatus.instDt}"></p>
+                            <p id="apply-dt" th:text="'작성일 : ' + ${@dateUtil.formatYearMonthDayLocalDateTime(applyStatus.instDt)}"></p>
                             <div id="right-bottom">
                                 <th:block th:each="stack:${applyStatus.stackCdList}">
                                     <button class="stack-btns" th:text="${stack}"></button>

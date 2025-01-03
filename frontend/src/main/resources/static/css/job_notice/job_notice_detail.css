@@ -100,7 +100,7 @@ button {
 }
 
 /*메인 상세*/
-.main-content, .mn-form h3, .mn-form p, .bottom-form h3, .bottom-form div, .bottom-form, .apply, .apply h3{
+.main-content, .mn-form h3, .mn-form p, .bottom-form h3, .bottom-form div, .bottom-form{
     margin: 10px;
 }
 
@@ -179,8 +179,14 @@ hr{
 }
 
 /*지원현황*/
+.apply, .apply h3{
+    margin: 30px 10px;
+}
+
+
+
 #apply-con{
-    margin: 10px; padding: 30px;
+    margin: 10px; padding: 20px;
     border: 1px solid #D4D4D4;
     border-radius: 15px;
     display: flex;
@@ -202,7 +208,6 @@ hr{
 #apply-left-content{
     margin: 0 10px;
     color: gray;
-
 }
 
 #apply-right{
@@ -229,6 +234,29 @@ hr{
     justify-content: space-between;
     width: 600px;
 }
+
+#apply-check{
+    margin: 0 auto;
+    align-content: center;
+}
+
+#jobNoticeWorkGbnCd{
+    box-sizing: border-box;
+    height: 40px; /* 48px */
+    width: 100px    ;
+    border-radius: 15px; /* 8px */
+    margin: 0.5rem; /* 8px */
+    padding-left: 0.5rem; /* 8px */
+    font-weight: 500;
+    font-size: 1rem; /* 16px */
+    border: 1px solid #D4D4D4;
+    /*transition: all 0.3s ease;*/
+}
+
+#jobNoticeWorkGbnCd:focus{
+        outline: none;
+        border: 1px solid #FF0083;
+    }
 
 
 

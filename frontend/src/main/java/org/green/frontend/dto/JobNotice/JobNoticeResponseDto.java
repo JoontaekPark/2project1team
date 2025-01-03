@@ -4,6 +4,8 @@ import lombok.Data;
 import org.green.frontend.dto.common.CodeInfoDto;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class JobNoticeResponseDto {
     private String jobNoticeEndDate;            // 공고 종료 기간
     private int vCnt;                         // 조회수
     private String instId;                    // 작성자 ID
-    private String instDt;                      // 작성일시
+    private LocalDateTime instDt;                      // 작성일시
 
     private List<String> stackList;   // 기술스택 리스트
     private List<String> stepList;     // 절차 리스트
