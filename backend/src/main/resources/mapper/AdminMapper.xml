@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.green.backend.repository.dao.AdminDao">
+
+    <select id="userCnt">
+        SELECT COUNT(*)
+        FROM tbl_user
+        WHERE user_gbn_cd LIKE CONCAT('%', #{filter}, '%')
+        AND name LIKE CONCAT('%', #{search}, '%')
+    </select>
+
+    <select id="userList" resultType="org.green.backend.dto.admin.ResponseUserDto">
+        SELECT  a.id,
+                a.name,
+                a.birth,
+                a.email,
+                a.phone,
+                a.use_yn,
+                a.user_gbn_cd,
+                b.cd_nm AS user_gbn_nm
+        FROM tbl_user a
+        LEFT JOIN tbl_codeinfo b ON a.user_gbn_cd = b.cd AND b.up_cd = 'user_gbn_cd'
+        WHERE a.user_gbn_cd LIKE CONCAT('%', #{filter}, '%')
+        AND a.name LIKE CONCAT('%', #{search}, '%')
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <update id="status">
+        UPDATE tbl_user
+        SET use_yn = CASE
+                        WHEN use_yn = 'Y' THEN 'N'
+                        ELSE 'Y'
+                     END
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>
