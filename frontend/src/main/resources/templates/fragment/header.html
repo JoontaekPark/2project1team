@@ -40,7 +40,7 @@
                 </ul>
                 <!--        회원-->
                 <ul class="nav-form" th:if="${session.user != null}">
-                    <li><a href="#" th:text="${session?.user?.name}"></a></li>
+                    <li><a href="/user-info" th:text="${session?.user?.name}"></a></li>
                     <li><a id="sign-out-btn">로그아웃</a></li>
                 </ul>
             </div>
