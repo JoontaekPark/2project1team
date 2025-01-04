@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="/static/css/sign_up/sign_up.css">
     </head>
     <body>
-        <main layout:fragment="content">
+        <main layout:fragment="content" style="display: flex">
             <th:block th:if="${mode == 'edit'}">
             <aside layout:fragment="sidebar" th:replace="~{fragment/aside :: asideUser}"></aside>
             </th:block>

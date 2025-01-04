@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.common.CodeInfoDto;
 import org.green.frontend.dto.company.CompanyDto;
 import org.green.frontend.dto.company.ResponseCompanyDto;
+import org.green.frontend.dto.company.ResponseJobNoticeDto;
 import org.green.frontend.service.common.CodeInfoService;
-import org.green.frontend.service.company_info.CompanyService;
-import org.green.frontend.utils.DateUtil;
+import org.green.frontend.service.company.CompanyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +33,15 @@ public class CompanyController {
     private final CodeInfoService codeInfoService;
     private final CompanyService companyService;
 
+    @GetMapping("/company")
+    public String company(Model model) throws Exception {
+
+        List<ResponseJobNoticeDto> companyJobNotice = companyService.jobNoticeInfo();
+        model.addAttribute("jobNoticeList", companyJobNotice);
+
+        return "company_main";
+    }
+
     @GetMapping("/company-info/edit")
     public String companyInfo(Model model) throws Exception {
 
@@ -41,7 +50,7 @@ public class CompanyController {
 
         model.addAttribute("companyTypeCd", companyTypeCd);
         model.addAttribute("company", company);
-        System.out.println(company);
+
         return "company_info/company_info_edit";
     }
 

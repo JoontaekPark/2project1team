@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.frontend.service.common
@@ -40,6 +42,14 @@ public class UserServiceImpl implements UserService {
     public UserDto userInfo() throws Exception {
 
         ApiResponse<UserDto> result = webClientUtil.getApi("/api/v1/user-info", UserDto.class);
+        return result.getBody();
+    }
+
+    @Override
+    public Map<String, Object> getJobNotices() throws Exception {
+
+        ApiResponse<Map> result = webClientUtil.getApi("/api/v1/user-main", Map.class);
+
         return result.getBody();
     }
 }

@@ -1,6 +1,7 @@
 package org.green.frontend.service.common;
 
 import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.company.ResponseJobNoticeDto;
 
 import java.util.List;
 

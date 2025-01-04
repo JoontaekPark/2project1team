@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.company.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 패키지명        : org.green.backend.repository.dao
@@ -29,7 +30,7 @@ public interface CompanyDao {
 
     public ResponseCompanyDto companyInfo(@Param("companyId") String companyId, @Param("id") String id);
 
-    public List<ResponseJobNoticeDto> jobNotices(@Param("companyId") String companyId);
+    public List<ResponseJobNoticeDto> jobNotices(@Param("companyId") String companyId, @Param("id") String id);
 
     public List<RevenusDto> getRevenuses(@Param("id") String id);
 
@@ -48,5 +49,13 @@ public interface CompanyDao {
     public void saveEmployee(@Param("employee") EmployeeDto employee);
 
     public void saveHistory(@Param("history") HistoryDto history);
+
+    public List<StarDto> getStars(@Param("companyId") String companyId);
+
+    public List<Object> getGenderByJobNoticeNum(@Param("jobNoticeNum") int jobNoticeNum);
+
+    public List<Object> getAgeByJobNoticeNum(@Param("jobNoticeNum") int jobNoticeNum);
+
+    public List<Object> getStackByJobNoticeNum(@Param("jobNoticeNum") int jobNoticeNum);
 }
 
