@@ -41,9 +41,6 @@ public class AdminController {
         model.addAttribute("search", search);
         model.addAttribute("filter", filter);
 
-        System.out.println("filter");
-        System.out.println(filter);
-
         return "admin_main";
     }
 
