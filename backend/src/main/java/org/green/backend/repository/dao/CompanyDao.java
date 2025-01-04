@@ -30,7 +30,7 @@ public interface CompanyDao {
 
     public ResponseCompanyDto companyInfo(@Param("companyId") String companyId, @Param("id") String id);
 
-    public List<ResponseJobNoticeDto> jobNotices(@Param("companyId") String companyId);
+    public List<ResponseJobNoticeDto> jobNotices(@Param("companyId") String companyId, @Param("id") String id);
 
     public List<RevenusDto> getRevenuses(@Param("id") String id);
 

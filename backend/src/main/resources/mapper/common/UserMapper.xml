@@ -95,4 +95,130 @@
 
     </update>
 
+    <select id="getPopJobNotices" resultType="org.green.backend.dto.company.ResponseJobNoticeDto">
+        SELECT  a.job_notice_num,
+                a.job_notice_title,
+                a.job_notice_area,
+                a.job_notice_career_gbn_cd,
+                b.cd_nm AS 'job_notice_career_gbn_nm',
+                DATEDIFF(NOW(), a.job_notice_end_date) AS left_dt,
+                IFNULL(c.file_new_name, '') AS file_new_name  ,
+                IFNULL(c.file_old_name, '') AS file_old_name  ,
+                IFNULL(c.file_ext, '') AS file_ext  ,
+                IFNULL(c.file_url, '') AS file_url,
+                IF(e.target IS NULL, 0, 1) AS likeYn,
+                d.name
+        FROM tbl_job_notice a
+        LEFT JOIN tbl_codeinfo b ON a.job_notice_career_gbn_cd = b.cd AND b.up_cd = 'job_notice_career_gbn_cd'
+        LEFT JOIN tbl_file c ON a.job_notice_num = c.file_ref_id AND c.file_gbn_cd = '40'
+        LEFT JOIN tbl_user d ON a.inst_id = d.id
+        LEFT JOIN tbl_like e ON e.target = a.job_notice_num AND e.like_gbn_cd = '30' AND e.inst_id = #{id}
+        WHERE a.job_notice_end_date >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+        AND d.use_yn = 'Y'
+        GROUP BY a.job_notice_num
+        ORDER BY a.v_cnt DESC, a.job_notice_num
+        LIMIT 16
+    </select>
+
+    <select id="getLikeJobNotices" resultType="org.green.backend.dto.company.ResponseJobNoticeDto">
+        SELECT  b.job_notice_num,
+                b.job_notice_title,
+                b.job_notice_area,
+                b.job_notice_career_gbn_cd,
+                c.cd_nm AS 'job_notice_career_gbn_nm',
+                DATEDIFF(NOW(), b.job_notice_end_date) AS left_dt,
+                IFNULL(d.file_new_name, '') AS file_new_name,
+                IFNULL(d.file_old_name, '') AS file_old_name,
+                IFNULL(d.file_ext, '') AS file_ext,
+                IFNULL(d.file_url, '') AS file_url,
+                IF(f.target IS NULL, 0, 1) AS likeYn,
+                e.name
+        FROM tbl_like a
+        LEFT JOIN tbl_job_notice b ON a.target = b.inst_id
+        LEFT JOIN tbl_codeinfo c ON b.job_notice_career_gbn_cd = c.cd AND c.up_cd = 'job_notice_career_gbn_cd'
+        LEFT JOIN tbl_file d ON b.job_notice_num = d.file_ref_id AND d.file_gbn_cd = '40'
+        LEFT JOIN tbl_user e ON b.inst_id = e.id
+        LEFT JOIN tbl_like f ON f.target = b.job_notice_num AND f.like_gbn_cd = '30' AND f.inst_id = #{id}
+        WHERE a.inst_id = #{id}
+        AND b.job_notice_end_date >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+        AND e.use_yn = 'Y'
+        GROUP BY b.job_notice_num
+        ORDER BY DATEDIFF(NOW(), b.job_notice_end_date) DESC
+        LIMIT 16;
+    </select>
+
+    <select id="getShortJobNotices" resultType="org.green.backend.dto.company.ResponseJobNoticeDto">
+        SELECT  a.job_notice_num,
+                a.job_notice_title,
+                a.job_notice_area,
+                a.job_notice_career_gbn_cd,
+                b.cd_nm AS 'job_notice_career_gbn_nm',
+                DATEDIFF(NOW(), a.job_notice_end_date) AS left_dt,
+                IFNULL(c.file_new_name, '') AS file_new_name,
+                IFNULL(c.file_old_name, '') AS file_old_name,
+                IFNULL(c.file_ext, '') AS file_ext,
+                IFNULL(c.file_url, '') AS file_url,
+                IF(e.target IS NULL, 0, 1) AS likeYn,
+                d.name
+        FROM tbl_job_notice a
+        LEFT JOIN tbl_codeinfo b ON a.job_notice_career_gbn_cd = b.cd AND b.up_cd = 'job_notice_career_gbn_cd'
+        LEFT JOIN tbl_file c ON a.job_notice_num = c.file_ref_id AND c.file_gbn_cd = '40'
+        LEFT JOIN tbl_user d ON a.inst_id = d.id
+        LEFT JOIN tbl_like e ON e.target = a.job_notice_num AND e.like_gbn_cd = '30' AND e.inst_id = #{id}
+        WHERE a.job_notice_end_date >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+        AND DATEDIFF(NOW(), a.job_notice_end_date) > -7
+        AND d.use_yn = 'Y'
+        GROUP BY a.job_notice_num
+        ORDER BY DATEDIFF(NOW(), a.job_notice_end_date) DESC
+        LIMIT 16;
+    </select>
+
+    <select id="passJobNotice" resultType="org.green.backend.dto.company.ResponseJobNoticeDto">
+
+        SELECT  b.job_notice_num,
+                b.job_notice_title,
+                b.job_notice_area,
+                b.job_notice_career_gbn_cd,
+                c.cd_nm AS 'job_notice_career_gbn_nm',
+                DATEDIFF(NOW(), b.job_notice_end_date) AS left_dt,
+                IFNULL(d.file_new_name, '') AS file_new_name,
+                IFNULL(d.file_old_name, '') AS file_old_name,
+                IFNULL(d.file_ext, '') AS file_ext,
+                IFNULL(d.file_url, '') AS file_url,
+                IF(f.target IS NULL, 0, 1) AS likeYn,
+                e.name,
+                IF(g.star IS NULL, 0, 1) as starYn
+        FROM tbl_resume z
+        LEFT JOIN tbl_apply_status a ON a.resume_id = a.resume_id
+        LEFT JOIN tbl_job_notice b ON a.job_notice_num = b.job_notice_num
+        LEFT JOIN tbl_codeinfo c ON b.job_notice_career_gbn_cd = c.cd AND c.up_cd = 'job_notice_career_gbn_cd'
+        LEFT JOIN tbl_file d ON b.job_notice_num = d.file_ref_id AND d.file_gbn_cd = '40'
+        LEFT JOIN tbl_user e ON b.inst_id = e.id
+        LEFT JOIN tbl_like f ON f.target = b.job_notice_num AND f.like_gbn_cd = '30' AND f.inst_id = #{id}
+        LEFT JOIN tbl_star g ON a.job_notice_num = g.job_notice_num AND g.id = #{id}
+        WHERE z.inst_id = #{id}
+        AND b.job_notice_end_date >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+        AND e.use_yn = 'Y'
+        AND a.apply_gbn_cd = 'P'
+        GROUP BY a.job_notice_num
+        ORDER BY DATEDIFF(NOW(), b.job_notice_end_date) DESC
+        LIMIT 16;
+
+    </select>
+
+    <insert id="insertStar">
+
+        INSERT INTO tbl_star (
+            job_notice_num,
+            id,
+            star
+        ) VALUES (
+            #{star.jobNoticeNum},
+            #{star.id},
+            #{star.star}
+        )
+
+    </insert>
+
+
 </mapper>

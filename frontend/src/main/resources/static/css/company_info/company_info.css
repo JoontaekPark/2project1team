@@ -1,3 +1,22 @@
+.bookmark {
+    width: 20px; /* 북마크의 너비 */
+    height: 20px; /* 북마크의 높이 */
+    background-color: orange; /* 북마크 활성화 시 오렌지 색 */
+    mask: url('/static/img/no_bookmark_icon.svg') no-repeat center / contain;
+    -webkit-mask: url('/static/img/no_bookmark_icon.svg') no-repeat center / contain;
+}
+
+/* 북마크 활성화 상태 */
+.bookmark.on {
+    background-color: orange; /* 북마크 활성화 시 오렌지 색 */
+    mask: url('/static/img/bookmark_icon.svg') no-repeat center / contain;
+    -webkit-mask: url('/static/img/bookmark_icon.svg') no-repeat center / contain;
+}
+
+.fa-heart{
+    color: red;
+}
+
 .container {
     width: 100%;
     max-width: 900px;
@@ -230,4 +249,175 @@
 #addrMap{
     width: 100%;
     height: 300px;
+}
+
+.modal-container{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: rgba(128, 128, 128, 0.5);
+    width: 100%;
+    height: 100vh;
+}
+
+.modal-container.on{
+    display: flex;
+}
+
+.modal-step-one{
+    z-index: 1000;
+    width: 400px;
+    height: 600px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.modal-step-two{
+    z-index: 1000;
+    width: 300px;
+    height: 220px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.modal-wrap{
+    display: none;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.modal-wrap.on{
+    display: flex;
+}
+
+.modal-title{
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding-bottom: 20px;
+}
+
+.modal-content{
+    overflow: auto;
+    width: 100%;
+    flex: 1;
+}
+
+.modal-btn{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal-btn button{
+    border: 0;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: #FF0083;
+    width: 90px;
+    height: 35px;
+}
+
+.modal-btn .modal-close-btn{
+    border: 2px solid #FF0083;
+    color: #FF0083;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: white;
+    width: 90px;
+    height: 35px;
+}
+
+.modal-notice-item{
+    position: relative;
+    display: flex;
+    border: 1px solid #d5d5d5;
+    border-radius: 10px;
+    width: 100%;
+    height: 110px;
+    margin-bottom: 10px;
+}
+
+.end-wrap{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-20deg);
+    color: red;
+    padding: 10px;
+    border: 2px solid red;
+
+}
+
+.modal-notice-item.end{
+
+    .end-wrap{
+        display: block;
+    }
+
+}
+
+.modal-notice-item .img{
+    border-radius: 10px;
+    padding: 10px;
+    width: 110px;
+    height: 110px;
+}
+
+.modal-notice-item .img img{
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-notice-item .detail{
+    flex: 1;
+    padding: 10px;
+}
+
+.modal-notice-item .detail .data{
+    font-size: 0.9rem;
+    color: #afafaf;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-notice-item .detail .data:first-child{
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.modal-step-two .modal-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating-star {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+}
+
+.rating-star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.rating-star span {
+    width: 0;
+    position: absolute;
+    left: 0;
+    color: #FF0083;
+    overflow: hidden;
+    pointer-events: none;
 }

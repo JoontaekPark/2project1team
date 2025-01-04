@@ -1,17 +1,20 @@
 package org.green.frontend.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.green.frontend.dto.common.SessionDto;
 import org.green.frontend.dto.common.UserDto;
 import org.green.frontend.dto.common.CodeInfoDto;
 import org.green.frontend.service.common.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.frontend.controller
@@ -30,6 +33,15 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping("/job-seeker")
+    public String jobSeeker(Model model) throws Exception {
+
+        Map<String, Object> jobNotices = userService.getJobNotices();
+        model.addAttribute("jobNotices", jobNotices);
+
+        return "job_seeker_main";
+    }
 
     @GetMapping("/sign-up")
     public String signUpCheck() {
@@ -70,6 +82,16 @@ public class UserController {
         model.addAttribute("userInfo", userInfo);
 
         return "sign_up/sign_up";
+    }
+
+    @PostMapping("/session")
+    @ResponseBody
+    public void Session(@RequestBody(required = false) SessionDto user,
+                          HttpSession session) {
+
+        System.out.println(session);
+        session.setAttribute("user", user);
+
     }
 
 }

@@ -13,6 +13,47 @@
     height: auto;
 }
 
+.menu-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 60px 20px;
+    flex-wrap: wrap; /* 화면 크기 변경 시 자동 줄바꿈 */
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    text-align: center;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    background-color: #000000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.card p {
+    margin: 0;
+    font-size: 14px;
+    color: #333333;
+}
+
+
 /* 콘텐츠 영역 */
 .content {
     max-width: 900px;
@@ -43,7 +84,9 @@
 }
 
 /* 북마크 스타일 */
+/* 북마크 스타일 */
 .bookmark {
+    cursor: pointer;
     width: 20px; /* 북마크의 너비 */
     height: 20px; /* 북마크의 높이 */
     background-color: orange; /* 북마크 활성화 시 오렌지 색 */
