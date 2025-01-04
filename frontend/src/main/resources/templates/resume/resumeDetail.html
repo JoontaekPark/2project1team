@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <title>이력서 작성</title>
+    <title>Example without Aside</title>
     <style>
+        .invite-btn{
+            background-color:#FF0083;
+            border-radius:12px;
+            color:white;
+            margin-top: 15px;
+            width:100px;
+            height:38px;
+            margin-left: 37px;
+        }
+
+        .prtfDate {
+            color: black;
+        }
+
         .stack-btn {
             margin: 5px;
             color: #FFFFFF;
@@ -66,6 +78,8 @@
         .photo-container img {
             width: 100%;
             height: 100%;
+
+
             object-fit: cover; /* 이미지를 컨테이너 크기에 맞게 잘라서 꽉 채우기 */
         }
 
@@ -141,6 +155,7 @@
             box-shadow: 0 0 0 3px rgba(255, 0, 131, 0.1);
             outline: none;
         }
+
         textarea {
             width: 100%;
             min-height: 100px;
@@ -191,7 +206,7 @@
         }
 
         .personal-info input {
-            width: 100%; /* 모든 input의 너비를 100%로 설정 */
+            width: 70%; /* 모든 input의 너비를 100%로 설정 */
             margin-bottom: 15px; /* 항목 간 간격 */
         }
 
@@ -222,7 +237,7 @@
         .intro-tips h4,
         .intro-tips h3 {
             font-weight: 700;
-            color: #FF0083;
+            color: black;
         }
 
         .stack-btn {
@@ -249,113 +264,129 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <div class="left-section">
-            <div class="title-row">
-                <h1 th:text="${resume.basicInfo.resumeTitle}">이력서 제목</h1>
+<div layout:fragment="banner"></div>
+<main layout:fragment="content">
+    <div class="container">
+        <div class="header">
+            <div class="left-section">
+                <div class="title-row">
+                    <h1 th:text="${resume.basicInfo.resumeTitle}">이력서 제목</h1>
 
-            </div>
-            <div class="personal-info">
-                <input type="tel" id="name" name="name" th:value="${user.getName()}" readonly>
-                <input type="tel" id="phone" name="phone" th:value="${user.getPhone()}" readonly>
-                <input type="tel" id="email" name="email" th:value="${user.getEmail()}" readonly>
-                <input type="tel" id="area" name="area" th:value="${resume.basicInfo.getResumeArea()}" readonly>
-            </div>
-
-            <h3>활동사항</h3>
-            <div th:each="actives : ${resume.actives}" class="active-section">
-
-                <div class="intro-tips">
-                    <p th:text="${actives.getResumeActiveStrDate()} + ' ~ ' + ${actives.getResumeActiveEndDate()}"></p>
-                    <p th:text="${actives.getResumeActiveDetail()}"></p>
                 </div>
-            </div>
-
-            <h3>경력사항</h3>
-            <div th:each=" careers : ${resume.careers}" class="career-section">
-                <div class="intro-tips">
-                    <p th:text="${careers.getResumeCareerJoinDt()} + ' ~ ' + ${careers.getResumeCareerOutDt()}"></p>
-                    <h5 th:text="${careers.getResumeCareerCompanyNm()}"></h5>
-                    <p th:text=" ' ['+ ${careers.getResumeCareerDmpt()} + '] &nbsp;&nbsp;&nbsp;  [' + ${careers.getResumeCareerPstn()} + '] &nbsp;&nbsp;&nbsp;  [' + ${careers.getResumeCareerDuties()}+']'"></p>
-                </div>
-            </div>
-
-            <h3>자격증</h3>
-            <div th:each=" certs : ${resume.certs}" class="certificate-section">
-                <div class="intro-tips">
-                    <p th:text=" '발급일자 : ' +${certs.getResumeCertsDt()}"></p>
-                    <p th:text=" '자격증명:' +${certs.getResumeCertsNm()}     + '&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp; 발급처:' + ${certs.getResumeCertsPlace()} +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 합격구분:' +${certs.getResumeCertsGbnCd()}"></p>
-                </div>
-            </div>
-
-            <h3>학력사항</h3>
-            <div th:each=" educations : ${resume.educations}" class="education-section">
-                <div class="intro-tips">
-                    <p th:text="'학력구분 : '+${educations.getResumeEducationGbnCd()}"></p>
-                    <p th:text="${educations.getResumeEducationIndt()} + ' ~ ' + ${educations.getResumeEducationOutdt()}"></p>
-                    <h4 th:text="'학교명 : '+${educations.getResumeEducationSchoolNm()}"></h4>
-                    <p th:text="'전공 : ' + ${educations.getResumeEducationMajor()} + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;학점 : ' + ${educations.getResumeEducationScore()} + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;지역 : '+${educations.getResumeEducationResion()}"></p>
-                    <p th:text="'편입여부 : '+${educations.getResumeEducationTransferYn()}"></p>
-                </div>
-            </div>
-
-            <h3>자기소개</h3>
-            <div th:each=" introduces : ${resume.introduces}" class="self-intro-section">
-                <div class="intro-tips">
-                    <h3 th:text ="${introduces.getResumeIntroduceTitle()}"></h3>
-                    <h4 th:text ="${introduces.getResumeIntroduceContent()}"></h4>
+                <div class="personal-info">
+                    <input type="tel" id="name" name="name" th:value="${user.getName()}" readonly>
+                    <input type="tel" id="phone" name="phone" th:value="${user.getPhone()}" readonly>
+                    <input type="tel" id="email" name="email" th:value="${user.getEmail()}" readonly>
+                    <input type="tel" id="area" name="area" th:value="${resume.basicInfo.getResumeArea()}" readonly>
                 </div>
 
-            </div>
+                <h3>활동사항</h3>
+                <div th:each="actives : ${resume.actives}" class="active-section">
 
-            <h3>우대사항</h3>
-            <div th:each=" loyalties : ${resume.loyalties}" class="preference-section">
-                <div class="intro-tips">
-                    <h4 th:text="${loyalties.getResumeLoyaltyDetail()}"></h4>
+                    <div class="intro-tips">
+                        <p th:text="${actives.getResumeActiveStrDate()} + ' ~ ' + ${actives.getResumeActiveEndDate()}"></p>
+                        <p th:text="${actives.getResumeActiveDetail()}"></p>
+                    </div>
                 </div>
 
-            </div>
-
-            <h3>병역사항</h3>
-            <div th:each = "militaries : ${resume.militaries}" class="military-section">
-                <div class="intro-tips">
-                    <p th:text="${militaries.getResumeMilitaryStrDate()} + '~' + ${militaries.getResumeMilitaryEndDate()}"></p>
-                    <h4 th:text="${militaries.getResumeMilitaryGbnCd()}"></h4>
-                    <h4 th:text="${militaries.getResumeMilitaryRankGbnCd()}"></h4>
-                    <h4 th:text="${militaries.getResumeMilitaryTypeGbnCd()}"></h4>
-                    <h4 th:text="${militaries.getResumeMilitaryFinishGbnCd()}"></h4>
+                <h3>경력사항</h3>
+                <div th:each=" careers : ${resume.careers}" class="career-section">
+                    <div class="intro-tips">
+                        <p th:text="${careers.getResumeCareerJoinDt()} + ' ~ ' + ${careers.getResumeCareerOutDt()}"></p>
+                        <h5 th:text="${careers.getResumeCareerCompanyNm()}"></h5>
+                        <p th:text=" ' ['+ ${careers.getResumeCareerDmpt()} + '] &nbsp;&nbsp;&nbsp;  [' + ${careers.getResumeCareerPstn()} + '] &nbsp;&nbsp;&nbsp;  [' + ${careers.getResumeCareerDuties()}+']'"></p>
+                    </div>
                 </div>
 
-            </div>
-
-            <h3>포트폴리오</h3>
-            <div th:each = "prtfs : ${resume.prtfs}"  class="portfolio-section">
-                <div class="intro-tips">
-                    <h3 th:text="${prtfs.getResumePrtfStrDate()} +'~'+${prtfs.getResumePrtfEndDate()}"></h3>
-                    <p th:if="${prtfs.getResumePrtfUrl() != null}" th:text="${prtfs.getResumePrtfUrl()}"></p>
-                    <p th:text="'작업 인원 수 :'+${prtfs.getResumePrtfCnt()}"></p>
-                    <p th:text="'작업 내용 : '+${prtfs.getResumePrtfContent()}"></p>
-                </div>
-            </div>
-
-            <h3>기술스택</h3>
-            <div th:each = "stacks : ${resume.stacks}"  class="skills-section">
-                <div class="intro-tips">
-                        <button class="stack-btn" th:value="${stacks.getStackCd()}" th:text="${stacks.getStackCd()}">
-                        </button>
+                <h3>자격증</h3>
+                <div th:each=" certs : ${resume.certs}" class="certificate-section">
+                    <div class="intro-tips">
+                        <p th:text=" '발급일자 : ' +${certs.getResumeCertsDt()}"></p>
+                        <p th:text=" '자격증명:' +${certs.getResumeCertsNm()}     + '&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp; 발급처:' + ${certs.getResumeCertsPlace()} +'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 합격구분:' +${certs.getCertsResult()}"></p>
+                    </div>
                 </div>
 
-            </div>
+                <h3>학력사항</h3>
+                <div th:each=" educations : ${resume.educations}" class="education-section">
+                    <div class="intro-tips">
+                        <p th:text="'학력구분 : '+${educations.getEducationType()}"></p>
+                        <p th:text="${educations.getResumeEducationIndt()} + ' ~ ' + ${educations.getResumeEducationOutdt()}"></p>
+                        <p th:text="'학교명 : '+${educations.getResumeEducationSchoolNm()}"></p>
+                        <p th:text="'전공 : ' + ${educations.getResumeEducationMajor()} + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;학점 : ' + ${educations.getResumeEducationScore()} + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;지역 : '+${educations.getResumeEducationResion()}"></p>
+                        <p th:text="'편입여부 : '+${educations.getResumeEducationTransferYn()}"></p>
+                    </div>
+                </div>
+
+                <h3>자기소개</h3>
+                <div th:each=" introduces : ${resume.introduces}" class="self-intro-section">
+                    <div class="intro-tips">
+                        <b th:text="${introduces.getResumeIntroduceTitle()}" style="font-size:24px"></b><br><br>
+                        <p th:text="${introduces.getResumeIntroduceContent()}" style="font-size:14px"></p>
+                    </div>
+
+                </div>
+
+                <h3>우대사항</h3>
+                <div th:each=" loyalties : ${resume.loyalties}" class="preference-section">
+                    <div class="intro-tips">
+                        <h4 th:text="${loyalties.getResumeLoyaltyDetail()}"></h4>
+                    </div>
+
+                </div>
+
+                <h3>병역사항</h3>
+                <div th:each="militaries : ${resume.militaries}" class="military-section">
+                    <div class="intro-tips">
+                        <b th:text="${militaries.getResumeMilitaryStrDate()} + '~' + ${militaries.getResumeMilitaryEndDate()}" style="font-size:20px"></b>
+                        <p th:text="'병역구분 : ' + ${militaries.getMilitaryNm()}"></p>
+                        <p th:text="'계급 :' + ${militaries.getMilitaryRankNm()}"></p>
+                        <p th:text="'복무부대 :'+${militaries.getMilitaryTypeNm()}"></p>
+                        <p th:text="'전역형태 :'+${militaries.getMilitaryFinishNm()}"></p>
+                    </div>
+
+                </div>
+
+                <h3>포트폴리오</h3>
+                <div th:each="prtfs : ${resume.prtfs}" class="portfolio-section">
+                    <div class="intro-tips">
+                        <p th:text="${prtfs.getResumePrtfStrDate()} +'~'+${prtfs.getResumePrtfEndDate()}"
+                           class="prtfDate" style="font-size:23px"></p>
+                        <p th:if="${prtfs.getResumePrtfUrl() != null}" th:text="${prtfs.getResumePrtfUrl()}"></p>
+                        <a th:href="${prtfs.fileUrl + prtfs.fileNewName + prtfs.fileExt}" th:text="${prtfs.fileOldName}"
+                           th:download="${prtfs.fileOldName}"></a>
+                        <p th:text="'작업 인원 수 :'+${prtfs.getResumePrtfCnt()}"></p>
+                        <p th:text="'작업 내용 : '+${prtfs.getResumePrtfContent()}"></p>
+                    </div>
+                </div>
+
+                <h3>기술스택</h3>
+                <div class="skills-section">
+                    <div class="intro-tips">
+                        <th:block th:each="stacks : ${resume.stacks}">
+                            <button class="stack-btn" th:value="${stacks.getStackCd()}"
+                                    th:text="${stacks.getStackNm()}">
+                            </button>
+                        </th:block>
+                    </div>
+
+                </div>
 
 
-            <div class="right-section">
-                <div class="photo-container" onclick="uploadPhoto()">
-                    <h4>증명사진ㅠㅠ</h4>
+                <div class="right-section">
+                    <div class="photo-container">
+                        <!--<img th:src="${resume.prtfs.fileUrl}" alt="증명사진"> -->
+                        <a th:if="${resume.basicInfo.getResumeFile() != null}"
+                           th:href="${resume.basicInfo.getResumeFile().fileUrl + resume.basicInfo.getResumeFile().fileExt + resume.basicInfo.getResumeFile().fileOldName}">
+                            <img th:src="${resume.basicInfo.getResumeFile().fileUrl + resume.basicInfo.getResumeFile().fileNewName + resume.basicInfo.getResumeFile().fileExt}">
+                        </a>
+                    </div>
+
+                    <!-- 이거 기능 나중에 구현 버튼만 있음 -->
+                    <button th:if="${session.user.userGbnCd == '20'}" class="invite-btn"><b>제안하기</b></button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package org.green.backend.service.resume;
 
 import lombok.RequiredArgsConstructor;
+import org.green.backend.dto.common.FileDto;
+import org.green.backend.dto.common.UserDto;
 import org.green.backend.dto.resume.*;
 import org.green.backend.repository.dao.resume.ResumeDao;
 import org.green.backend.service.common.FileService;
@@ -23,12 +25,12 @@ public class ResumeServiceImpl implements ResumeService {
 
 
     @Override
-    public void insertResumeBase(String instId,int resumeId,ResumeDto resumeDto) throws IOException{
+    public void insertResumeBase(String instId, int resumeId, ResumeDto resumeDto) throws IOException {
 
-        resumeDao.insertResumeBase(instId,resumeDto);
+        resumeDao.insertResumeBase(instId, resumeDto);
         String resumeNum = String.valueOf(resumeId);
-        if(resumeDto.getResumeProfile() != null){
-        fileService.saveFile(resumeDto.getResumeProfile(), "30",resumeNum, "임시 가라값 박준택임");
+        if (resumeDto.getResumeProfile() != null) {
+            fileService.saveFile(resumeDto.getResumeProfile(), "30", resumeNum, "임시 가라값 박준택임");
         }
     }
 
@@ -76,15 +78,20 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public void insertResumePrtf(int resumeId, List<ResumePrtfDto> resumePrtfDto) throws IOException {
-        resumeDao.insertResumePrtf(resumeId, resumePrtfDto);
+        //resumeDao.insertResumePrtf(resumeId, resumePrtfDto);
 
         // 리스트의 각 항목에 대해 반복문을 돌면서 파일을 저장하는 작업 수행
 
         String resumeNum = String.valueOf(resumeId);
         for (ResumePrtfDto prtfDto : resumePrtfDto) {
+
+            resumeDao.insertResumePrtf(resumeId, prtfDto);
+
+            int prtfNum = resumeDao.getResumePrtfNum();
+
             if (prtfDto.getResumePrtfFile() != null) {
                 // resumePrtfFile이 존재하는 경우에만 파일 저장
-                fileService.saveFile(prtfDto.getResumePrtfFile(), "40",resumeNum, "임시 가라값 박준택임");
+                fileService.saveFile(prtfDto.getResumePrtfFile(), "40", String.valueOf(prtfNum), "임시 가라값 박준택임");
             }
         }
     }
@@ -99,7 +106,7 @@ public class ResumeServiceImpl implements ResumeService {
     public ResumeInfoAll2Dto getResumeDetail(int resumeId) {
 
         ResumeInfoAll2Dto resumeInfo = resumeDao.getResumeDetail(resumeId);
-        System.out.println("서비스 resumeInfo :" +resumeInfo);
+        System.out.println("서비스 resumeInfo :" + resumeInfo);
 
         return resumeInfo;
     }
@@ -117,6 +124,9 @@ public class ResumeServiceImpl implements ResumeService {
         List<ResumePrtfDto> prtf = resumeDao.getResumePrtfDto(resumeId);
         List<ResumeStackDto> stack = resumeDao.getResumeStackDto(resumeId);
 
+        resumeBasic.setResumeFile(resumeDao.getResumeFilePhoto(resumeId));
+
+        //---------------------------------------------------------
         ResumeInfoAll2Dto resumeInfo = new ResumeInfoAll2Dto();
         resumeInfo.setBasicInfo(resumeBasic);
         resumeInfo.setActives(active);
@@ -130,14 +140,37 @@ public class ResumeServiceImpl implements ResumeService {
         resumeInfo.setStacks(stack);
 
 
-
-
         return resumeInfo;
     }
 
+    @Override
+    public UserDto getResumeUser(String instId) {
+
+        UserDto user = resumeDao.getResumeUser(instId);
+
+        return user;
+    }
+
+    @Override
+    public List<ResumeDto> getResumeList(String instId) {
+        List<ResumeDto> resumes = resumeDao.getResumeList(instId);
+        return resumes;
+    }
+
+//    @Override
+//    public FileDto getResumeFilePhoto(int resumeId) {
+//        FileDto resumePhoto = resumeDao.getResumeFilePhoto(resumeId);
+//        return resumePhoto;
+//    }
+//
+//    @Override
+//    public List<FileDto> getResumeFilePrtf(int resumeId) {
+//        List<FileDto> resumePrtf = resumeDao.getResumeFilePrtf(resumeId);
+//        return resumePrtf;
+//    }
+
 
     //-----------------------------
-
 
 
 }

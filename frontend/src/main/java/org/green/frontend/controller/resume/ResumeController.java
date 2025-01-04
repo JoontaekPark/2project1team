@@ -1,7 +1,9 @@
 package org.green.frontend.controller.resume;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.common.SessionDto;
 import org.green.frontend.dto.common.UserDto;
 import org.green.frontend.dto.resume.ResumeDto;
 import org.green.frontend.dto.resume.ResumeInfoAll2Dto;
@@ -117,21 +119,39 @@ import java.util.List;
  public String resumeDetail(Model model) throws Exception {
 
 
-  ApiResponse<ResumeInfoAll2Dto> response = webClientUtil.getApi("/resume/getResumeDetail2?resumeId=44", ResumeInfoAll2Dto.class);
+  ApiResponse<ResumeInfoAll2Dto> response = webClientUtil.getApi("/resume/getResumeDetail2?resumeId=50", ResumeInfoAll2Dto.class);
   ResumeInfoAll2Dto resumeInfo = response.getBody();
   String instId = resumeInfo.getBasicInfo().getInstId();
-  ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/getLoginUser?instId="+instId, UserDto.class);
+  ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/getResumeUser?instId="+instId, UserDto.class);
   UserDto user = userResponse.getBody();
   model.addAttribute("user", user);
-
-
-  System.out.println("FrontEnd ResumeController info : " + resumeInfo);
   model.addAttribute("resume", resumeInfo);
   return "/resume/resumeDetail";
  }
 
  @GetMapping("/resumeList")
- public String resumeList(){
+ public String resumeList(Model model, HttpSession session) throws Exception{
+
+
+
+  SessionDto user = (SessionDto)session.getAttribute("user");
+  String instId = user.getId();
+  ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/getLoginUser?instId="+instId, UserDto.class);
+
+  UserDto loginUser = userResponse.getBody();
+
+  ApiResponse<List> resumesInfo = webClientUtil.getApi("/resume/getResumeList?instId="+instId, List.class);
+
+  List<ResumeDto> resumes = resumesInfo.getBody();
+
+  for(int i=0; i<resumes.size(); i++){
+   System.out.println(i+"번째 이력서 정보 : "+resumes.get(i));
+  }
+
+
+  model.addAttribute("resumes", resumes);
+
+
   return "/resume/resumeList";
  }
 

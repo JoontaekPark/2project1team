@@ -34,4 +34,10 @@ public class ResumeMilitaryDto {
     private String resumeMilitaryTypeGbnCd;
     // 전역구분(의가사, 만기, 불명예 등등)
     private String resumeMilitaryFinishGbnCd;
+
+    //코드명 들고오려고 만든 변수
+    private String militaryNm;
+    private String militaryRankNm;
+    private String militaryTypeNm;
+    private String militaryFinishNm;
 }
