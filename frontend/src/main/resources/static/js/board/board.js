@@ -169,10 +169,11 @@ function fetchBoardDetail() {
 }
 
 function renderBoardDetail(detail) {
-    document.getElementById("boardTitle").textContent = detail.boardTitle;
+    document.getElementById("boardTitle").textContent = `제목: ${detail.boardTitle}`;
     document.getElementById("boardContent").textContent = detail.boardContent;
     document.getElementById("instId").textContent = detail.instId;
     document.getElementById("instDt").textContent = detail.instDt;
+    document.getElementById("instDt2").textContent = detail.instDt;
 
     const statusMap = {
         "10": "미확인",
@@ -186,7 +187,14 @@ function renderBoardDetail(detail) {
 
     detail.replies.forEach(reply => {
         const listItem = document.createElement("li");
-        listItem.textContent = `${reply.instId} : ${reply.commentContent}`;
+        listItem.innerHTML = `
+        <div class="content">
+        <img src="/static/img/board_profile.png" alt="프로필">
+        <p class="instidP"><span id="instId">${reply.instId}</span></p>
+        <p class="pinst2">등록일 <span id="instDt2">${reply.instDt}</span></p>
+        </div>
+        <p class="board-content"><span id="boardContent">${reply.commentContent}</span></p>
+        `;
         replyList.appendChild(listItem);
     });
 }
@@ -221,9 +229,9 @@ function addReply() {
 
 // 상태 관리
 function updateBoardStatus(boardNum, boardStatusCd) {
-    console.log("updateBoardStatus 호출:", { boardNum, boardStatusCd });
+    console.log("updateBoardStatus 호출:", {boardNum, boardStatusCd});
 
-    return api.put('/api/board/updateStatus', { boardNum, boardStatusCd })
+    return api.put('/api/board/updateStatus', {boardNum, boardStatusCd})
         .then(() => {
             console.log(`상태가 ${boardStatusCd}로 업데이트되었습니다.`);
         })
@@ -234,8 +242,6 @@ function updateBoardStatus(boardNum, boardStatusCd) {
 }
 
 // 답글 폼
-function openReplyForm() {
-    const replyForm = document.getElementById("replyForm");
-    replyForm.style.display = replyForm.style.display === "none" ? "block" : "none";
-}
+
+
 

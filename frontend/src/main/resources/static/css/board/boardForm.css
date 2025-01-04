@@ -1,0 +1,67 @@
+/* form 전체 컨테이너 */
+body {
+    height: 100%;
+}
+#boardForm {
+    max-width: 600px;
+    margin: 50px auto; /* 중앙 정렬 */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* form 라벨 스타일 */
+#boardForm label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* input 및 textarea 스타일 */
+#boardForm input[type="text"],
+#boardForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+#boardForm input[type="text"]:focus,
+#boardForm textarea:focus {
+    border-color: #ff007f; /* 포커스 시 강조 색상 */
+    background-color: #fff;
+    outline: none;
+}
+
+/* textarea 높이 고정 */
+#boardForm textarea {
+    height: 150px;
+    resize: none; /* 크기 조절 비활성화 */
+}
+
+/* 버튼 스타일 */
+#boardForm button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ff007f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#boardForm button:hover {
+    background-color: #e60073;
+}

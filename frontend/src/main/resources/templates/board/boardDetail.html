@@ -7,23 +7,70 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/static/js/common/axios.js"></script> <!-- api 정의된 파일 -->
 <script src="/static/js/board/board.js" defer></script> <!-- board.js -->
-
+<link rel="stylesheet" href="/static/css/board/boardDetail.css" />
+<link rel="stylesheet" href="/static/css/layout.css">
 <body>
+<div class="header-container">
+    <!--        구직자용-->
+    <div class="size">
+        <ul class="nav-content" >
+            <li><a href="/main">LOGO 1ike</a></li>
+            <li><a href="#">이력서</a></li>
+            <li><a href="#">헤드헌팅</a></li>
+            <li><a href="#">지원현황</a></li>
+            <li><a href="#">고객센터</a></li>
+        </ul>
+        <!--        기업용-->
+        <!--        <ul class="nav-content" th:if="">-->
+        <!--            <li><a href="/main">LOGO 1ike</a></li>-->
+        <!--            <li><a href="#">공고관리</a></li>-->
+        <!--            <li><a href="#">헤드헌팅</a></li>-->
+        <!--            <li><a href="#">고객센터</a></li>-->
+        <!--            <li><a href="#">1:1 문의</a></li>-->
+        <!--        </ul>-->
+        <!--        비회원-->
+        <ul class="nav-form" >
+            <li><a href="#">회원가입</a></li>
+            <li><a href="#">로그인</a></li>
+        </ul>
+        <!--        회원-->
+        <!--        <ul class="nav-form" th:if="">-->
+        <!--            <li><a href="#">그린 아카데미님</a></li>-->
+        <!--            <li><a href="#">로그아웃</a></li>-->
+        <!--        </ul>-->
+    </div>
+</div>
+<h1>1:1문의하기</h1>
 <h1 id="boardTitle"></h1>
-<p>내용: <span id="boardContent"></span></p>
-<p>작성자: <span id="instId"></span></p>
-<p>등록일: <span id="instDt"></span></p>
+<p class="dt1">등록일 <span id="instDt"></span></p>
+<div class="content">
+    <img src="/static/img/board_profile.png" alt="프로필">
+    <p class="instidP"><span id="instId"></span></p>
+    <p class="pinst2">등록일 <span id="instDt2"></span></p>
+</div>
 
-<h2>답글</h2>
+<p class="board-content"><span id="boardContent"></span></p>
+
 <ul id="replyList"></ul>
 <!-- 답변 버튼 -->
-<button onclick="openReplyForm()">답변하기</button>
+
 
 <!-- 답변 폼 -->
-<div id="replyForm" style="display: none;">
-    <textarea id="commentInput" placeholder="답변 내용을 입력하세요"></textarea>
+<div id="replyForm">
     <button id="commentSubmitButton">등록</button>
+    <textarea id="commentInput" placeholder="답변 내용을 입력하세요"></textarea>
 </div>
 <a href="/board/list">목록</a>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="logo"><span>LOGO 1ike</span></div>
+        <ul class="footer-content">
+            <li>박준택</li>
+            <li>김상준</li>
+            <li>박선영</li>
+            <li>최윤서</li>
+        </ul>
+    </div>
+</footer>
 </body>
 </html>

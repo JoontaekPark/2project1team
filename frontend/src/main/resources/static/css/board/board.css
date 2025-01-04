@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+h1 {
+    width: 1400px;
+    font-size: 30px;
+    margin: 60px auto 30px;
+}
+
+.banner {
+    width: 100%;
+}
+
+.banner img {
+    width: 100%;
+    height: 400px;
+
+    display: block; /* 여백 제거 */
+
+    background-position: top;
+
+}
+
+table {
+    width: 1400px;
+    margin: 20px auto 200px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #f4f4f4;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+#boardTableBody {
+    position: relative;
+}
+td:nth-child(1) {
+    font-size: 24px ;
+    color : #FF0083
+}
+td:nth-child(2) {
+    position: absolute;
+    left: 180px;
+    border-bottom: none;
+    font-size: 24px
+}
+td:nth-child(3) {
+    position: absolute;
+    right: 350px;
+    border-bottom: none;
+    font-size: 24px
+}
+td:nth-child(4) {
+    position: absolute;
+    right: 0;
+    border-bottom: none;
+    font-size: 24px
+}
+
+
+th {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+td a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+.delete-icon {
+    color: red;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.delete-icon:hover {
+    color: darkred;
+}
+
+.section {
+    height: 100%;
+}
+

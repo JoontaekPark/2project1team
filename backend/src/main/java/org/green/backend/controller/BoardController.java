@@ -1,6 +1,5 @@
 package org.green.backend.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.board.*;
 import org.green.backend.service.BoardService;
@@ -33,7 +32,7 @@ public class BoardController {
     //1:1문의 등록
     @PostMapping("/regist")
     public String registerBoard(
-            @Valid @RequestBody BoardDto boardDto,
+            @RequestBody BoardDto boardDto,
             BindingResult bindingResult,
             Model model
     ) {
