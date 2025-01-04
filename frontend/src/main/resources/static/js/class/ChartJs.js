@@ -1,7 +1,7 @@
 /**
  * ChartJs 클래스를 사용하여 Chart.js 차트를 생성하고 관리합니다.
  */
-export class ChartJs {
+export class ChartJsApi {
 
     /**
      * @typedef {Object} Dataset

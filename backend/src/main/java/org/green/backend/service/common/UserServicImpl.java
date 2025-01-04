@@ -4,8 +4,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.common.FileDto;
 import org.green.backend.dto.common.SignInDto;
+import org.green.backend.dto.common.StarDto;
 import org.green.backend.dto.common.UserDto;
 import org.green.backend.dto.company.CompanyDto;
+import org.green.backend.dto.company.ResponseJobNoticeDto;
 import org.green.backend.repository.dao.common.UserDao;
 import org.green.backend.security.CustomUserDetails;
 import org.green.backend.service.company.CompanyService;
@@ -19,6 +21,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.backend.service.common
@@ -37,7 +42,6 @@ import java.io.IOException;
 public class UserServicImpl implements UserService {
 
     private final FileService fileService;
-    private final FileUploadUtil fileUploadUtil;
     private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JWTUtil jwtUtil;
@@ -126,6 +130,49 @@ public class UserServicImpl implements UserService {
         user.setFileDto(file);
         return user;
 
+    }
+
+    @Override
+    public Map<String, Object> userMain(String token) throws Exception {
+
+        Map<String, Object> result = new HashMap<>();
+
+        String id = "";
+        System.out.println(token);
+        if (token != null) {
+            id = jwtUtil.getId(token);
+        }
+        System.out.println(id);
+        List<ResponseJobNoticeDto> likeJobNotices = userDao.getLikeJobNotices(id);
+        List<ResponseJobNoticeDto> popJobNotices = userDao.getPopJobNotices(id);
+        List<ResponseJobNoticeDto> shortJobNotices = userDao.getShortJobNotices(id);
+
+        System.out.println(likeJobNotices);
+        System.out.println(popJobNotices);
+        System.out.println(shortJobNotices);
+
+        result.put("likeJobNotices", likeJobNotices);
+        result.put("popJobNotices", popJobNotices);
+        result.put("shortJobNotices", shortJobNotices);
+
+        return result;
+    }
+
+    @Override
+    public List<ResponseJobNoticeDto> passJobNotice(String token) {
+
+        String id = jwtUtil.getId(token);
+
+        return userDao.passJobNotice(id);
+    }
+
+    @Override
+    public void star(String token, StarDto star) {
+
+        String id = jwtUtil.getId(token);
+        star.setId(id);
+
+        userDao.insertStar(star);
     }
 
 }

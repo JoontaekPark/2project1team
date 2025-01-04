@@ -3,12 +3,16 @@ package org.green.backend.controller.common;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.common.SignInDto;
+import org.green.backend.dto.common.StarDto;
 import org.green.backend.dto.common.UserDto;
+import org.green.backend.dto.company.ResponseJobNoticeDto;
 import org.green.backend.service.common.UserService;
 import org.green.backend.utils.CookieUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 패키지명        : org.green.backend.controller.common
@@ -59,6 +63,27 @@ public class UserController {
 
         System.out.println(user);
         return userService.edit(user, fileChk);
+    }
+
+    @GetMapping("/api/v1/user-main")
+    public Map<String, Object> userInfoMain(HttpServletRequest request) throws Exception {
+        String token = request.getHeader("Authorization");
+        return userService.userMain(token);
+    }
+
+    @GetMapping("/api/v1/pass-job-notice")
+    public List<ResponseJobNoticeDto> passJobNotice(HttpServletRequest request) throws Exception {
+
+        String token = cookieUtil.getCookie(request, "Authorization");
+        return userService.passJobNotice(token);
+    }
+
+    @PostMapping("/api/v1/star")
+    public void star(@RequestBody StarDto star,
+                     HttpServletRequest request) {
+        String token = cookieUtil.getCookie(request, "Authorization");
+
+        userService.star(token, star);
     }
 
 }

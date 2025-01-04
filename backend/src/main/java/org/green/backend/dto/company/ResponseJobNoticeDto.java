@@ -24,6 +24,13 @@ public class ResponseJobNoticeDto {
     private String jobNoticeCareerGbnCd;  // 경력 구분 코드
     private String jobNoticeCareerGbnNm;  // 경력 구분 이름
 
+    private String name; // 회사명
+    // 스크랩 여부 0, 1
+    private int likeYn;
+
+    // 별점 여부 0, 1
+    private int starYn;
+
     // 공고 마감일 계산
     private int leftDt;                 // 남은 일수 (오늘 기준 마감일까지)
 

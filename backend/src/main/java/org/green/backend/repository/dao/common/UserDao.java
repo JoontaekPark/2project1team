@@ -3,7 +3,11 @@ package org.green.backend.repository.dao.common;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.common.SecurityUserDto;
+import org.green.backend.dto.common.StarDto;
 import org.green.backend.dto.common.UserDto;
+import org.green.backend.dto.company.ResponseJobNoticeDto;
+
+import java.util.List;
 
 /**
  * 패키지명        : org.green.backend.repository.dao.common
@@ -31,5 +35,15 @@ public interface UserDao {
     public int save(@Param("user") UserDto user);
 
     public int edit(@Param("user") UserDto user);
+
+    public List<ResponseJobNoticeDto> getPopJobNotices(@Param("id") String id);
+
+    public List<ResponseJobNoticeDto> getShortJobNotices(@Param("id") String id);
+
+    public List<ResponseJobNoticeDto> getLikeJobNotices(@Param("id") String id);
+
+    public List<ResponseJobNoticeDto> passJobNotice(@Param("id") String id);
+
+    public void insertStar(@Param("star") StarDto star);
 
 }
