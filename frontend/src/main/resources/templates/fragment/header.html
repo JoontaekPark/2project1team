@@ -12,17 +12,24 @@
             <!--        구직자용-->
             <div class="size">
                 <ul class="nav-content" th:if="${session?.user?.userGbnCd != '20' && session?.user?.userGbnCd != '30'}">
-                    <li><a href="/main">LOGO 1ike</a></li>
-                    <li><a href="/resume/resumeList">이력서</a></li>
+                    <li><a href="/job-seeker">LOGO 1ike</a></li>
+                    <li><a href="#">이력서</a></li>
                     <li><a href="#">헤드헌팅</a></li>
-                    <li><a href="/resume/applyStatusList">지원현황</a></li>
+                    <li><a href="#">지원현황</a></li>
                     <li><a href="#">고객센터</a></li>
                 </ul>
                 <!--        기업용-->
                 <ul class="nav-content" th:if="${session?.user?.userGbnCd == '20'}">
-                    <li><a href="/main">LOGO 1ike</a></li>
+                    <li><a href="/company">LOGO 1ike</a></li>
                     <li><a href="#">공고관리</a></li>
                     <li><a href="#">헤드헌팅</a></li>
+                    <li><a href="#">고객센터</a></li>
+                    <li><a href="#">1:1 문의</a></li>
+                </ul>
+
+                <!--                관리자-->
+                <ul class="nav-content" th:if="${session?.user?.userGbnCd == '30'}">
+                    <li><a href="/admin">LOGO 1ike</a></li>
                     <li><a href="#">고객센터</a></li>
                     <li><a href="#">1:1 문의</a></li>
                 </ul>
@@ -33,7 +40,7 @@
                 </ul>
                 <!--        회원-->
                 <ul class="nav-form" th:if="${session.user != null}">
-                    <li><a href="#" th:text="${session?.user?.name}"></a></li>
+                    <li><a href="/user-info" th:text="${session?.user?.name}"></a></li>
                     <li><a id="sign-out-btn">로그아웃</a></li>
                 </ul>
             </div>
