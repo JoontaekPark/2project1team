@@ -14,6 +14,9 @@ import java.util.List;
     @Mapper
     public interface JobNoticeDao {
 
+        //채용공고 리스트 조회
+        public List<JobNoticeResponseDto> getJobNoticeList(String instId);
+
         //채용공고 상세정보 조회
         public JobNoticeResponseDto getJobNoticeDetails(@Param("jobNoticeNum") int jobNoticeNum, @Param("Id") String Id);
         public List<String> getStep(int jobNoticeNum);

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragment/header :: userHeader}"></div>
+<div th:replace="~{fragment/aside :: asideCompany}"></div>
+<main>
+<div class="job-notice-container">
+    <h3>나의 채용공고</h3>
+<!--    <div class="grid-item" th:each="jobNotice : ${jobNoticeList}">-->
+<!--        <img alt="채용 공고 이미지" th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"-->
+             onerror="this.src='/static/img/default_image.png'">
+        <div class="job-title" th:text="${jobNotice.jobNoticeTitle}"></div>
+        <div class="job-company" th:text="${jobNotice.companyName}"></div>
+        <div class="job-location" th:text="${jobNotice.jobNoticeArea} +'&nbsp;|&nbsp;'+ ${jobNotice.careerName}"></div>
+    </div>
+</div>
+</main>
+<div th:replace="~{fragment/footer :: footer}"></div>
+</body>
+</html>

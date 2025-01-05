@@ -16,8 +16,8 @@
         <!--    이미지-->
         <div class="img-container">
             <div class="grid-item" th:each="file : ${jobNotice.fileList}">
-                    <img class="grid-image" th:src="${file.fileUrl + file.fileNewName + file.fileExt}"
-                         onerror="this.src='/static/img/default_image.png'">
+                <img class="grid-image" th:src="${file.fileUrl + file.fileNewName + file.fileExt}"
+                     onerror="this.src='/static/img/default_image.png'">
             </div>
 
             <div class="grid-item" th:if="${jobNotice.fileList.size() < 3}"
@@ -38,8 +38,14 @@
             </div>
             <div class="right-title">
                 <div class="top-right">
-                    <i id="like" th:class="${(jobNotice.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}" style="font-size: 1.5rem;" th:data-jobNoticeNum="${jobNotice.jobNoticeNum}"></i>
-                    <button onclick="" id="apply-btn">지원하기</button>
+                    <i id="like" th:class="${(jobNotice.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"
+                       style="font-size: 1.5rem;" th:data-jobNoticeNum="${jobNotice.jobNoticeNum}"></i>
+                    <th:block th:if="${session.user.userGbnCd == '10'}">
+                        <button onclick="" id="apply-btn">지원하기</button>
+                    </th:block>
+                    <th:block th:if="${session.user.userGbnCd == '20'}">
+                        <button onclick="" id="apply-btn">마감하기</button>
+                    </th:block>
                 </div>
                 <div class="bottom-right">
                     <p th:text="'조회수 : '+${jobNotice.vCnt+1}"></p>
@@ -146,7 +152,7 @@
 
         <hr>
 
-        <div class="apply">
+        <div class="apply" th:if="${session.user.userGbnCd == '20' && session.user.id == jobNotice.instId}">
             <h3>지원현황</h3>
             <th:block th:each="applyStatus : ${applyStatusList}">
                 <div id="apply-con">
@@ -157,7 +163,8 @@
                                th:text="${applyStatus.genderCd}+'&nbsp;|&nbsp;'+${applyStatus.resumeTitle}"></p>
                         </div>
                         <div id="apply-right">
-                            <p id="apply-dt" th:text="'작성일 : ' + ${@dateUtil.formatYearMonthDayLocalDateTime(applyStatus.instDt)}"></p>
+                            <p id="apply-dt"
+                               th:text="'작성일 : ' + ${@dateUtil.formatYearMonthDayLocalDateTime(applyStatus.instDt)}"></p>
                             <div id="right-bottom">
                                 <th:block th:each="stack:${applyStatus.stackCdList}">
                                     <button class="stack-btns" th:text="${stack}"></button>
@@ -166,7 +173,8 @@
                         </div>
                     </div>
                     <div id="apply-check">
-                        <select class="jobNoticeWorkGbnCd" th:data-jobNoticeNum="${applyStatus.jobNoticeNum}" th:data-resumeId="${applyStatus.resumeId}">
+                        <select class="jobNoticeWorkGbnCd" th:data-jobNoticeNum="${applyStatus.jobNoticeNum}"
+                                th:data-resumeId="${applyStatus.resumeId}">
                             <th:block th:each="applyGbnCd : ${applyGbnCdList}">
                                 <option th:value="${applyGbnCd.cd}"
                                         th:text="${applyGbnCd.cdNm}"
@@ -233,7 +241,6 @@
                 .catch(error => console.error(error));
         }
     });
-
 
 
 </script>

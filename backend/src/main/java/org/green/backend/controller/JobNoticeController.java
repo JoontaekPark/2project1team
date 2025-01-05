@@ -30,6 +30,15 @@ public class JobNoticeController {
     @Autowired
     private CookieUtil cookikeUtil;
 
+    // 리스트 조회
+    @GetMapping("job-notice-list")
+    public ResponseEntity<List<JobNoticeResponseDto>> getJobNoticeList(HttpServletRequest request){
+
+        String token = request.getHeader("Authorization");
+        List<JobNoticeResponseDto> list = jobNoticeService.getJobNoticeList(token);
+        return ResponseEntity.ok(list);
+    }
+
     //    조회
         @GetMapping("/job-notice")
         public ResponseEntity<JobNoticeResponseDto> getJobNotice(@RequestParam("jobNoticeNum") int jobNoticeNum,
