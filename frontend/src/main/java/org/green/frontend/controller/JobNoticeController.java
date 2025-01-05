@@ -53,8 +53,6 @@ public class JobNoticeController {
         List<ApplyStatusResponseDto> applyStatusList = jobNoticeService.getApplyStatusList(jobNoticeNum);
         List<CodeInfoDto> applyGbnCdList = jobNoticeService.applyInfo();
 
-
-
         model.addAttribute("jobNotice", dto);
         model.addAttribute("applyGbnCdList", applyGbnCdList);
         model.addAttribute("applyStatusList", applyStatusList);
