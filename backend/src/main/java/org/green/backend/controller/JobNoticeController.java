@@ -83,5 +83,12 @@ public class JobNoticeController {
         jobNoticeService.updateStatus(dto);
         return "success";
     }
-    
+
+    //공고 마감처리
+    @PutMapping("/job-notice-status")
+    public String updateNoticeStatus(@RequestParam("jobNoticeNum")int jobNoticeNum) throws  IOException{
+        jobNoticeService.updateNoticeStatus(jobNoticeNum);
+        return "success";
+    }
+
 }

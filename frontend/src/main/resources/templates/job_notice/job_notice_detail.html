@@ -12,6 +12,7 @@
 <main>
 
     <div class="main-container">
+        <input type="hidden" id="jobNoticeNum" th:value="${jobNotice.jobNoticeNum}">
 
         <!--    이미지-->
         <div class="img-container">
@@ -45,7 +46,7 @@
                         <button onclick="" id="apply-btn">지원하기</button>
                     </th:block>
                     <th:block th:if="${session.user.userGbnCd == '20'}">
-                        <button onclick="" id="apply-btn">마감하기</button>
+                        <button onclick="endNotice()" id="apply-btn" th:disabled="${jobNotice.jobNoticeStatus == '30'}">마감하기</button>
                     </th:block>
                 </div>
                 <div class="bottom-right">
@@ -145,7 +146,7 @@
                 <span>궁금하신 내용을 입력해주시면</span>
                 <span> 명확히 신속하게 전달 드리겠습니다. </span>
             </div>
-            <a href="/job-seeker">
+            <a href="/board-form">
                 <div id="board-icon">
                     <p>1:1 문의하기<i class="bi bi-arrow-up-right-circle"></i></p>
                     <!--                <i id="mailbox" class="bi bi-mailbox"></i>-->
@@ -177,7 +178,8 @@
                     </div>
                     <div id="apply-check">
                         <select class="jobNoticeWorkGbnCd" th:data-jobNoticeNum="${applyStatus.jobNoticeNum}"
-                                th:data-resumeId="${applyStatus.resumeId}">
+                                th:data-resumeId="${applyStatus.resumeId}"
+                                th:disabled="${jobNotice.jobNoticeStatus == '30'}">
                             <th:block th:each="applyGbnCd : ${applyGbnCdList}">
                                 <option th:value="${applyGbnCd.cd}"
                                         th:text="${applyGbnCd.cdNm}"
@@ -245,6 +247,22 @@
         }
     });
 
+
+    //공고 채용종료
+    function endNotice(){
+        const jobNoticeNum = document.querySelector('#jobNoticeNum').value; // 공고 번호를 가져옴
+        console.log(jobNoticeNum);
+        api.put('/api/v1/job-notice-status?jobNoticeNum='+jobNoticeNum)
+            .then(response => {
+                console.log('공고 상태가 마감 처리되었습니다:', response.data);
+                alert('공고가 마감되었습니다.');
+                location.reload(); // 페이지 새로고침
+            })
+            .catch(error => {
+                console.error('오류 발생:', error);
+                alert('오류가 발생했습니다. 다시 시도해주세요.');
+            });
+    }
 
 </script>
 </html>

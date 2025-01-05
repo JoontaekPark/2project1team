@@ -30,4 +30,6 @@ public interface JobNoticeService {
 
     void updateStatus(ApplyStatusRequestDto dto) throws IOException;
 
+    //공고 마감
+    void updateNoticeStatus(int jobNoticeNum) throws IOException;
 }

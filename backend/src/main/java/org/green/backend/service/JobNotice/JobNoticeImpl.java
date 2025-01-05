@@ -132,7 +132,10 @@ public class JobNoticeImpl implements JobNoticeService {
         jobNoticeDao.updateStatus(dto);
     }
 
-
-
+    @Override
+    public void updateNoticeStatus(int jobNoticeNum) throws IOException {
+        jobNoticeDao.updateNoticeStatus(jobNoticeNum);
+        jobNoticeDao.updateNoticeApplyStatus(jobNoticeNum);
+    }
 
 }

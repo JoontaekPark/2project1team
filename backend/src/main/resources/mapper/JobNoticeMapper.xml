@@ -63,6 +63,7 @@
         work.cd_nm AS work_name,
         career.cd_nm AS career_name,
         education.cd_nm AS education_name,
+        jn.job_notice_status,
         IF(e.target IS NULL, 0, 1) AS likeYn
 
         FROM tbl_job_notice jn
@@ -207,5 +208,18 @@
         SET apply_gbn_cd = #{dto.applyGbnCd}
         WHERE job_notice_num = #{dto.jobNoticeNum}
         AND resume_id = #{dto.resumeId}
+    </update>
+
+<!--    공고 마감-->
+    <update id="updateNoticeStatus">
+        UPDATE tbl_job_notice
+        SET job_notice_status="30"
+        WHERE job_notice_num = #{jobNoticeNum}
+    </update>
+    <update id="updateNoticeApplyStatus">
+        UPDATE tbl_apply_status
+        SET apply_gbn_cd = "F"
+        WHERE job_notice_num = #{jobNoticeNum}
+        AND apply_gbn_cd = "N";
     </update>
 </mapper>

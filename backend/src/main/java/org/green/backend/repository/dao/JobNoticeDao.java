@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.JobNotice.*;
 import org.green.backend.dto.common.FileDto;
+import org.green.backend.dto.company.ResponseJobNoticeDto;
 
 import java.util.List;
 
@@ -15,7 +16,8 @@ import java.util.List;
     public interface JobNoticeDao {
 
         //채용공고 리스트 조회
-        public List<JobNoticeResponseDto> getJobNoticeList(String instId);
+//        public List<JobNoticeResponseDto> getJobNoticeList(String instId);
+        public List<ResponseJobNoticeDto> getJobNoticeList(String Id);
 
         //채용공고 상세정보 조회
         public JobNoticeResponseDto getJobNoticeDetails(@Param("jobNoticeNum") int jobNoticeNum, @Param("Id") String Id);
@@ -38,4 +40,8 @@ import java.util.List;
 
         //지원 수정
         public void updateStatus(@Param("dto")ApplyStatusRequestDto dto);
-    }
+
+        //공고 마감
+        void updateNoticeStatus(int jobNoticeNum);
+        void updateNoticeApplyStatus(int jobNoticeNum);
+}
