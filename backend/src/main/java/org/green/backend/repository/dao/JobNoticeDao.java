@@ -4,6 +4,7 @@ package org.green.backend.repository.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.JobNotice.*;
+import org.green.backend.dto.common.FileDto;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
         public List<String> getStep(int jobNoticeNum);
         public List<String> getWelfare(int jobNoticeNum);
         public List<String> getStack(int jobNoticeNum);
+
 
         //조회수 증가
         public void increaseVcnt(int jobNoticeNum);

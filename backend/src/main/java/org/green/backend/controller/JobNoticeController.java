@@ -36,7 +36,8 @@ public class JobNoticeController {
                                                                  HttpServletRequest request) {
 
             String token = request.getHeader("Authorization");
-
+            System.out.println("ssssssssssssssssssssssssssssss");
+            System.out.println(token);
             JobNoticeResponseDto dto = jobNoticeService.getJobNoticeDetails(jobNoticeNum, token);
             System.out.println("backController : "+dto.toString());
             return ResponseEntity.ok(dto);

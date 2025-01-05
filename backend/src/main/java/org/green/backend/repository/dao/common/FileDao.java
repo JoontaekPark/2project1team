@@ -27,6 +27,8 @@ public interface FileDao {
 
     FileDto findOneByFileGbnCdAndFileRefId(String fileGbnCd, String fileRefId);
 
+    List<FileDto> findAllByFilesGbnCdAndFileRefId(String fileGbnCd, String fileRefId);
+
     void deleteAllFileByFileGbnCdAndFileRefId(String fileGbnCd, String fileRefId);
 
 }

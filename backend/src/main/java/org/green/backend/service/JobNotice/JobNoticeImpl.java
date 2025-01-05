@@ -1,8 +1,10 @@
 package org.green.backend.service.JobNotice;
 
 import org.green.backend.dto.JobNotice.*;
+import org.green.backend.dto.common.FileDto;
 import org.green.backend.repository.dao.JobNoticeDao;
 import org.green.backend.service.common.FileService;
+import org.green.backend.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +26,24 @@ public class JobNoticeImpl implements JobNoticeService {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private JWTUtil jwtUtil;
+
     //채용공고 조회
-    public JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum, String Id) {
+    public JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum, String token) {
         List<String> StepList = jobNoticeDao.getStep(jobNoticeNum);
         List<String> WelfareList = jobNoticeDao.getWelfare(jobNoticeNum);
         List<String> StackList = jobNoticeDao.getStack(jobNoticeNum);
 
-        JobNoticeResponseDto dto = jobNoticeDao.getJobNoticeDetails(jobNoticeNum, Id);
+        //사진파일 조회
+        List<FileDto> fileList = fileService.findAllByFilesGbnCdAndFileRefId("20", String.valueOf(jobNoticeNum));
+        System.out.println(fileList);
+
+        String id = jwtUtil.getId(token);
+        System.out.println("id " + id);
+        JobNoticeResponseDto dto = jobNoticeDao.getJobNoticeDetails(jobNoticeNum, id);
         jobNoticeDao.increaseVcnt(jobNoticeNum);
+        dto.setFileList(fileList);
         dto.setStepList(StepList);
         dto.setWelfareList(WelfareList);
         dto.setStackList(StackList);
@@ -69,6 +81,8 @@ public class JobNoticeImpl implements JobNoticeService {
     @Override
     public List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum) {
         List<ApplyStatusResponseDto> list = jobNoticeDao.getApplyStatusList(jobNoticeNum);
+
+
         // stack 문자열 리스트로 변환
         for (ApplyStatusResponseDto dto : list) {
             String stackNames = dto.getStackNames();

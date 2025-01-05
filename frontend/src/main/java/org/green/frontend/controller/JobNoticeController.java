@@ -48,7 +48,6 @@ public class JobNoticeController {
     public String jobNoticeDetail(@PathVariable("jobNoticeNum") int jobNoticeNum, Model model) throws Exception {
         JobNoticeResponseDto dto = jobNoticeService.getJobNoticeDetail(jobNoticeNum);
         System.out.println("frontController :" + dto);
-//        dto.setVCnt(dto.getVCnt() + 1);
 
         //지원현황
         List<ApplyStatusResponseDto> applyStatusList = jobNoticeService.getApplyStatusList(jobNoticeNum);

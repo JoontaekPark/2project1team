@@ -3,6 +3,7 @@ package org.green.backend.dto.JobNotice;
 
 import lombok.Data;
 import org.green.backend.dto.common.CodeInfoDto;
+import org.green.backend.dto.common.FileDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -37,10 +38,12 @@ public class JobNoticeResponseDto {
     private int likeYn;
     private String jobNoticeStatus;             //공고 상태
 
+    //파일
+    private List<FileDto> fileList;
+
     private List<String> stackList;   // 기술스택 리스트
     private List<String> stepList;     // 절차 리스트
     private List<String> welfareList; // 복리후생 리스트
-//    private List<MultipartFile> files;
 
 
 }

@@ -2,6 +2,7 @@ package org.green.frontend.dto.JobNotice;
 
 import lombok.Data;
 import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.common.FileDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -33,10 +34,10 @@ public class JobNoticeResponseDto {
     private int vCnt;                         // 조회수
     private String instId;                    // 작성자 ID
     private LocalDateTime instDt;                      // 작성일시
-
     private int likeYn;
 
-
+    //파일
+    private List<FileDto> fileList;
 
     private List<String> stackList;   // 기술스택 리스트
     private List<String> stepList;     // 절차 리스트

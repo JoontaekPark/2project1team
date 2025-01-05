@@ -15,10 +15,14 @@
 
         <!--    이미지-->
         <div class="img-container">
-            <div class="grid-container">
-                <!--    <img src="">-->
-                <!--    <img src="">-->
-                <!--    <img src="">-->
+            <div class="grid-item" th:each="file : ${jobNotice.fileList}">
+                    <img class="grid-image" th:src="${file.fileUrl + file.fileNewName + file.fileExt}"
+                         onerror="this.src='/static/img/default_image.png'">
+            </div>
+
+            <div class="grid-item" th:if="${jobNotice.fileList.size() < 3}"
+                 th:each="i : ${#numbers.sequence(1, 3 - jobNotice.fileList.size())}">
+                <img class="grid-image" src="/static/img/default_image.png">
             </div>
         </div>
 

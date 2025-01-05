@@ -3,6 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.green.backend.repository.dao.JobNoticeDao">
+<!--    <select id="getFiles" resultType="org.green.backend.dto.common.FileDto">-->
+<!--        SELECT file_new_name, file_old_name, file_ext, file_url-->
+<!--        FROM tbl_file-->
+<!--        WHERE file_ref_id = #{job_notice_num}-->
+<!--    </select>-->
     <select id="getJobNoticeDetails" resultType="org.green.backend.dto.JobNotice.JobNoticeResponseDto">
         SELECT
         <!--        기본 채용공고 정보-->
@@ -28,7 +33,7 @@
 
         FROM tbl_job_notice jn
 
-<!--        &#45;&#45; 스크랩 여부-->
+<!--      스크랩 여부-->
         LEFT JOIN tbl_like e
         ON e.target = jn.job_notice_num
         AND e.like_gbn_cd = '30'
