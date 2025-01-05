@@ -16,7 +16,7 @@ import java.util.List;
 public interface JobNoticeService {
 
     //리스트
-
+    List<JobNoticeResponseDto> getJobNoticeList(String instId);
 
     //조회
     JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum, String Id);

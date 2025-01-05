@@ -16,7 +16,9 @@ $(function () {
         loop: true
     });
 
-    $(document).on("click", ".bookmark", function () {
+    $(document).on("click", ".bookmark", function (e) {
+
+        e.stopPropagation();
 
         let param = {
             target: this.closest(".job-card").dataset.jobnoticenum,
@@ -34,6 +36,14 @@ $(function () {
 
         }
 
+
+    });
+
+    $(document).on("click", ".job-card", function (){
+
+        let jobNoticeNum = this.dataset.jobnoticenum;
+
+        location.href = "/job-notice-detail/" + jobNoticeNum;
 
     });
 

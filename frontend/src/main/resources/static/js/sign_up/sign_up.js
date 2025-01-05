@@ -170,7 +170,8 @@ $(function () {
         api.post("/api/v1/user-info?fileChk=" + chk.file, utills.input.setFormData(inputData.data), {"Content-Type": "multipart/form-data"})
             .then(data => {
                 if (data.status === "SUCCESS") {
-                    location.href = "/sign-in";
+                    document.querySelector("#sign-out-btn")?.click();
+                    // location.href = "/sign-in";
                 }
             })
             .catch(error => {

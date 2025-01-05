@@ -61,5 +61,13 @@ public class JobNoticeController {
         return "job_notice/job_notice_detail";
     }
 
+    //공고 리스트 조회
+    @GetMapping("/job-notice-list")
+    public String jobNoticeList(Model model) throws Exception {
+        List<JobNoticeResponseDto> list = jobNoticeService.getJobNoticeList();
+        model.addAttribute("jobNoticeList", list);
+        return "job_notice/job_notice_list";
+    }
+
 
 }

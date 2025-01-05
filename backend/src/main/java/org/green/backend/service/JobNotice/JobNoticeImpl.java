@@ -29,6 +29,15 @@ public class JobNoticeImpl implements JobNoticeService {
     @Autowired
     private JWTUtil jwtUtil;
 
+    //채용공고 리스트 조회
+    @Override
+    public List<JobNoticeResponseDto> getJobNoticeList(String token) {
+        String instId = jwtUtil.getId(token);
+
+        List<JobNoticeResponseDto> list = jobNoticeDao.getJobNoticeList(instId);
+        return list;
+    }
+
     //채용공고 조회
     public JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum, String token) {
         List<String> StepList = jobNoticeDao.getStep(jobNoticeNum);
