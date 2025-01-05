@@ -4,15 +4,32 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.green.backend.repository.dao.headhunting.HeadHuntingDao">
-    <select id="getStackFilters" resultType="org.green.backend.dto.headhunting.StackDto">
+    <select id="findFiltersByCategory" resultType="org.green.backend.dto.common.CodeInfoDto">
         SELECT cd, cd_nm, up_cd
         FROM tbl_codeinfo
-        WHERE up_cd = 'stack_cd'
+        WHERE up_cd = #{category}
     </select>
-    
-    <select id="getCareerFilters" resultType="org.green.backend.dto.headhunting.CareerDto">
-        SELECT cd, cd_nm
-        FROM tbl_codeinfo
-        WHERE up_cd = 'job_notice_career_gbn_cd'
+<!-- 필터링 검색 결과 값  -->
+    <select id="search" parameterType="org.green.backend.dto.headhunting.SearchFiltersDto" resultType="org.green.backend.dto.headhunting.JobNoticeDto">
+        SELECT
+        jn.job_notice_num AS jobNoticeNum,
+        jn.job_notice_title AS jobNoticeTitle,
+        c.company_name AS companyName,
+        jn.job_notice_area AS jobNoticeArea
+        FROM tbl_job_notice jn
+        JOIN tbl_company c ON jn.inst_id = c.id
+        WHERE
+        jn.job_notice_career_gbn_cd IN
+        <foreach item="career" collection="careerFilters" open="(" separator="," close=")">
+            #{career}
+        </foreach>
+        AND jn.job_notice_num IN (
+        SELECT job_notice_num
+        FROM tbl_job_notice_stack
+        WHERE stack_cd IN
+        <foreach item="stack" collection="stackFilters" open="(" separator="," close=")">
+            #{stack}
+        </foreach>
+        )
     </select>
 </mapper>

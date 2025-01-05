@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FiltersDto {
-    private List<StackDto> stacks;
-    private List<CareerDto> careers;
+public class SearchFiltersDto {
+    private List<String> stackFilters; // 선택된 기술 스택
+    private List<String> careerFilters; // 선택된 경력
 }

@@ -5,7 +5,6 @@ xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="/static/js/common/axios.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/static/js/headhunting/headhunting.js"></script>
     <link rel="stylesheet" href="/static/css/headhunting/filters.css">
@@ -13,28 +12,20 @@ xmlns:th="http://www.thymeleaf.org">
 <body>
 <h1>헤드헌팅 필터</h1>
 
-<!-- 필터 영역 -->
 <div id="filter-section">
-    <!-- 첫 번째 열: 기술스택 및 경력 선택 -->
-    <div id="filter-category">
-        <button onclick="loadCategory('stack_cd')">기술스택</button>
-        <button onclick="loadCategory('job_notice_career_gbn_cd')">경력</button>
+    <div id="stack-category">
+        <!-- 기술스택 카테고리 버튼들이 여기에 렌더링됩니다 -->
     </div>
-
-    <!-- 두 번째 열: 상세 데이터 -->
-    <div id="filter-items">
-        <!-- 동적으로 데이터가 로드됩니다 -->
-    </div>
-
-    <!-- 세 번째 열: 선택된 필터 -->
-    <div id="selected-filters">
-        <!-- 선택된 항목이 여기에 표시됩니다 -->
+    <div id="career-options">
+        <!-- 경력 버튼들이 여기에 렌더링됩니다 -->
     </div>
 </div>
 
-<div id="action-buttons">
-    <button id="clear-filters">선택 초기화</button>
-    <button id="search-button">선택된 조건 검색하기</button>
+<button id="search-button">검색하기</button>
+<div id="search-results">
+    <!-- 검색 결과가 여기에 표시됩니다 -->
 </div>
+
+
 </body>
 </html>
