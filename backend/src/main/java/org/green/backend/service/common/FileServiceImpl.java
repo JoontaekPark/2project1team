@@ -68,4 +68,10 @@ public class FileServiceImpl implements FileService {
         return fileDao.findOneByFileGbnCdAndFileRefId(fileGbnCd, fileRefId);
     }
 
+    @Override
+    public List<FileDto> findAllByFilesGbnCdAndFileRefId(String fileGbnCd, String fileRefId) {
+        return fileDao.findAllFileByFileGbnCdAndFileRefId(fileGbnCd, fileRefId);
+    }
+
+
 }

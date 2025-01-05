@@ -1,0 +1,286 @@
+
+/*이미지 css*/
+.img-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)); /* 컬럼 크기를 유동적으로 조정 */
+    gap: 15px;
+}
+
+.grid-item {
+    display: flex; /* 아이템 내부 정렬 */
+    justify-content: center; /* 가로 정렬 */
+    align-items: center; /* 세로 정렬 */
+    overflow: hidden; /* 이미지 크기 초과 부분 숨기기 */
+    border: 1px solid #ddd; /* 선택적으로 테두리 추가 */
+    border-radius: 8px; /* 선택적으로 둥근 모서리 */
+}
+
+.grid-image {
+    width: 100%; /* 이미지가 부모 컨테이너를 채움 */
+    height: 100%; /* 이미지 비율을 유지하지 않으려면 고정 크기 */
+    object-fit: cover; /* 이미지 비율 유지하며 컨테이너 채움 */
+    border-radius: 8px; /* 선택적으로 둥근 모서리 */
+}
+
+/*메인 css*/
+.main-container{
+    width: 980px;
+    padding: 30px;
+    margin: 0 auto;
+}
+.title-container{
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-left, .bottom-left, .top-right, .bottom-right{
+    margin: 5px;
+    align-items: center;
+}
+.bottom-right{
+    display: flex;
+}
+
+.bottom-left h3{
+    font-size: 30px;
+}
+
+.top-right{
+    display: flex;
+    justify-content: right;
+}
+
+#like{
+    margin: 0 20px;
+}
+
+.bottom-right{
+    display: flex;
+    justify-content: space-between;
+    width: 310px;
+}
+
+
+/* 커스터마이징된 버튼 */
+button {
+    margin: 5px;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #FF0083;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: 1px solid #FF0083;
+}
+
+#apply-btn{
+    width: 250px;
+    font-weight: bold;
+}
+
+#str-btn{
+    color: black;
+    background-color: white;
+    border: 1px solid #FF0083;
+}
+
+.default-step{
+    margin: 0;
+    color: black;
+    background-color: white;
+    border: 2px solid #FF0083;
+    width: 130px;
+}
+
+.add-step{
+    margin: 0;
+    width: 130px;
+}
+
+#detail-table{
+    margin: 20px 10px; padding: 10px;
+    border-top: 1px solid #D4D4D4;
+    border-bottom: 1px solid #D4D4D4;
+    width: 100%;
+}
+
+#detail-table td{
+    padding: 10px;
+}
+
+.name{
+    width: 7rem;
+    font-weight: bold;
+}
+
+.table-content{
+    color: gray;
+}
+
+/*메인 상세*/
+.main-content, .mn-form h3, .mn-form p, .bottom-form h3, .bottom-form div, .bottom-form{
+    margin: 10px;
+}
+
+.mn-form, .bottom-form {
+    margin: 100px 0;
+}
+
+#stepIcon{
+    padding : 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.line {
+    width: 70px;
+    height: 2px;
+    background-color: #FF0083;
+}
+
+#jobNoticeDetail, #welfare{
+    margin : 30px 0;
+}
+
+hr{
+    border: 1px solid #D4D4D4;
+}
+
+#welfare-content{
+    /*min-height: 70px;*/
+    /*border: 1px solid #D4D4D4;*/
+    border-radius: 7px;
+    padding: 10px;
+
+}
+
+#welfare-content span{
+    font-weight: bold;
+    margin: 20px;
+}
+
+#notice-period{
+    margin-bottom: 30px;
+}
+
+.board{
+    margin: 10px; padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;    /* 자식 요소 가로 가운데 정렬 */
+}
+
+.board #board-content{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#board-icon{
+    margin-top: 30px;
+    background-color: #D4D4D4;
+    border-radius: 15px;
+    width: 200px; height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#board-icon p{
+    font-size: 23px;
+}
+
+#board-icon i{
+    margin-left: 10px;
+}
+
+/*지원현황*/
+.apply, .apply h3{
+    margin: 30px 10px;
+}
+
+
+
+#apply-con{
+    margin: 10px; padding: 20px;
+    border: 1px solid #D4D4D4;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#apply-left{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#name{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+#apply-left-content{
+    margin: 0 10px;
+    color: gray;
+}
+
+#apply-right{
+    display: flex;
+    flex-direction: column;
+}
+
+#apply-dt{
+    margin: 10px;
+    color: gray;
+    text-align: right;
+}
+
+.stack-btns{
+    height: 25px;
+    line-height: 10px;
+    font-size: 12px;
+    border-radius: 7px;
+}
+
+#apply-one{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 600px;
+}
+
+#apply-check{
+    margin: 0 auto;
+    align-content: center;
+}
+
+.jobNoticeWorkGbnCd{
+    box-sizing: border-box;
+    height: 40px; /* 48px */
+    width: 100px    ;
+    border-radius: 15px; /* 8px */
+    margin: 0.5rem; /* 8px */
+    padding-left: 0.5rem; /* 8px */
+    font-weight: 500;
+    font-size: 1rem; /* 16px */
+    border: 1px solid #D4D4D4;
+    /*transition: all 0.3s ease;*/
+}
+
+.jobNoticeWorkGbnCd:focus{
+        outline: none;
+        border: 1px solid #FF0083;
+    }
+
+
+
+

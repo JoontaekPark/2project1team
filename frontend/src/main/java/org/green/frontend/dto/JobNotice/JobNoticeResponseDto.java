@@ -1,9 +1,8 @@
-package org.green.backend.dto.JobNotice;
-
+package org.green.frontend.dto.JobNotice;
 
 import lombok.Data;
-import org.green.backend.dto.common.CodeInfoDto;
-import org.green.backend.dto.common.FileDto;
+import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.common.FileDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -12,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created on 2024-12-27 by 최윤서
+ * Created on 2025-01-01 by 최윤서
  */
 @Data
 public class JobNoticeResponseDto {
@@ -36,7 +35,6 @@ public class JobNoticeResponseDto {
     private String instId;                    // 작성자 ID
     private LocalDateTime instDt;                      // 작성일시
     private int likeYn;
-    private String jobNoticeStatus;             //공고 상태
 
     //파일
     private List<FileDto> fileList;
@@ -44,6 +42,6 @@ public class JobNoticeResponseDto {
     private List<String> stackList;   // 기술스택 리스트
     private List<String> stepList;     // 절차 리스트
     private List<String> welfareList; // 복리후생 리스트
-
+//    private List<MultipartFile> files;
 
 }

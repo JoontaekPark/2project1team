@@ -86,8 +86,10 @@
         }
 
         #file-names {
-            width: 750px;
+            /*width: 750px;*/
+            flex: 1;
         }
+
 
         /* 실제 file input 숨기기 */
         .file-upload {
@@ -142,15 +144,15 @@
         }
 
         #step-form {
-            width: 850px;
+            /*width: 850px;*/
             margin: 10px;
             padding: 20px;
             background-color: #D4D4D4;
         }
 
         .text-form {
-            width: 850px;
-            height: 350px;
+            /*width: 850px;*/
+            /*height: 350px;*/
             margin: 10px;
             padding: 20px;
             background-color: #D4D4D4;
@@ -238,7 +240,12 @@
 
             <div class="form">
                 <p><span class="red-point">* </span> 근무형태</p>
-                <input type="text" id="jobNoticeWorkGbnCd" placeholder="근무형태를 입력하세요">
+                <select id="jobNoticeWorkGbnCd">
+                    <option selected>근무형태 선택</option>
+                    <th:block th:each="work : ${jobNoticeWorkGbnCdList}">
+                        <option th:value="${work.cd}" th:text="${work.cdNm}"></option>
+                    </th:block>
+                </select>
             </div>
         </div>
 
@@ -476,7 +483,7 @@
         })
             .then(response => {
                 alert('공고 등록이 완료되었습니다.');
-                location.href="/main";
+                location.href = "/main";
             })
             .catch(error => {
                 console.log("실패: " + error);

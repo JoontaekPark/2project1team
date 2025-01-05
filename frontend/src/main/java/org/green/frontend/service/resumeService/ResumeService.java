@@ -1,8 +1,8 @@
 package org.green.frontend.service.resumeService;
 
 import org.green.frontend.dto.common.CodeInfoDto;
-import org.green.frontend.dto.resume.ResumeDto;
-import org.green.frontend.global.common.ApiResponse;
+import org.green.frontend.dto.common.UserDto;
+import org.green.frontend.dto.resume.ResumeInfoAll2Dto;
 
 import java.util.List;
 
@@ -34,4 +34,5 @@ public interface ResumeService {
 
     public List<CodeInfoDto> resumeMilitaryFinishGbnCd() throws Exception;
 
+    public UserDto getUser() throws Exception;
 }
