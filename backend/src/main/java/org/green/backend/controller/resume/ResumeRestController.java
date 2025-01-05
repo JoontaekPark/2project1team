@@ -46,7 +46,7 @@ public class ResumeRestController {
     private JWTUtil jwtUtil;
 
 
-    @PostMapping("regProc2")
+    @PostMapping("reg-proc2")
     public String regProc2(@ModelAttribute ResumeInfoAll2Dto resumeDto ,
                            HttpServletRequest request) throws Exception {
 
@@ -183,30 +183,27 @@ public class ResumeRestController {
 
 
 
-    @GetMapping("getResumeDetail")
+    @GetMapping("getresume-detail")
     public ResumeInfoAll2Dto getResumeDetail(@RequestParam int resumeId) {
-
-
-
         ResumeInfoAll2Dto resumeInfo = resumeService.getResumeDetail(resumeId);
         System.out.println("Backend RestResumeController info : " + resumeInfo);
         return resumeInfo;
     }
 
-    @GetMapping("getResumeDetail2")
+    @GetMapping("getresume-detail2")
     public ResumeInfoAll2Dto getResumeDetail2(@RequestParam int resumeId) {
         ResumeInfoAll2Dto resumeInfo = resumeService.getResumeInfo(resumeId);
         return resumeInfo;
     }
 
 
-    @GetMapping("getLoginUser")
+    @GetMapping("get-loginuser")
     public UserDto getLoginUser(HttpServletRequest request) throws Exception{
         String token = request.getHeader("Authorization");
         return userService.userInfo(token);
     }
 
-    @GetMapping("getResumeUser")
+    @GetMapping("get-resumeuser")
     public UserDto getResumeUser(HttpServletRequest request,String instId) throws Exception{
         UserDto user = resumeService.getResumeUser(instId);
         return user;
@@ -214,26 +211,26 @@ public class ResumeRestController {
 
 
 
-    @GetMapping("getResumeList")
+    @GetMapping("/get-resumelist")
     public List<ResumeDto> getResumeList(HttpServletRequest request,@RequestParam String instId) throws Exception{
         List<ResumeDto> resumes = resumeService.getResumeList(instId);
         return resumes;
     }
 
-    @GetMapping("updateMainResume")
+    @GetMapping("update-mainresume")
     public void updateMainResume(@RequestParam int resumeId) {
         System.out.println(resumeId);
         resumeService.updateMainResume(resumeId);
     }
 
-    @GetMapping("getApplyStatus")
+    @GetMapping("get-applystatus")
     public List<userApplyStatus> getApplyStatus(@RequestParam String instId) throws Exception {
 
         List<userApplyStatus> applyStatusList = resumeService.getApplyList(instId);
         return applyStatusList;
     }
 
-    @GetMapping("getCntApply")
+    @GetMapping("get-cntapply")
     public GetCntApplyDto getCntApply(@RequestParam String instId) throws Exception {
 
         GetCntApplyDto cntApply = resumeService.getCntApply(instId);

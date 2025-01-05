@@ -150,7 +150,7 @@
             <div class="resume-container">
                 <!-- New Resume Card -->
                 <div class="resume-card">
-                    <div class="new-resume" onclick="window.location.href='/resume/resumeForm2';">새 이력서 작성</div>
+                    <div class="new-resume" onclick="window.location.href='/resume/resume-form2';">새 이력서 작성</div>
                 </div>
 
                 <!-- Resume List Cards -->
@@ -167,7 +167,7 @@
 <!--                    </div>-->
 
                     <div class="title">
-                        <a th:href="@{/resume/resumeDetail/{resumeId}(resumeId=${resume.resumeId})}" class="resume-link" th:text="${resume.resumeTitle}"></a>
+                        <a th:href="@{/resume/resume-detail/{resumeId}(resumeId=${resume.resumeId})}" class="resume-link" th:text="${resume.resumeTitle}"></a>
                     </div>
 
                     <div th:text="${resume != null ? resume.resumeMemo : '메모를 입력하지 않았습니다.'}"></div>
@@ -197,7 +197,7 @@
         // 확인용 로그
         console.log("Resume ID:", resumeId);
 
-        axios.get(`http://localhost:8080/resume/updateMainResume`, {
+        axios.get(`http://localhost:8080/resume/update-mainresume`, {
             params: {resumeId: resumeId}
         })
             .then(response => {

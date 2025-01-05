@@ -64,7 +64,7 @@ public class ResumeController {
     }
 
 
-    @RequestMapping("/resumeForm2")
+    @RequestMapping("/resume-form2")
     public String resumeForm2(Model model) throws Exception {
 
         UserDto user = resumeService.getUser();
@@ -105,35 +105,35 @@ public class ResumeController {
         model.addAttribute("jobNoticeStackGbnCdList", jobNoticeStackGbnCdList);
 
 
-        return "/resume/resumeRegForm2";
+        return "/resume/resume_reg_form2";
     }
 
-    @RequestMapping("/resumeDetail/{resumeId}")
+    @RequestMapping("/resume-detail/{resumeId}")
     public String resumeDetail(@PathVariable("resumeId") int resumeId, Model model) throws Exception {
 
 
-        ApiResponse<ResumeInfoAll2Dto> response = webClientUtil.getApi("/resume/getResumeDetail2?resumeId=" + resumeId, ResumeInfoAll2Dto.class);
+        ApiResponse<ResumeInfoAll2Dto> response = webClientUtil.getApi("/resume/getresume-detail2?resumeId=" + resumeId, ResumeInfoAll2Dto.class);
         ResumeInfoAll2Dto resumeInfo = response.getBody();
         String instId = resumeInfo.getBasicInfo().getInstId();
-        ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/getResumeUser?instId=" + instId, UserDto.class);
+        ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/get-resumeuser?instId=" + instId, UserDto.class);
         UserDto user = userResponse.getBody();
         model.addAttribute("user", user);
         model.addAttribute("resume", resumeInfo);
-        return "/resume/resumeDetail";
+        return "/resume/resume_detail";
     }
 
-    @GetMapping("/resumeList")
+    @GetMapping("/resume-list")
     public String resumeList(Model model, HttpSession session) throws Exception {
 
 
         SessionDto user = (SessionDto) session.getAttribute("user");
         String instId = user.getId();
-        ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/getLoginUser?instId=" + instId, UserDto.class);
+        ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/get-loginuser?instId=" + instId, UserDto.class);
 
         UserDto loginUser = userResponse.getBody();
 
 
-        ApiResponse<List> resumesInfo = webClientUtil.getApi("/resume/getResumeList?instId=" + instId, List.class);
+        ApiResponse<List> resumesInfo = webClientUtil.getApi("/resume/get-resumelist?instId=" + instId, List.class);
 
         List<ResumeDto> resumes = resumesInfo.getBody();
 
@@ -145,25 +145,25 @@ public class ResumeController {
         model.addAttribute("resumes", resumes);
 
 
-        return "/resume/resumeList";
+        return "/resume/resume_list";
     }
 
-    @RequestMapping("/applyStatusList")
+    @RequestMapping("/applystatus-list")
         public String applyStatus (HttpSession session,Model model)throws Exception {
 
         SessionDto user = (SessionDto) session.getAttribute("user");
         String instId = user.getId();
-        ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/getLoginUser?instId=" + instId, UserDto.class);
+        ApiResponse<UserDto> userResponse = webClientUtil.getApi("/resume/get-loginuser?instId=" + instId, UserDto.class);
         UserDto loginUser = userResponse.getBody();
 
-        ApiResponse<List> applyStatusList1 = webClientUtil.getApi("/resume/getApplyStatus?instId=" + instId, List.class);
+        ApiResponse<List> applyStatusList1 = webClientUtil.getApi("/resume/get-applystatus?instId=" + instId, List.class);
         List<userApplyStatus> applyStatusList = applyStatusList1.getBody();
         model.addAttribute("applyStatusList", applyStatusList);
 
-        ApiResponse<GetCntApplyDto> cntApplyStatus = webClientUtil.getApi("/resume/getCntApply?instId=" + instId, GetCntApplyDto.class);
+        ApiResponse<GetCntApplyDto> cntApplyStatus = webClientUtil.getApi("/resume/get-cntapply?instId=" + instId, GetCntApplyDto.class);
         GetCntApplyDto cntApply = cntApplyStatus.getBody();
         model.addAttribute("cntApply", cntApply);
-            return "/resume/applyStatusList";
+            return "/resume/applystatus_list";
         }
 
     }

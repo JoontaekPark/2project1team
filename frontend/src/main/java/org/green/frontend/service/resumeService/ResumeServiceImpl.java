@@ -168,7 +168,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public UserDto getUser() throws Exception {
 
-        ApiResponse<UserDto> response = webClientUtil.getApi("/resume/getLoginUser", UserDto.class);
+        ApiResponse<UserDto> response = webClientUtil.getApi("/resume/get-loginuser", UserDto.class);
 //뒤에꺼 매개변수에 (url,반환타입)
         return response.getBody();
     }
