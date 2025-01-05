@@ -30,7 +30,7 @@ public class ResumeServiceImpl implements ResumeService {
         resumeDao.insertResumeBase(instId, resumeDto);
         String resumeNum = String.valueOf(resumeId);
         if (resumeDto.getResumeProfile() != null) {
-            fileService.saveFile(resumeDto.getResumeProfile(), "30", resumeNum, "임시 가라값 박준택임");
+            fileService.saveFile(resumeDto.getResumeProfile(), "30", resumeNum, instId);
         }
     }
 
@@ -80,7 +80,6 @@ public class ResumeServiceImpl implements ResumeService {
     public void insertResumePrtf(int resumeId, List<ResumePrtfDto> resumePrtfDto) throws IOException {
         //resumeDao.insertResumePrtf(resumeId, resumePrtfDto);
 
-        // 리스트의 각 항목에 대해 반복문을 돌면서 파일을 저장하는 작업 수행
 
         String resumeNum = String.valueOf(resumeId);
         for (ResumePrtfDto prtfDto : resumePrtfDto) {
@@ -90,7 +89,6 @@ public class ResumeServiceImpl implements ResumeService {
             int prtfNum = resumeDao.getResumePrtfNum();
 
             if (prtfDto.getResumePrtfFile() != null) {
-                // resumePrtfFile이 존재하는 경우에만 파일 저장
                 fileService.saveFile(prtfDto.getResumePrtfFile(), "40", String.valueOf(prtfNum), "임시 가라값 박준택임");
             }
         }
