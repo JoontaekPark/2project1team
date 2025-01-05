@@ -34,7 +34,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/job-seeker")
+    @GetMapping("/")
     public String jobSeeker(Model model) throws Exception {
 
         Map<String, Object> jobNotices = userService.getJobNotices();

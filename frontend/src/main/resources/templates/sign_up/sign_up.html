@@ -11,7 +11,7 @@
     <body>
         <main layout:fragment="content" style="display: flex">
             <th:block th:if="${mode == 'edit'}">
-            <aside layout:fragment="sidebar" th:replace="~{fragment/aside :: asideUser}"></aside>
+                <aside th:replace="~{fragment/aside :: ${session != null and session.user != null and session.user.userGbnCd == '10' ? 'asideUser' : (session != null and session.user != null and session.user.userGbnCd == '20' ? 'asideCompany' : 'asideUser')}}"></aside>
             </th:block>
             <div class="sign-up">
                 <input type="hidden" name="userGbnCd" id="userGbnCd" th:value="${mode == 'insert' ? userGbnCd : userInfo?.userGbnCd}">
