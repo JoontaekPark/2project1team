@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
+<head>
+    <meta charset="UTF-8">
+    <title>1:1문의 상세</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/js/common/axios.js"></script> <!-- api 정의된 파일 -->
+    <script src="/static/js/board/board.js" defer></script> <!-- board.js -->
+    <link rel="stylesheet" href="/static/css/board/board_detail.css" />
+    <link rel="stylesheet" href="/static/css/layout.css">
+</head>
+
+<body>
+<main layout:fragment="content">
+<h1>1:1문의하기</h1>
+<h1 id="boardTitle"></h1>
+<p class="dt1">등록일 <span id="instDt"></span></p>
+<div class="content">
+    <img src="/static/img/board_profile.png" alt="프로필">
+    <p class="instidP"><span id="instId"></span></p>
+    <p class="pinst2">등록일 <span id="instDt2"></span></p>
+</div>
+
+<p class="board-content"><span id="boardContent"></span></p>
+
+<ul id="replyList"></ul>
+<!-- 답변 버튼 -->
+
+
+<!-- 답변 폼 -->
+<div id="replyForm">
+    <button id="commentSubmitButton">등록</button>
+    <textarea id="commentInput" placeholder="답변 내용을 입력하세요"></textarea>
+</div>
+<a href="/board/list">목록</a>
+</main>
+</body>
+</html>
