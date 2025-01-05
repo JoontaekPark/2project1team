@@ -3,11 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.green.backend.repository.dao.JobNoticeDao">
+<!--    <select id="getFiles" resultType="org.green.backend.dto.common.FileDto">-->
+<!--        SELECT file_new_name, file_old_name, file_ext, file_url-->
+<!--        FROM tbl_file-->
+<!--        WHERE file_ref_id = #{job_notice_num}-->
+<!--    </select>-->
     <select id="getJobNoticeDetails" resultType="org.green.backend.dto.JobNotice.JobNoticeResponseDto">
         SELECT
         <!--        기본 채용공고 정보-->
         jn.job_notice_num,
-        c.name AS company_name <!-- 기업 이름-->
+        c.name AS company_name, <!-- 기업 이름-->
         jn.job_notice_title,
         jn.job_notice_area,
         jn.job_notice_worktime,
@@ -21,15 +26,23 @@
         jn.v_cnt,
         jn.inst_id,
         jn.inst_dt,
-        work_type.name AS work_type_name,
-        career.name AS career_name,
-        education.name AS education_name
+        work.cd_nm AS work_name,
+        career.cd_nm AS career_name,
+        education.cd_nm AS education_name,
+        IF(e.target IS NULL, 0, 1) AS likeYn
 
         FROM tbl_job_notice jn
+
+<!--      스크랩 여부-->
+        LEFT JOIN tbl_like e
+        ON e.target = jn.job_notice_num
+        AND e.like_gbn_cd = '30'
+        AND e.inst_id = #{Id}
+
         <!-- 근무 형태-->
-        LEFT JOIN tbl_codeinfo work_type
-        ON jn.job_notice_work_gbn_cd = work_type.cd
-        AND work_type.up_cd='job_notice_work_gbn_cd'
+        LEFT JOIN tbl_codeinfo work
+        ON jn.job_notice_work_gbn_cd = work.cd
+        AND work.up_cd='job_notice_work_gbn_cd'
 
         <!-- 경력 구분-->
         LEFT JOIN tbl_codeinfo career
@@ -44,10 +57,34 @@
         <!--        기업 이름 가져오기-->
         JOIN tbl_user c
         ON jn.inst_id = c.id
+
         WHERE job_notice_num = #{jobNoticeNum}
     </select>
+    <select id="getWelfare">
+        SELECT job_notice_welfare_detail
+        FROM tbl_job_notice_welfare
+        WHERE job_notice_num = #{jobNoticeNum};
+    </select>
+    <select id="getStep">
+        SELECT job_notice_step_detail
+        FROM tbl_job_notice_step
+        WHERE job_notice_num = #{jobNoticeNum};
+    </select>
+    <select id="getStack">
+        SELECT c.cd_nm AS stack_name
+        FROM tbl_job_notice_stack js
+        LEFT JOIN tbl_codeinfo c
+        ON js.stack_cd = c.cd AND up_cd
+        IN (SELECT cd FROM tbl_codeinfo WHERE up_cd = 'stack_cd')
+        WHERE js.job_notice_num = #{jobNoticeNum};
+    </select>
 
-
+<!--    조회수 증가-->
+    <update id="increaseVcnt">
+        UPDATE tbl_job_notice
+        SET v_cnt = v_cnt+1
+        WHERE job_notice_num = #{job_notice_num}
+    </update>
 
 <!--    등록-->
     <insert id="registJobNotice" parameterType="org.green.backend.dto.JobNotice.JobNoticeRequestDto" keyProperty="jobNoticeNum" useGeneratedKeys="true">
@@ -105,4 +142,34 @@
         </foreach>
     </insert>
 
+<!--    지원현황-->
+    <select id="getApplyStatusList" resultType="org.green.backend.dto.JobNotice.ApplyStatusResponseDto">
+        SELECT
+        u.id AS user_id,
+        r.resume_id,
+        jb.job_notice_num,
+        u.name,
+        u.gender_cd,
+        r.resume_title,
+        ap.inst_dt,
+        ap.apply_gbn_cd,
+        c.cd_nm AS apply_gbn_name,
+        GROUP_CONCAT(ci.cd_nm LIMIT 3) AS stack_names
+        FROM tbl_apply_status ap
+        JOIN tbl_resume r ON r.resume_id = ap.resume_id
+        JOIN tbl_user u ON u.id = r.inst_id
+        JOIN tbl_job_notice jb ON jb.job_notice_num = ap.job_notice_num
+        JOIN tbl_resume_stack rst ON rst.resume_id = ap.resume_id
+        JOIN tbl_codeinfo c ON ap.apply_gbn_cd = c.cd AND c.up_cd = 'apply_gbn_cd'
+        JOIN tbl_codeinfo ci ON rst.stack_cd = ci.cd and ci.up_cd IN (SELECT cd FROM tbl_codeinfo WHERE up_cd = 'stack_cd')
+        WHERE jb.job_notice_num = #{jobNoticeNum}
+        GROUP BY r.resume_id, u.id, jb.job_notice_num, ap.inst_dt, apply_gbn_cd;
+    </select>
+
+    <update id="updateStatus">
+        UPDATE tbl_apply_status
+        SET apply_gbn_cd = #{dto.applyGbnCd}
+        WHERE job_notice_num = #{dto.jobNoticeNum}
+        AND resume_id = #{dto.resumeId}
+    </update>
 </mapper>

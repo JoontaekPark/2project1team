@@ -1,20 +1,21 @@
-package org.green.backend.dto.resume;
+package org.green.frontend.dto.resume;
 
 import lombok.Data;
-import org.green.backend.dto.common.FileDto;
+import lombok.ToString;
+import org.green.frontend.dto.common.FileDto;
 
 import java.util.List;
 
 /**
- * packageName    : org.green.backend.dto.resume
- * fileName       : ResumeInfoAll2
+ * packageName    : org.green.frontend.dto.resume
+ * fileName       : ResumeAll2Dto
  * author         : 박준택
- * date           : 24. 12. 30.
+ * date           : 2025-01-02
  * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 24. 12. 30.        박준택       최초 생성
+ * 2025-01-02        박준택       최초 생성
  */
 @Data
 public class ResumeInfoAll2Dto {
@@ -41,3 +42,5 @@ public class ResumeInfoAll2Dto {
     List<ResumePrtfDto> prtfs;
     List<ResumeStackDto> stacks;
 }
+
+

@@ -24,7 +24,7 @@ public class ResumeActiveDto {
     // 활동 상세 내용
     private String resumeActiveDetail;
     // 활동 시작일
-    private LocalDate resumeActiveStrDate;
+    private String resumeActiveStrDate;
     // 활동 종료일
-    private LocalDate resumeActiveEndDate;
+    private String resumeActiveEndDate;
 }

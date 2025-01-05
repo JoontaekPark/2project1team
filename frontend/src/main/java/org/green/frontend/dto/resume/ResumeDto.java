@@ -1,6 +1,7 @@
 package org.green.frontend.dto.resume;
 
 import lombok.Data;
+import org.green.frontend.dto.common.FileDto;
 
 import java.time.LocalDate;
 
@@ -31,5 +32,8 @@ public class ResumeDto {
         private String instId;
         // 작성일시
         private LocalDate instDt;
+
+        //이력서 증명사진
+        private FileDto resumeFile;
     }
 

@@ -11,11 +11,16 @@
         <div class="header-container">
             <!--        구직자용-->
             <div class="size">
-                <ul class="nav-content" th:if="${session?.user?.userGbnCd != '20' && session?.user?.userGbnCd != '30'}">
+                <!-- 비회원용-->
+                <ul class="nav-content" th:if="${session.user == null}">
                     <li><a href="/job-seeker">LOGO 1ike</a></li>
-                    <li><a href="#">이력서</a></li>
+                </ul>
+
+                <ul class="nav-content" th:if="${session?.user?.userGbnCd != '20' && session?.user?.userGbnCd != '30' && session.user != null}">
+                    <li><a href="/job-seeker">LOGO 1ike</a></li>
+                    <li><a href="/resume/resume-list">이력서</a></li>
                     <li><a href="#">헤드헌팅</a></li>
-                    <li><a href="#">지원현황</a></li>
+                    <li><a href="/resume/applystatus-list">지원현황</a></li>
                     <li><a href="#">고객센터</a></li>
                 </ul>
                 <!--        기업용-->

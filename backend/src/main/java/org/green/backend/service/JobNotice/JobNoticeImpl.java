@@ -1,16 +1,19 @@
 package org.green.backend.service.JobNotice;
 
-import org.green.backend.dto.JobNotice.JobNoticeRequestDto;
-import org.green.backend.dto.JobNotice.JobNoticeResponseDto;
+import org.green.backend.dto.JobNotice.*;
+import org.green.backend.dto.common.FileDto;
 import org.green.backend.repository.dao.JobNoticeDao;
 import org.green.backend.service.common.FileService;
+import org.green.backend.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created on 2024-12-27 by 최윤서
@@ -23,9 +26,28 @@ public class JobNoticeImpl implements JobNoticeService {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private JWTUtil jwtUtil;
+
     //채용공고 조회
-    public JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum) {
-        return jobNoticeDao.getJobNoticeDetails(jobNoticeNum);
+    public JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum, String token) {
+        List<String> StepList = jobNoticeDao.getStep(jobNoticeNum);
+        List<String> WelfareList = jobNoticeDao.getWelfare(jobNoticeNum);
+        List<String> StackList = jobNoticeDao.getStack(jobNoticeNum);
+
+        //사진파일 조회
+        List<FileDto> fileList = fileService.findAllByFilesGbnCdAndFileRefId("20", String.valueOf(jobNoticeNum));
+        System.out.println(fileList);
+
+        String id = jwtUtil.getId(token);
+        System.out.println("id " + id);
+        JobNoticeResponseDto dto = jobNoticeDao.getJobNoticeDetails(jobNoticeNum, id);
+        jobNoticeDao.increaseVcnt(jobNoticeNum);
+        dto.setFileList(fileList);
+        dto.setStepList(StepList);
+        dto.setWelfareList(WelfareList);
+        dto.setStackList(StackList);
+        return dto;
     }
 
     //채용공고 등록
@@ -53,6 +75,40 @@ public class JobNoticeImpl implements JobNoticeService {
         // 4. 복리후생 등록
         jobNoticeDao.registWelfares(jobNoticeNum, dto.getWelfareList());
     }
+
+
+    //지원현황 조회
+    @Override
+    public List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum) {
+        List<ApplyStatusResponseDto> list = jobNoticeDao.getApplyStatusList(jobNoticeNum);
+
+
+        // stack 문자열 리스트로 변환
+        for (ApplyStatusResponseDto dto : list) {
+            String stackNames = dto.getStackNames();
+                List<String> stackCdList = Arrays.asList(stackNames.split(","));
+                dto.setStackCdList(stackCdList);
+        }
+
+        //M/F 성별 변환
+        for(ApplyStatusResponseDto dto : list){
+            if(Objects.equals(dto.getGenderCd(), "M")){
+                dto.setGenderCd("남");
+            }else if(Objects.equals(dto.getGenderCd(), "F")){
+                dto.setGenderCd("여");
+            }
+        }
+
+        return list;
+    }
+
+    //지원현황 업데이트
+    @Override
+    public void updateStatus(ApplyStatusRequestDto dto) throws IOException {
+        jobNoticeDao.updateStatus(dto);
+    }
+
+
 
 
 }

@@ -15,6 +15,7 @@ package org.green.frontend.utils;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateUtil {
@@ -22,4 +23,15 @@ public class DateUtil {
         if (date == null) return "";
         return date.format(DateTimeFormatter.ofPattern("yyyy-MM"));
     }
+
+    public String formatYearMonthDay(LocalDate date) {
+        if (date == null) return "";
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    public String formatYearMonthDayLocalDateTime(LocalDateTime date) {
+        if (date == null) return "";
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
 }

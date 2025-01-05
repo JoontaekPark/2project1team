@@ -2,8 +2,12 @@ package org.green.frontend.service.resumeService;
 
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.common.UserDto;
+import org.green.frontend.dto.company.CompanyDto;
 import org.green.frontend.dto.resume.ResumeDto;
+import org.green.frontend.dto.resume.ResumeInfoAll2Dto;
 import org.green.frontend.global.common.ApiResponse;
+import org.green.frontend.utils.WebClientUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -26,7 +30,7 @@ import java.util.List;
 public class ResumeServiceImpl implements ResumeService {
 
  private final WebClient webClient;
-
+ private final WebClientUtil webClientUtil;
 
     @Override
     public List<CodeInfoDto> certResult() throws Exception {
@@ -160,6 +164,14 @@ public class ResumeServiceImpl implements ResumeService {
         return (List<CodeInfoDto>) result.getBody();
     }
 
+
+    @Override
+    public UserDto getUser() throws Exception {
+
+        ApiResponse<UserDto> response = webClientUtil.getApi("/resume/get-loginuser", UserDto.class);
+//뒤에꺼 매개변수에 (url,반환타입)
+        return response.getBody();
+    }
 
 
 }
