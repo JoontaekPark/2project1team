@@ -1,17 +1,19 @@
 // 1:1 문의 등록
 function registerBoard() {
     const data = {
-        boardTarget: "test", // 임시 저장
+        //boardTarget: document.getElementById("boardTarget").value, // 문의 대상
+        boardTarget: "넷플릭스2", // 임시 저장
         boardTitle: document.getElementById("boardTitle").value,
         boardContent: document.getElementById("boardContent").value,
         boardGbnCd: "10",
         boardStatusCd: "10",
-        instId: "tjsdud", // 임시 저장
+        //instId: "tjsdud", // 임시 저장
     };
 
     api.post('/api/board/regist', data)
         .then(() => {
             alert("문의가 등록되었습니다.");
+            window.location.href = "/board/list"
         })
         .catch(error => {
             console.error("등록 실패:", error);
@@ -36,15 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 1:1 문의 리스트
 function fetchBoardList() {
-    const userId = 'tjsdud';
-    const userGbnCd = '10';
+    //const userId = 'tjsdud';
+    //const userGbnCd = '10';
 
-    api.get('/api/board/list', {userId, userGbnId: userGbnCd})
+    api.get('/api/board/list')
         .then(response => {
             console.log("리스트에서 응답을 받는지" + response.body); // 응답 데이터 출력
             console.log('Response as JSON:', JSON.stringify(response.body, null, 2)); // JSON
             const boardList = response.body;
-            renderBoardList(boardList, userGbnCd);
+            renderBoardList(boardList);
             console.log("상태 업데이트 응답 데이터:", response);
         })
         .catch(error => {
