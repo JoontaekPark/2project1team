@@ -48,7 +48,7 @@ public class BoardController {
         // JWT에서 사용자 ID 추출
         String token = request.getHeader("Authorization");
         String userId = jwtUtil.getId(token); // JWT에서 사용자 ID 추출
-
+        System.out.println(userId);
         // 작성자 ID를 DTO에 설정
         boardDto.setInstId(userId);
 
