@@ -69,5 +69,12 @@ public interface ResumeDao {
     //로그인 되있는 이력서 리스트 들고오기
     public List<ResumeDto> getResumeList(String instId);
 
+    public void updateMainResume1(@Param("resumeId")int resumeId);
+    public void updateMainResume2();
+
+    //구직자의 지원현황 리스트
+    public List<userApplyStatus> getApplyList(String instId);
+
+    public GetCntApplyDto getCntApply(String instId);
 }
 

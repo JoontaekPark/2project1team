@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/js/common/axios.js"></script>
+    <title>지원현황</title>
+    <link rel="stylesheet" href="/static/css/layout.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .layout {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .status-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .status-container .status {
+            flex: 1;
+        }
+
+        .status-container .status h3 {
+            margin: 0;
+            color: #ff0099; /* 핑크 색상 */
+        }
+
+        .status-container .status p {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .search-bar button {
+            background-color: #ff0099;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #e60080;
+        }
+
+        .table-container {
+            margin-top: 20px;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #f9f9f9;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        table .status-final {
+            color: #28a745; /* 최종합격 색상 */
+        }
+
+        table .status-fail {
+            color: #dc3545; /* 불합격 색상 */
+        }
+    </style>
+</head>
+<body>
+<header th:replace="~{fragment/header :: userHeader}"></header>
+
+<div class="layout">
+    <main layout:fragment="content">
+        <div class="status-container">
+            <div class="status">
+                <h3 th:text="${cntApply.totalCnt}">1384</h3>
+                <p>전체</p>
+            </div>
+            <div class="status">
+                <h3 th:text="${cntApply.nocheckCnt}">54</h3>
+                <p>진행중</p>
+            </div>
+            <div class="status">
+                <h3 th:text="${cntApply.passCnt}">71</h3>
+                <p>최종합격</p>
+            </div>
+            <div class="status">
+                <h3 th:text="${cntApply.failCnt}">200</h3>
+                <p>불합격</p>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="회사명 검색" />
+            <button>검색</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>지원 공고</th>
+                    <th>지원 이력서</th>
+                    <th>지원 일시</th>
+                    <th>진행 상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- applyStatusList를 반복하여 테이블에 데이터 표시 -->
+                <tr th:each="applyStatus : ${applyStatusList}">
+                    <td th:text="${applyStatus.jobNoticeTitle}">(주)준택물산</td> <!-- 지원 공고 -->
+                    <td th:text="${applyStatus.resumeTitle}">1번이력서</td> <!-- 이력서 번호 -->
+                    <td th:text="${applyStatus.instDt}"></td> <!-- 지원 날짜 -->
+                    <td th:class="${applyStatus.applyGbnCd == '최종합격' ? 'status-final' : 'status-fail'}"
+                        th:text="${applyStatus.applyGbnCd}">최종합격</td> <!-- 진행 상태 -->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+</html>

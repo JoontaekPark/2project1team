@@ -515,6 +515,39 @@ SELECT DISTINCT
 
 
 
+<!--    입력받은 resumeId를 대표이력서로 설정-->
+    <update id="updateMainResume1">
+        UPDATE tbl_resume SET resume_main_yn = 'Y' WHERE resume_id = #{resumeId}
+    </update>
+<!--원래 대표 이력서인걸 N으로 내림-->
+    <update id="updateMainResume2">
+        UPDATE tbl_resume SET resume_main_yn = 'N' WHERE resume_main_yn='y'
+    </update>
+
+    <select id="getApplyList" resultType="org.green.backend.dto.resume.userApplyStatus">
+        SELECT a.job_notice_num,
+        a.inst_dt,
+        b.resume_id,
+        b.resume_title,
+        c.cd_nm AS applyGbnCd,
+        d.job_notice_title
+        FROM tbl_apply_status a
+        LEFT JOIN tbl_resume b ON a.resume_id = b.resume_id
+        LEFT JOIN tbl_codeinfo c ON c.cd = a.apply_gbn_cd AND c.up_cd = 'apply_gbn_cd'
+        LEFT JOIN tbl_job_notice d ON d.job_notice_num = a.job_notice_num
+        WHERE b.inst_id = #{instId}
+    </select>
+
+    <select id="getCntApply" resultType="org.green.backend.dto.resume.GetCntApplyDto">
+        SELECT COUNT(*) AS 'total_cnt',
+        SUM(IF(a.apply_gbn_cd = 'F', 1, 0)) AS fail_cnt,
+        SUM(IF(a.apply_gbn_cd = 'N', 1, 0)) AS nocheck_cnt,
+        SUM(IF(a.apply_gbn_cd = 'P', 1, 0)) AS pass_cnt
+        FROM tbl_apply_status a
+        LEFT JOIN tbl_resume b ON a.resume_id = b.resume_id
+        WHERE b.inst_id = #{instId}
+    </select>
+
 
 
 

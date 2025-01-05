@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/fragment/main_layout_with_aside}">
+<html xmlns="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/js/common/axios.js"></script>
     <title>이력서 리스트</title>
     <link rel="stylesheet" href="/static/css/layout.css">
     <style>
@@ -93,19 +95,21 @@
                 width: 100%;
             }
         }
+
         .resumeSetting {
             position: absolute;
             top: 65px;
             right: 10px;
             cursor: pointer;
-            display: flex
-        ;
+            display: flex;
             flex-direction: column;
         }
+
         .dot {
             font-size: 16px;
             line-height: 7px;
         }
+
         .menu {
             position: absolute;
             top: 0;
@@ -130,6 +134,8 @@
         .menu button:hover {
             background-color: #e1e1e1;
         }
+
+
     </style>
 </head>
 <body>
@@ -152,33 +158,60 @@
                     <span class="star" th:if="${resume.resumeMainYn == 'Y'}">★</span>
                     <span class="star"
                           th:if="${resume.resumeMainYn == 'N'}"
-                          th:onclick="'f(' + ${resume.resumeId} + ', \'' + ${resume.resumeTitle} + '\')'">☆</span>
+                          th:data-resume-id="${resume.resumeId}"
+                          onclick="updateMainResume(this)">☆</span>
 
+<!--                    <div class="title" th:text="${resume.resumeTitle}">-->
+<!--                        <a th:href="@{/resume/resumeDetail2/{resumeId}(resumeId=${resume.resumeId})}" class="resume-link">-->
+<!--                        </a>-->
+<!--                    </div>-->
 
-                    <div class="title" th:text="${resume.resumeTitle}">이력서 제목</div>
-                    <div class="subtitle" th:text="${resume.resumeMemo}">메모</div>
-                    <div class="date" th:text="${resume.instDt}">날짜</div>
-                    <div class="resumeSetting">
-                        <div class="dot">•</div>
-                        <div class="dot">•</div>
-                        <div class="dot">•</div>
+                    <div class="title">
+                        <a th:href="@{/resume/resumeDetail/{resumeId}(resumeId=${resume.resumeId})}" class="resume-link" th:text="${resume.resumeTitle}"></a>
                     </div>
+
+                    <div th:text="${resume != null ? resume.resumeMemo : '메모를 입력하지 않았습니다.'}"></div>
+                    <p th:if="${resume != null}">  [[${resume.instDt}]]</p>
+<!--                    <div class="resumeSetting">-->
+<!--                        <div class="dot">•</div>-->
+<!--                        <div class="dot">•</div>-->
+<!--                        <div class="dot">•</div>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
     </main>
+
 </div>
 
 <footer th:replace="~{fragment/footer :: footer}"></footer>
-
 
 
 </body>
 </html>
 
 <script>
-    function f(resumeId, resumeTitle) {
+    function updateMainResume(element) {
+        const resumeId = element.getAttribute('data-resume-id');
+
+        // 확인용 로그
         console.log("Resume ID:", resumeId);
-        console.log("Resume Title:", resumeTitle);
+
+        axios.get(`http://localhost:8080/resume/updateMainResume`, {
+            params: {resumeId: resumeId}
+        })
+            .then(response => {
+                alert('대표 이력서가 변경되었습니다!');
+                // 성공 시 페이지 새로고침 또는 UI 업데이트
+                location.reload();
+            })
+            .catch(error => {
+                console.error('오류 발생:', error);
+                alert('대표 이력서 변경 중 오류가 발생했습니다.');
+            });
     }
+
+
 </script>
+
+

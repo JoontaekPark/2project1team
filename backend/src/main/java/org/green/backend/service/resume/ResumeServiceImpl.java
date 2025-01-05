@@ -157,6 +157,25 @@ public class ResumeServiceImpl implements ResumeService {
         return resumes;
     }
 
+    @Override
+    public void updateMainResume(int resumeId) {
+        resumeDao.updateMainResume2();
+        System.out.println("서비스에서 대표이력서 순서 구분@@");
+        resumeDao.updateMainResume1(resumeId);
+    }
+
+    @Override
+    public List<userApplyStatus> getApplyList(String instId) {
+        List<userApplyStatus> applyStatusList = resumeDao.getApplyList(instId);
+        return applyStatusList;
+    }
+
+    @Override
+    public GetCntApplyDto getCntApply(String instId) {
+        GetCntApplyDto cntApply = resumeDao.getCntApply(instId);
+        return cntApply;
+    }
+
 //    @Override
 //    public FileDto getResumeFilePhoto(int resumeId) {
 //        FileDto resumePhoto = resumeDao.getResumeFilePhoto(resumeId);

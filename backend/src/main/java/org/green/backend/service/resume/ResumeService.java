@@ -45,4 +45,10 @@ public interface ResumeService {
     //로그인한 유저의 이력서 리스트 들고오기
     public List<ResumeDto> getResumeList(String instId);
 
+    public void updateMainResume(int resumeId);
+
+    public List<userApplyStatus> getApplyList(String instId);
+
+    public GetCntApplyDto getCntApply(String instId);
+
 }
