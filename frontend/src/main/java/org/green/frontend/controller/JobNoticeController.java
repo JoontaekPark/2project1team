@@ -1,14 +1,18 @@
 package org.green.frontend.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.green.frontend.dto.JobNotice.ApplyStatusRequestDto;
 import org.green.frontend.dto.JobNotice.ApplyStatusResponseDto;
 import org.green.frontend.dto.JobNotice.JobNoticeResponseDto;
 import org.green.frontend.dto.common.CodeInfoDto;
 import org.green.frontend.service.JobNotice.JobNoticeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.stream.Collectors;

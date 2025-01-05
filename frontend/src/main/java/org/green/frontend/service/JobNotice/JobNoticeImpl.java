@@ -1,6 +1,7 @@
 package org.green.frontend.service.JobNotice;
 
 import lombok.RequiredArgsConstructor;
+import org.green.frontend.dto.JobNotice.ApplyStatusRequestDto;
 import org.green.frontend.dto.JobNotice.ApplyStatusResponseDto;
 import org.green.frontend.dto.JobNotice.JobNoticeResponseDto;
 import org.green.frontend.dto.common.CodeInfoDto;
@@ -132,5 +133,7 @@ public class JobNoticeImpl implements JobNoticeService {
         ApiResponse<List> result = webClientUtil.getApi("/api/v1/status-list?jobNoticeNum=" + jobNoticeNum, List.class);
         return result.getBody();
     }
+
+
 
 }

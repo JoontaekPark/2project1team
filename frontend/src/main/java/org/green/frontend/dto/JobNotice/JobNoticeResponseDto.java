@@ -34,6 +34,10 @@ public class JobNoticeResponseDto {
     private String instId;                    // 작성자 ID
     private LocalDateTime instDt;                      // 작성일시
 
+    private int likeYn;
+
+
+
     private List<String> stackList;   // 기술스택 리스트
     private List<String> stepList;     // 절차 리스트
     private List<String> welfareList; // 복리후생 리스트

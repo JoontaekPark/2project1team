@@ -240,7 +240,7 @@ hr{
     align-content: center;
 }
 
-#jobNoticeWorkGbnCd{
+.jobNoticeWorkGbnCd{
     box-sizing: border-box;
     height: 40px; /* 48px */
     width: 100px    ;
@@ -253,7 +253,7 @@ hr{
     /*transition: all 0.3s ease;*/
 }
 
-#jobNoticeWorkGbnCd:focus{
+.jobNoticeWorkGbnCd:focus{
         outline: none;
         border: 1px solid #FF0083;
     }

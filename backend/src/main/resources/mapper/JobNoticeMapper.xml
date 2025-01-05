@@ -23,9 +23,17 @@
         jn.inst_dt,
         work.cd_nm AS work_name,
         career.cd_nm AS career_name,
-        education.cd_nm AS education_name
+        education.cd_nm AS education_name,
+        IF(e.target IS NULL, 0, 1) AS likeYn
 
         FROM tbl_job_notice jn
+
+<!--        &#45;&#45; 스크랩 여부-->
+        LEFT JOIN tbl_like e
+        ON e.target = jn.job_notice_num
+        AND e.like_gbn_cd = '30'
+        AND e.inst_id = #{Id}
+
         <!-- 근무 형태-->
         LEFT JOIN tbl_codeinfo work
         ON jn.job_notice_work_gbn_cd = work.cd
@@ -63,9 +71,15 @@
         LEFT JOIN tbl_codeinfo c
         ON js.stack_cd = c.cd AND up_cd
         IN (SELECT cd FROM tbl_codeinfo WHERE up_cd = 'stack_cd')
-        WHERE js.job_notice_num = ${jobNoticeNum};
+        WHERE js.job_notice_num = #{jobNoticeNum};
     </select>
 
+<!--    조회수 증가-->
+    <update id="increaseVcnt">
+        UPDATE tbl_job_notice
+        SET v_cnt = v_cnt+1
+        WHERE job_notice_num = #{job_notice_num}
+    </update>
 
 <!--    등록-->
     <insert id="registJobNotice" parameterType="org.green.backend.dto.JobNotice.JobNoticeRequestDto" keyProperty="jobNoticeNum" useGeneratedKeys="true">
@@ -147,4 +161,10 @@
         GROUP BY r.resume_id, u.id, jb.job_notice_num, ap.inst_dt, apply_gbn_cd;
     </select>
 
+    <update id="updateStatus">
+        UPDATE tbl_apply_status
+        SET apply_gbn_cd = #{dto.applyGbnCd}
+        WHERE job_notice_num = #{dto.jobNoticeNum}
+        AND resume_id = #{dto.resumeId}
+    </update>
 </mapper>

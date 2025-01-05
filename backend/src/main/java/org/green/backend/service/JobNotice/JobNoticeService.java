@@ -1,6 +1,7 @@
 package org.green.backend.service.JobNotice;
 
 import org.apache.ibatis.annotations.Param;
+import org.green.backend.dto.JobNotice.ApplyStatusRequestDto;
 import org.green.backend.dto.JobNotice.ApplyStatusResponseDto;
 import org.green.backend.dto.JobNotice.JobNoticeRequestDto;
 import org.green.backend.dto.JobNotice.JobNoticeResponseDto;
@@ -18,16 +19,15 @@ public interface JobNoticeService {
 
 
     //조회
-    JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum);
+    JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum, String Id);
 
     //등록
     void createJobNotice(JobNoticeRequestDto dto) throws IOException;
 
 
-    //수정
-
-    //삭제
-
     //지원현황
     List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum);
+
+    void updateStatus(ApplyStatusRequestDto dto) throws IOException;
+
 }

@@ -25,12 +25,13 @@ public class JobNoticeImpl implements JobNoticeService {
     private FileService fileService;
 
     //채용공고 조회
-    public JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum) {
+    public JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum, String Id) {
         List<String> StepList = jobNoticeDao.getStep(jobNoticeNum);
         List<String> WelfareList = jobNoticeDao.getWelfare(jobNoticeNum);
         List<String> StackList = jobNoticeDao.getStack(jobNoticeNum);
 
-        JobNoticeResponseDto dto = jobNoticeDao.getJobNoticeDetails(jobNoticeNum);
+        JobNoticeResponseDto dto = jobNoticeDao.getJobNoticeDetails(jobNoticeNum, Id);
+        jobNoticeDao.increaseVcnt(jobNoticeNum);
         dto.setStepList(StepList);
         dto.setWelfareList(WelfareList);
         dto.setStackList(StackList);
@@ -86,6 +87,14 @@ public class JobNoticeImpl implements JobNoticeService {
 
         return list;
     }
+
+    //지원현황 업데이트
+    @Override
+    public void updateStatus(ApplyStatusRequestDto dto) throws IOException {
+        jobNoticeDao.updateStatus(dto);
+    }
+
+
 
 
 }

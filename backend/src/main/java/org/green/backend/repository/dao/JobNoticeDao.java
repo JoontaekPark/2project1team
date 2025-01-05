@@ -14,10 +14,13 @@ import java.util.List;
     public interface JobNoticeDao {
 
         //채용공고 상세정보 조회
-        public JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum);
+        public JobNoticeResponseDto getJobNoticeDetails(@Param("jobNoticeNum") int jobNoticeNum, @Param("Id") String Id);
         public List<String> getStep(int jobNoticeNum);
         public List<String> getWelfare(int jobNoticeNum);
         public List<String> getStack(int jobNoticeNum);
+
+        //조회수 증가
+        public void increaseVcnt(int jobNoticeNum);
 
         // 등록
         public void registJobNotice(JobNoticeRequestDto dto);
@@ -28,4 +31,6 @@ import java.util.List;
         // 지원현황 조회
         public List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum);
 
+        //지원 수정
+        public void updateStatus(@Param("dto")ApplyStatusRequestDto dto);
     }

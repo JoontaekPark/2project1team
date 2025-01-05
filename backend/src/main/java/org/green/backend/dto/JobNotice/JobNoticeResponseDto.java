@@ -34,6 +34,8 @@ public class JobNoticeResponseDto {
     private int vCnt;                         // 조회수
     private String instId;                    // 작성자 ID
     private LocalDateTime instDt;                      // 작성일시
+    private int likeYn;
+    private String jobNoticeStatus;             //공고 상태
 
     private List<String> stackList;   // 기술스택 리스트
     private List<String> stepList;     // 절차 리스트
