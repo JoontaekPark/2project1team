@@ -26,4 +26,5 @@ public interface JobNoticeService {
 
     List<ApplyStatusResponseDto> getApplyStatusList(Integer jobNoticeNum) throws Exception;
 
+    List<JobNoticeResponseDto> getJobNoticeList() throws Exception;
 }

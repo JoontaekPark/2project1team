@@ -127,6 +127,13 @@ public class JobNoticeImpl implements JobNoticeService {
         return result.getBody();
     }
 
+    //채용공고 리스트 조회
+    @Override
+    public List<JobNoticeResponseDto> getJobNoticeList() throws Exception {
+        ApiResponse<List> result = webClientUtil.getApi("/api/v1/job-notice-list", List.class);
+            return result.getBody();
+    }
+
     //지원현황
     @Override
     public List<ApplyStatusResponseDto> getApplyStatusList(Integer jobNoticeNum) throws Exception {

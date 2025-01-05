@@ -3,11 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.green.backend.repository.dao.JobNoticeDao">
-<!--    <select id="getFiles" resultType="org.green.backend.dto.common.FileDto">-->
-<!--        SELECT file_new_name, file_old_name, file_ext, file_url-->
-<!--        FROM tbl_file-->
-<!--        WHERE file_ref_id = #{job_notice_num}-->
-<!--    </select>-->
+    <select id="getJobNoticeList" resultType="org.green.backend.dto.JobNotice.JobNoticeResponseDto">
+        SELECT
+        c.name AS company_name,
+        jn.job_notice_title,
+        jn.job_notice_area,
+        career.cd_nm AS career_name
+
+        FROM tbl_job_notice jn
+
+        LEFT JOIN tbl_codeinfo career
+        ON jn.job_notice_career_gbn_cd = career.cd
+        AND career.up_cd='job_notice_career_gbn_cd'
+
+        JOIN tbl_user c
+        ON jn.inst_id = c.id
+
+        WHERE inst_id = #{inst_id}
+    </select>
     <select id="getJobNoticeDetails" resultType="org.green.backend.dto.JobNotice.JobNoticeResponseDto">
         SELECT
         <!--        기본 채용공고 정보-->
