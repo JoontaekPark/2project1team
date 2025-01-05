@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class BoardService {
+public class BoardServiceImpl {
 
     private final BoardDao boardDao;
 

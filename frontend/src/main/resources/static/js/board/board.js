@@ -23,7 +23,7 @@ function registerBoard() {
 document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
 
-    if (currentPath.includes('/board/boardDetail')) {
+    if (currentPath.includes('/board/board-detail')) {
         fetchBoardDetail();
     } else if (currentPath.includes('/board/list')) {
         fetchBoardList();
@@ -75,7 +75,7 @@ function renderBoardList(boardList, userGbnCd) {
         // 제목
         const titleCell = document.createElement("td");
         const link = document.createElement("a");
-        link.href = `/board/boardDetail?boardNum=${board.boardNum}`;
+        link.href = `/board/board-detail?boardNum=${board.boardNum}`;
         link.textContent = board.boardTitle;
         titleCell.appendChild(link);
 
@@ -231,7 +231,7 @@ function addReply() {
 function updateBoardStatus(boardNum, boardStatusCd) {
     console.log("updateBoardStatus 호출:", {boardNum, boardStatusCd});
 
-    return api.put('/api/board/updateStatus', {boardNum, boardStatusCd})
+    return api.put('/api/board/update-status', {boardNum, boardStatusCd})
         .then(() => {
             console.log(`상태가 ${boardStatusCd}로 업데이트되었습니다.`);
         })

@@ -2,7 +2,7 @@ package org.green.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.board.*;
-import org.green.backend.service.BoardService;
+import org.green.backend.service.BoardServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +27,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4000")
 public class BoardController {
 
-    private final BoardService boardService;
+    private final BoardServiceImpl boardService;
 
     //1:1문의 등록
     @PostMapping("/regist")
@@ -82,7 +82,7 @@ public class BoardController {
         return ResponseEntity.ok("댓글 등록 완료");
     }
     //1:1 문의 상태관리
-    @PutMapping("/updateStatus")
+    @PutMapping("/update-status")
     public ResponseEntity<String> updateStatus(
             @RequestBody UpdateStatusRequestDto updateStatusRequestDto
             ) {

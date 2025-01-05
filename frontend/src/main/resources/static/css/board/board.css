@@ -4,6 +4,10 @@ body {
     padding: 0;
     height: 100%;
 }
+main {
+    max-width: none;
+    padding: 0;
+}
 
 h1 {
     width: 1400px;
