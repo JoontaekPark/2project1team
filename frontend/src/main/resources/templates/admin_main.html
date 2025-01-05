@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
+    <head>
+        <title>관리자</title>
+        <link rel="stylesheet" href="/static/css/admin_main.css">
+    </head>
+    <body>
+        <main layout:fragment="content">
+            <div class="container">
+
+                <div class="button-container">
+
+                    <div class="button-group">
+
+                        <button th:class="'filter ' + (${#strings.isEmpty(filter) ? 'active' : ''})"
+                                data-usergbncd="">
+                            전체
+                        </button>
+
+                        <th:block th:each="userGbn : ${userGbnList}">
+
+                            <button th:attr="data-usergbncd=${userGbn.cd}"
+                                    th:class="${'filter ' + (userGbn.cd == filter ? 'active' : '')}"
+                                    th:text="${userGbn.cdNm}">
+                                구직자
+                            </button>
+
+                        </th:block>
+                    </div>
+
+                    <div>
+                        <button id="status-btn" class="active">상태변경</button>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="userChkAll"></th>
+                            <th>아이디</th>
+                            <th>이름</th>
+                            <th>생년월일</th>
+                            <th>구분</th>
+                            <th>상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block th:each="user : ${list}">
+                            <tr th:attr="data-id=${user.id}">
+                                <td><input type="checkbox" name="userChk"></td>
+                                <td th:text="${user.id}">test</td>
+                                <td th:text="${user.name}">test</td>
+                                <td th:text="${user.birth}">test</td>
+                                <td th:text="${user.userGbnNm}">test</td>
+                                <td th:text="${user.useYn}">test</td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+
+                <div class="actions">
+                    <form id="search-frm">
+                        <input type="text" name="search" placeholder="검색" th:value="${search}">
+                        <button type="submit" id="search-btn">검색</button>
+                    </form>
+                </div>
+
+                <div class="pagination">
+                    <!-- 처음 페이지 버튼 -->
+                    <button th:class="${paging.firstPageBtn ? '' : 'disabled'}"
+                            th:attr="data-page=${paging.firstPageBtn ? 1 : ''}"
+                            aria-label="처음">&lt;&lt;
+                    </button>
+
+                    <!-- 이전 페이지 버튼 -->
+                    <button th:class="${paging.prevBtn ? '' : 'disabled'}"
+                            th:attr="data-page=${paging.prevBtn ? paging.startPage - 1 : ''}"
+                            aria-label="이전">&lt;
+                    </button>
+
+                    <!-- 페이지 번호 리스트 -->
+                    <button th:each="i : ${#numbers.sequence(paging.startPage, paging.endPage)}"
+                            th:class="${paging.currentPage == i ? 'active' : ''}"
+                            th:attr="data-page=${i}"
+                            th:text="${i}"></button>
+
+                    <!-- 다음 페이지 버튼 -->
+                    <button th:class="${paging.nextBtn ? '' : 'disabled'}"
+                            th:attr="data-page=${paging.nextBtn ? paging.endPage + 1 : ''}"
+                            aria-label="다음">&gt;
+                    </button>
+
+                    <!-- 마지막 페이지 버튼 -->
+                    <button th:class="${paging.lastPageBtn ? '' : 'disabled'}"
+                            th:attr="data-page=${paging.lastPageBtn ? paging.totalPage : ''}"
+                            aria-label="마지막">&gt;&gt;
+                    </button>
+                </div>
+
+
+            </div>
+        </main>
+    </body>
+</html>
+
+<script type="module" src="/static/js/admin_main.js"></script>

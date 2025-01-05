@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class BoardService {
+public class BoardServiceImpl {
 
     private final BoardDao boardDao;
 
@@ -29,9 +29,9 @@ public class BoardService {
     }
     public List<BoardListDto> getBoardList(String userId, String userGbnId ) {
         System.out.println("service" + userId + userGbnId);
-        if(userGbnId.equals("10")) { //구직자
+        if("10".equals(userGbnId)) { //구직자
             return boardDao.getUserBoardList(userId);
-        } else if(userGbnId.equals("20")) {
+        } else if("20".equals(userGbnId)) {
             return boardDao.getCompanyBoardList(userId);
         } else {
             throw new IllegalArgumentException("Invalid userGbnId");

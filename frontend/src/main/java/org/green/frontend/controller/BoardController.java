@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-    @GetMapping("/boardForm")
+    @GetMapping("/board-form")
     public String boardFormRoot() {
-        return "/board/boardForm";
+        return "/board/board_form";
     }
 
     @GetMapping("/list")
@@ -27,8 +27,8 @@ public class BoardController {
         return "/board/list";
     }
 
-    @GetMapping("/boardDetail")
+    @GetMapping("/board-detail")
     public String getBoardDetail() {
-        return "/board/boardDetail";
+        return "/board/board_detail";
     }
 }

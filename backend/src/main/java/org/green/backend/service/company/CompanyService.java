@@ -2,7 +2,10 @@ package org.green.backend.service.company;
 
 import org.green.backend.dto.company.CompanyDto;
 import org.green.backend.dto.company.ResponseCompanyDto;
+import org.green.backend.dto.company.ResponseJobNoticeDto;
+import org.green.backend.dto.company.StarDto;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,4 +32,10 @@ public interface CompanyService {
     public void update(CompanyDto company, String token);
 
     public Map<String, Object> companyExtraInfo(String companyId);
+
+    public List<ResponseJobNoticeDto> getJobNotices(String token);
+
+    public List<StarDto> getStars(String token);
+
+    public Map<String, Object> companyMain(int jobNoticeNum);
 }

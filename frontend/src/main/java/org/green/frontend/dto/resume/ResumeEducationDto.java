@@ -37,4 +37,7 @@ public class ResumeEducationDto {
     private String resumeEducationTransferYn;
     // 지역
     private String resumeEducationResion;
+
+    //코드명필요
+    private String educationType;
 }

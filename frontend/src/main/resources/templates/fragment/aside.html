@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<aside th:fragment="asideUser">
-    <p><strong>내 프로필</strong></p>
-    <ul>
-        <li><a href="">정보 변경</a></li>
-        <li><a href="">설정</a></li>
-    </ul>
-    <hr>
-    <p><strong>이력서</strong></p>
-    <ul>
-        <li><a href="">나의 이력서 보기</a></li>
-        <li><a href="">이력서 등록</a></li>
-        <li><a href="">지원현황</a></li>
-    </ul>
-    <hr>
-    <p><strong>관심/스크랩</strong></p>
-    <ul>
-        <li><a href="">관심 기업</a></li>
-        <li><a href="">공고 스크랩</a></li>
-    </ul>
-    <hr>
-    <p><strong>쪽지함</strong></p>
-    <ul>
-        <li><a href="">나에게 온 제안</a></li>
-        <li><a href="">1:1 문의</a></li>
-        <li><a href="">고객센터</a></li>
-    </ul>
-</aside>
 
-<aside th:fragment="asideCompany">
-    <p><strong>내 프로필</strong></p>
-    <ul>
-        <li><a href="">정보 변경</a></li>
-        <li><a href="">설정</a></li>
-    </ul>
-    <hr>
-    <p><strong>공고관리</strong></p>
-    <ul>
-        <li><a href="">나의 채용공고 보기</a></li>
-        <li><a href="">채용공고 등록</a></li>
-    </ul>
-    <hr>
-    <p><strong>관심 구직자</strong></p>
-    <ul>
-        <li><a href="">관심 구직자</a></li>
-    </ul>
-    <hr>
-    <p><strong>쪽지함</strong></p>
-    <ul>
-        <li><a href="">나에게 온 제안</a></li>
-        <li><a href="">1:1 문의</a></li>
-        <li><a href="">고객센터</a></li>
-    </ul>
-</aside>
+    <aside th:fragment="asideUser">
+        <p><strong>내 프로필</strong></p>
+        <ul>
+            <li><a href="/user-info">내 정보</a></li>
+        </ul>
+        <hr>
+        <p><strong>이력서</strong></p>
+        <ul>
+            <li><a href="/resume/resume-listist">나의 이력서 보기</a></li>
+            <li><a href="/resume/resume-form2">이력서 등록</a></li>
+            <li><a href="/resume/applystatus-list">지원 현황</a></li>
+        </ul>
+        <hr>
+        <p><strong>관심/스크랩</strong></p>
+        <ul>
+            <li><a href="">관심 기업</a></li>
+            <li><a href="">공고 스크랩</a></li>
+        </ul>
+        <hr>
+        <p><strong>쪽지함</strong></p>
+        <ul>
+            <li><a href="">나에게 온 제안</a></li>
+            <li><a href="">1:1 문의</a></li>
+            <li><a href="">고객센터</a></li>
+        </ul>
+    </aside>
+
+    <aside th:fragment="asideCompany">
+        <p><strong>내 프로필</strong></p>
+        <ul>
+            <li><a href="/user-info">내 정보</a></li>
+            <li><a href="/company-info/edit">기업정보</a></li>
+        </ul>
+        <hr>
+        <p><strong>공고관리</strong></p>
+        <ul>
+            <li><a href="/job-notice-list">나의 채용공고 보기</a></li>
+            <li><a href="/job-notice-form">채용공고 등록</a></li>
+        </ul>
+        <hr>
+        <p><strong>관심 구직자</strong></p>
+        <ul>
+            <li><a href="">관심 구직자</a></li>
+        </ul>
+        <hr>
+        <p><strong>쪽지함</strong></p>
+        <ul>
+            <li><a href="">나에게 온 제안</a></li>
+            <li><a href="">1:1 문의</a></li>
+            <li><a href="">고객센터</a></li>
+        </ul>
+    </aside>
 </html>

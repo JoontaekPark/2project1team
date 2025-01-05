@@ -46,11 +46,15 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public ResponseCompanyDto companyInfo(String companyId, String token) {
 
-        String id = jwtUtil.getId(token);
+        String id = "";
+
+        if (token != null) {
+            id = jwtUtil.getId(token);
+        }
 
         ResponseCompanyDto company = companyDao.companyInfo(companyId, id);
         company.setHistories(companyDao.getHistories(companyId));
-        company.setJobNotices(companyDao.jobNotices(companyId));
+        company.setJobNotices(companyDao.jobNotices(companyId, id));
 
         return company;
     }
@@ -78,6 +82,32 @@ public class CompanyServiceImpl implements CompanyService {
 
         result.put("employees", companyDao.getEmployees(companyId));
         result.put("revenuses", companyDao.getRevenuses(companyId));
+        return result;
+    }
+
+    @Override
+    public List<ResponseJobNoticeDto> getJobNotices(String token) {
+        String id = jwtUtil.getId(token);
+        return companyDao.jobNotices(id, id);
+    }
+
+    @Override
+    public List<StarDto> getStars(String token) {
+        String companyId = jwtUtil.getId(token);
+        return companyDao.getStars(companyId);
+    }
+
+    @Override
+    public Map<String, Object> companyMain(int jobNoticeNum) {
+
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("age", companyDao.getAgeByJobNoticeNum(jobNoticeNum));
+        result.put("stack", companyDao.getStackByJobNoticeNum(jobNoticeNum));
+        result.put("gender", companyDao.getGenderByJobNoticeNum(jobNoticeNum));
+
+        System.out.println(result);
+
         return result;
     }
 

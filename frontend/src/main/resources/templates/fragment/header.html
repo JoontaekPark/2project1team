@@ -1,43 +1,74 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<header th:fragment="userHeader">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="/static/js/common/axios.js"></script>
-    <link rel="stylesheet" href="/static/css/layout.css">
-    <div class="header-container">
-        <!--        구직자용-->
-        <div class="size">
-            <ul class="nav-content" >
-                <li><a href="/main">LOGO 1ike</a></li>
-                <li><a href="#">이력서</a></li>
-                <li><a href="#">헤드헌팅</a></li>
-                <li><a href="#">지원현황</a></li>
-                <li><a href="#">고객센터</a></li>
-            </ul>
-            <!--        기업용-->
-            <!--        <ul class="nav-content" th:if="">-->
-            <!--            <li><a href="/main">LOGO 1ike</a></li>-->
-            <!--            <li><a href="#">공고관리</a></li>-->
-            <!--            <li><a href="#">헤드헌팅</a></li>-->
-            <!--            <li><a href="#">고객센터</a></li>-->
-            <!--            <li><a href="#">1:1 문의</a></li>-->
-            <!--        </ul>-->
-            <!--        비회원-->
-            <ul class="nav-form" >
-                <li><a href="#">회원가입</a></li>
-                <li><a href="#">로그인</a></li>
-            </ul>
-            <!--        회원-->
-            <!--        <ul class="nav-form" th:if="">-->
-            <!--            <li><a href="#">그린 아카데미님</a></li>-->
-            <!--            <li><a href="#">로그아웃</a></li>-->
-            <!--        </ul>-->
+    <header th:fragment="userHeader">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="/static/js/common/axios.js"></script>
+        <script type="module" src="/static/js/header.js"></script>
+        <link rel="stylesheet" href="/static/css/layout.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <div class="header-container">
+            <!--        구직자용-->
+            <div class="size">
+                <!-- 비회원용-->
+                <ul class="nav-content" th:if="${session.user == null}">
+                    <li>
+                        <a href="/">
+                            <img src="/static/img/logo.svg">
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="nav-content" th:if="${session?.user?.userGbnCd != '20' && session?.user?.userGbnCd != '30' && session.user != null}">
+                    <li>
+                        <a href="/">
+                            <img src="/static/img/logo.svg">
+                        </a>
+                    </li>
+                    <li><a href="/resume/resume-list">이력서</a></li>
+                    <li><a href="#">헤드헌팅</a></li>
+                    <li><a href="/resume/applystatus-list">지원현황</a></li>
+                    <li><a href="#">고객센터</a></li>
+                </ul>
+                <!--        기업용-->
+                <ul class="nav-content" th:if="${session?.user?.userGbnCd == '20'}">
+                    <li>
+                        <a href="/">
+                            <img src="/static/img/logo.svg">
+                        </a>
+                    </li>
+                    <li><a href="/job-notice-list">공고관리</a></li>
+                    <li><a href="#">헤드헌팅</a></li>
+                    <li><a href="#">고객센터</a></li>
+                    <li><a href="#">1:1 문의</a></li>
+                </ul>
+
+                <!--                관리자-->
+                <ul class="nav-content" th:if="${session?.user?.userGbnCd == '30'}">
+                    <li>
+                        <a href="/">
+                            <img src="/static/img/logo.svg">
+                        </a>
+                    </li>
+                    <li><a href="#">고객센터</a></li>
+                    <li><a href="#">1:1 문의</a></li>
+                </ul>
+                <!--        비회원-->
+                <ul class="nav-form" th:if="${session.user == null}">
+                    <li><a href="/sign-up">회원가입</a></li>
+                    <li><a href="/sign-in">로그인</a></li>
+                </ul>
+                <!--        회원-->
+                <ul class="nav-form" th:if="${session.user != null}">
+                    <li><a href="/user-info" th:text="${session?.user?.name}"></a></li>
+                    <li><a id="sign-out-btn">로그아웃</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
 </html>
+
 
 

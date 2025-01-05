@@ -12,22 +12,22 @@ public class TestController {
 
     private final TestService testService;
 
-    @GetMapping("/")
-    public String index() {
+//    @GetMapping("/")
+//    public String index() {
+//
+//        return "main";
+//    }
 
-        return "main";
-    }
 
-
-    @GetMapping("/test1")
-    public String test1() {
-        return "example_no_aside";
-    }
-
-    @GetMapping("/test2")
-    public String test2() {
-        return "example_with_aside";
-    }
+//    @GetMapping("/test1")
+//    public String test1() {
+//        return "example_no_aside";
+//    }
+//
+//    @GetMapping("/test2")
+//    public String test2() {
+//        return "example_with_aside";
+//    }
 
 
 }

@@ -1,17 +1,19 @@
 // 1:1 문의 등록
 function registerBoard() {
     const data = {
-        boardTarget: "test", // 임시 저장
+        //boardTarget: document.getElementById("boardTarget").value, // 문의 대상
+        boardTarget: "넷플릭스2", // 임시 저장
         boardTitle: document.getElementById("boardTitle").value,
         boardContent: document.getElementById("boardContent").value,
         boardGbnCd: "10",
         boardStatusCd: "10",
-        instId: "tjsdud", // 임시 저장
+        //instId: "tjsdud", // 임시 저장
     };
 
     api.post('/api/board/regist', data)
         .then(() => {
             alert("문의가 등록되었습니다.");
+            window.location.href = "/board/list"
         })
         .catch(error => {
             console.error("등록 실패:", error);
@@ -23,7 +25,7 @@ function registerBoard() {
 document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
 
-    if (currentPath.includes('/board/boardDetail')) {
+    if (currentPath.includes('/board/board-detail')) {
         fetchBoardDetail();
     } else if (currentPath.includes('/board/list')) {
         fetchBoardList();
@@ -36,15 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 1:1 문의 리스트
 function fetchBoardList() {
-    const userId = 'tjsdud';
-    const userGbnCd = '10';
+    //const userId = 'tjsdud';
+    //const userGbnCd = '10';
 
-    api.get('/api/board/list', {userId, userGbnId: userGbnCd})
+    api.get('/api/board/list')
         .then(response => {
             console.log("리스트에서 응답을 받는지" + response.body); // 응답 데이터 출력
             console.log('Response as JSON:', JSON.stringify(response.body, null, 2)); // JSON
             const boardList = response.body;
-            renderBoardList(boardList, userGbnCd);
+            renderBoardList(boardList);
             console.log("상태 업데이트 응답 데이터:", response);
         })
         .catch(error => {
@@ -75,7 +77,7 @@ function renderBoardList(boardList, userGbnCd) {
         // 제목
         const titleCell = document.createElement("td");
         const link = document.createElement("a");
-        link.href = `/board/boardDetail?boardNum=${board.boardNum}`;
+        link.href = `/board/board-detail?boardNum=${board.boardNum}`;
         link.textContent = board.boardTitle;
         titleCell.appendChild(link);
 
@@ -169,10 +171,11 @@ function fetchBoardDetail() {
 }
 
 function renderBoardDetail(detail) {
-    document.getElementById("boardTitle").textContent = detail.boardTitle;
+    document.getElementById("boardTitle").textContent = `제목: ${detail.boardTitle}`;
     document.getElementById("boardContent").textContent = detail.boardContent;
     document.getElementById("instId").textContent = detail.instId;
     document.getElementById("instDt").textContent = detail.instDt;
+    document.getElementById("instDt2").textContent = detail.instDt;
 
     const statusMap = {
         "10": "미확인",
@@ -186,7 +189,14 @@ function renderBoardDetail(detail) {
 
     detail.replies.forEach(reply => {
         const listItem = document.createElement("li");
-        listItem.textContent = `${reply.instId} : ${reply.commentContent}`;
+        listItem.innerHTML = `
+        <div class="content">
+        <img src="/static/img/board_profile.png" alt="프로필">
+        <p class="instidP"><span id="instId">${reply.instId}</span></p>
+        <p class="pinst2">등록일 <span id="instDt2">${reply.instDt}</span></p>
+        </div>
+        <p class="board-content"><span id="boardContent">${reply.commentContent}</span></p>
+        `;
         replyList.appendChild(listItem);
     });
 }
@@ -221,9 +231,9 @@ function addReply() {
 
 // 상태 관리
 function updateBoardStatus(boardNum, boardStatusCd) {
-    console.log("updateBoardStatus 호출:", { boardNum, boardStatusCd });
+    console.log("updateBoardStatus 호출:", {boardNum, boardStatusCd});
 
-    return api.put('/api/board/updateStatus', { boardNum, boardStatusCd })
+    return api.put('/api/board/update-status', {boardNum, boardStatusCd})
         .then(() => {
             console.log(`상태가 ${boardStatusCd}로 업데이트되었습니다.`);
         })
@@ -234,8 +244,6 @@ function updateBoardStatus(boardNum, boardStatusCd) {
 }
 
 // 답글 폼
-function openReplyForm() {
-    const replyForm = document.getElementById("replyForm");
-    replyForm.style.display = replyForm.style.display === "none" ? "block" : "none";
-}
+
+
 

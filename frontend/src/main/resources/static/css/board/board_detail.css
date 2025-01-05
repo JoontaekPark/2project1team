@@ -1,0 +1,187 @@
+/* 전체 스타일 초기화 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* 제목 스타일 */
+h1 {
+    width: 1400px;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 50px auto 0;
+    font-size: 40px;
+}
+
+h2{
+    width: 1400px;
+    margin: 0 auto
+}
+
+.content {
+    display: flex;
+    width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    padding: 20px 0;
+}
+.content p {
+    display: block;
+}
+.content img {
+    width: 60px;
+}
+
+.dt1 {
+    width: 1400px;
+    margin: 0 auto;
+    font-size: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid gainsboro;
+}
+.board-content {
+    width: 1400px;
+    margin: 20px auto;
+    font-size: 24px;
+    border-bottom: 1px solid gainsboro;
+    padding-bottom: 20px;
+}
+.pinst2 {
+    position: absolute;
+    top: 56px;
+    left: 74px;
+}
+.pinst2 > span {
+    font-size: 16px;
+}
+.instidP {
+    padding: 16px;
+    font-size: 18px;
+}
+/* 게시글 상세 영역 스타일 */
+#boardTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+#instDt {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* 구분선 */
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+/* 답글 리스트 */
+#replyList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#replyList li {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+#replyList li .reply-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+#replyList li .reply-header .reply-author {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#replyList li .reply-header .reply-date {
+    font-size: 12px;
+    color: #777;
+}
+
+#replyList li .reply-content {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* 답변 입력 창 */
+#commentInput {
+    width: 1400px;
+    height: 100px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* 등록 버튼 */
+#commentSubmitButton {
+    background-color: #ff007f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+
+#commentSubmitButton:hover {
+    background-color: #e60073;
+}
+
+/* 목록 버튼 */
+a[href="/board/list"] {
+    display: block;
+    width: 10%;
+    background-color: #ff007f;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin: 20px auto 60px;
+    text-decoration: none;
+}
+
+a[href="/board/list"]:hover {
+    background-color: #e60073;
+}
+
+/* 숨겨진 답변 폼 스타일 */
+#replyForm {
+    width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#replyForm textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 70px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.section {
+    height: 100%;
+}
