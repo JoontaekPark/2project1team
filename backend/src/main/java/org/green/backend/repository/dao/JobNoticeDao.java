@@ -34,7 +34,7 @@ import java.util.List;
         public void registWelfares(@Param("jobNoticeNum") int jobNoticeNum, @Param("welfareList") List<String> welfareList);
 
         // 지원현황 조회
-        public List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum);
+        public List<ApplyStatusResponseDto> getApplyStatusList(@Param("jobNoticeNum")int jobNoticeNum, @Param("Id") String Id);
 
         //지원 수정
         public void updateStatus(@Param("dto")ApplyStatusRequestDto dto);

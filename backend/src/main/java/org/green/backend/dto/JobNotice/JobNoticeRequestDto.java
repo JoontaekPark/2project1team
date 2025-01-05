@@ -33,6 +33,7 @@ public class JobNoticeRequestDto {
     private String jobNoticeEndDate;            // 공고 종료 기간
     private String instId;                    // 작성자 ID
     private String instDt;                      // 작성일시
+    private String jobNoticeStatus;
 
     private List<String> stackList;   // 기술스택 리스트
     private List<String> stepList;     // 절차 리스트

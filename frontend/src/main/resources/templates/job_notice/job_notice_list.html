@@ -10,9 +10,9 @@
 <main>
 <div class="job-notice-container">
     <h3>나의 채용공고</h3>
-<!--    <div class="grid-item" th:each="jobNotice : ${jobNoticeList}">-->
+    <div class="grid-item" th:each="jobNotice : ${jobNoticeList}">
 <!--        <img alt="채용 공고 이미지" th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"-->
-             onerror="this.src='/static/img/default_image.png'">
+<!--             onerror="this.src='/static/img/default_image.png'">-->
         <div class="job-title" th:text="${jobNotice.jobNoticeTitle}"></div>
         <div class="job-company" th:text="${jobNotice.companyName}"></div>
         <div class="job-location" th:text="${jobNotice.jobNoticeArea} +'&nbsp;|&nbsp;'+ ${jobNotice.careerName}"></div>
