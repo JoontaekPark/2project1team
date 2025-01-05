@@ -21,4 +21,6 @@ public class ResumeStackDto {
     private Long resumeId;
     // 기술스택
     private String stackCd;
+
+    private String stackNm;
 }

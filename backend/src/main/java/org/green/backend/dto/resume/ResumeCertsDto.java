@@ -31,5 +31,8 @@ public class ResumeCertsDto {
     private String resumeCertsPlace;
     // 합격여부(P: 필기, S:실기)
     private String resumeCertsGbnCd;
+
+    //코드들고오기용
+    private String certsResult;
 }
 
