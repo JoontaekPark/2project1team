@@ -13,11 +13,19 @@
             <div class="size">
                 <!-- 비회원용-->
                 <ul class="nav-content" th:if="${session.user == null}">
-                    <li><a href="/">LOGO 1ike</a></li>
+                    <li>
+                        <a href="/">
+                            <img src="/static/img/logo.svg">
+                        </a>
+                    </li>
                 </ul>
 
                 <ul class="nav-content" th:if="${session?.user?.userGbnCd != '20' && session?.user?.userGbnCd != '30' && session.user != null}">
-                    <li><a href="/">LOGO 1ike</a></li>
+                    <li>
+                        <a href="/">
+                            <img src="/static/img/logo.svg">
+                        </a>
+                    </li>
                     <li><a href="/resume/resume-list">이력서</a></li>
                     <li><a href="#">헤드헌팅</a></li>
                     <li><a href="/resume/applystatus-list">지원현황</a></li>
@@ -25,7 +33,11 @@
                 </ul>
                 <!--        기업용-->
                 <ul class="nav-content" th:if="${session?.user?.userGbnCd == '20'}">
-                    <li><a href="/company">LOGO 1ike</a></li>
+                    <li>
+                        <a href="/">
+                            <img src="/static/img/logo.svg">
+                        </a>
+                    </li>
                     <li><a href="/job-notice-list">공고관리</a></li>
                     <li><a href="#">헤드헌팅</a></li>
                     <li><a href="#">고객센터</a></li>
@@ -34,7 +46,11 @@
 
                 <!--                관리자-->
                 <ul class="nav-content" th:if="${session?.user?.userGbnCd == '30'}">
-                    <li><a href="/admin">LOGO 1ike</a></li>
+                    <li>
+                        <a href="/">
+                            <img src="/static/img/logo.svg">
+                        </a>
+                    </li>
                     <li><a href="#">고객센터</a></li>
                     <li><a href="#">1:1 문의</a></li>
                 </ul>
