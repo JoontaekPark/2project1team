@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class HeadHuntingService {
+public class HeadHuntingServiceImpl {
     private final HeadHuntingDao headHuntingDao;
 
     public InitialFiltersDto getInitialFilters() {

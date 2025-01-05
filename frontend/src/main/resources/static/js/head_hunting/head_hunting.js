@@ -1,6 +1,6 @@
 // API 클라이언트 설정
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api/headhunting',
+    baseURL: 'http://localhost:8080/api/head-hunting',
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',

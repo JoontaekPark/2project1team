@@ -2,7 +2,7 @@ package org.green.backend.controller.headhunting;
 
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.headhunting.InitialFiltersDto;
-import org.green.backend.service.headhunting.HeadHuntingService;
+import org.green.backend.service.headhunting.HeadHuntingServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/headhunting")
+@RequestMapping("/api/head-hunting")
 @RequiredArgsConstructor
 public class HeadHuntingController {
-    private final HeadHuntingService headHuntingService;
+    private final HeadHuntingServiceImpl headHuntingService;
 
     @GetMapping("/filters")
     public ResponseEntity<InitialFiltersDto> getFilters() {

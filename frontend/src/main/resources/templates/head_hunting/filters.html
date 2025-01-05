@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en"
-xmlns:th="http://www.thymeleaf.org">
->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/fragment/main_layout_no_aside}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/static/js/headhunting/headhunting.js"></script>
-    <link rel="stylesheet" href="/static/css/headhunting/filters.css">
+    <script src="/static/js/head_hunting/head_hunting.js"></script>
+    <link rel="stylesheet" href="/static/css/head_hunting/filters.css">
 </head>
 <body>
+<main layout:fragment="content">
 <h1>헤드헌팅 필터</h1>
 
 <div id="filter-section">
@@ -26,6 +28,6 @@ xmlns:th="http://www.thymeleaf.org">
     <!-- 검색 결과가 여기에 표시됩니다 -->
 </div>
 
-
+</main>
 </body>
 </html>
