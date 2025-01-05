@@ -1,0 +1,79 @@
+.container{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.button-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-group {
+    margin-bottom: 20px;
+}
+.button-container button {
+    background-color: #fff;
+    color: #ff1493;
+    font-weight: bold;
+    border: 1px solid #ff1493;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.button-container button.active {
+    background-color: #ff1493;
+    color: white;
+}
+table {
+    width: 100%;
+    margin: 0 auto 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+table th {
+    background-color: #f8f8f8;
+    color: #333;
+}
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+.pagination button {
+    background-color: #fff;
+    color: #ff1493;
+    border: 1px solid #ff1493;
+    padding: 8px 12px;
+    margin: 0 2px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.pagination button.active {
+    background-color: #ff1493;
+    color: #fff;
+}
+.actions {
+    text-align: right;
+    margin-top: 20px;
+}
+.actions input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 200px;
+}
+.actions button {
+    background-color: #ff1493;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -12,10 +12,8 @@
 
         <!-- Layout -->
         <div class="layout">
-<!--            <aside th:replace="~{fragment/aside :: asideUser}">-->
-            <aside th:replace="~{fragment/aside :: asideCompany}" layout:fragment="sidebar">
-                <!-- 사이드바가 렌더링될 위치 -->
-            </aside>
+            <aside th:replace="~{fragment/aside :: ${session != null and session.user != null and session.user.userGbnCd == '10' ? 'asideUser' : (session != null and session.user != null and session.user.userGbnCd == '20' ? 'asideCompany' : 'asideUser')}}"></aside>
+
             <main layout:fragment="content">
                 <!-- 메인 콘텐츠 -->
             </main>

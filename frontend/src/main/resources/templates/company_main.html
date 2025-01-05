@@ -33,16 +33,14 @@
         <main layout:fragment="content">
 
             <div class="content">
-                <!-- 채용중인 내 공고 -->
                 <div class="slider-section">
                     <div class="swiper-container job-notice-swiper">
                         <h2>채용중인 내 공고</h2>
                         <div class="slider swiper-wrapper">
-                            <!-- 북마크가 활성화된 공고 카드 -->
                             <th:block th:each="jobNotice : ${jobNoticeList}">
                                 <div class="job-card swiper-slide" th:attr="data-jobNoticeNum=${jobNotice.jobNoticeNum}">
                                     <div class="job-header">
-                                        <div th:class="${'bookmark '}"></div>
+                                        <div></div>
                                         <span class="deadline">D-3</span>
                                     </div>
                                     <img alt="채용 공고 이미지" th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"
@@ -67,7 +65,7 @@
 
                 <!-- 차트 영역 -->
                 <div class="chart-section">
-                    <h2>별점 평균</h2>
+                    <h2>별점</h2>
                     <div class="chart-placeholder">
                         <canvas id="starChart"></canvas>
                     </div>
