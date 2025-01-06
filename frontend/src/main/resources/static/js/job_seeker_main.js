@@ -5,8 +5,8 @@ import {SwiperApi} from "/static/js/class/SwiperApi.js";
 $(function () {
 
     const jobNotice = new SwiperApi('.job-notice-swiper', {
-        slidesPerView: 5, // 한 번에 보여줄 슬라이드 개수
-        slidesPerGroup: 3, // 한 번에 이동할 슬라이드 개수
+        slidesPerView: 4, // 한 번에 보여줄 슬라이드 개수
+        slidesPerGroup: 1, // 한 번에 이동할 슬라이드 개수
         loop: false
     });
 
