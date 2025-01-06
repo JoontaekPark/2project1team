@@ -3,6 +3,7 @@ package org.green.backend.controller.resume;
 import jakarta.servlet.http.HttpServletRequest;
 import org.green.backend.dto.common.UserDto;
 import org.green.backend.dto.resume.*;
+import org.green.backend.repository.dao.resume.ResumeDao;
 import org.green.backend.service.common.UserService;
 import org.green.backend.service.resume.ResumeService;
 import org.green.backend.dto.resume.ResumeInfoAllDto;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * packageName    : org.green.backend.controller.resume
@@ -44,6 +46,9 @@ public class ResumeRestController {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private ResumeDao resumeDao;
 
 
     @PostMapping("reg-proc2")
@@ -235,6 +240,26 @@ public class ResumeRestController {
 
         GetCntApplyDto cntApply = resumeService.getCntApply(instId);
         return cntApply;
+    }
+
+    @DeleteMapping("delete-resume/{resumeId}")
+    public String deleteResume(@PathVariable int resumeId) {
+
+        resumeDao.deleteResume(resumeId);
+        return "이력서가 삭제되었습니다.";
+    }
+
+    @PostMapping("save-memo")
+    public String saveResume(@RequestBody Map<String,String> param) {
+        System.out.println(param);
+
+
+        int resumeId = Integer.parseInt(param.get("resumeId"));
+        String memo = String.valueOf(param.get("memo"));
+
+        resumeDao.insertMemo(memo,resumeId);
+
+        return "";
     }
 
 
