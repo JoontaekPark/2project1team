@@ -41,8 +41,7 @@
 
             <div class="grid-item" th:if="${jobNotice.fileList.size() < 3}"
                  th:each="i : ${#numbers.sequence(1, 3 - jobNotice.fileList.size())}">
-                <img class="grid-image" th:src="${file.fileUrl + file.fileNewName + file.fileExt}"
-                     onerror="this.src='/static/img/default_image.png'">
+                <img class="grid-image" th:src="'/static/img/default_image.png'">
             </div>
         </div>
 
@@ -62,7 +61,7 @@
                     <th:block th:if="${session.user.userGbnCd == '10'}">
                         <i id="like" th:class="${(jobNotice.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"
                            style="font-size: 1.5rem;" th:data-jobNoticeNum="${jobNotice.jobNoticeNum}"></i>
-                        <button onclick="applyModal(true)" id="apply-btn">지원하기</button>
+                        <button onclick="applyModal(true)" id="apply-btn" th:disabled="${jobNotice.jobNoticeStatus == '30'}">지원하기</button>
                     </th:block>
                     <th:block th:if="${session.user.userGbnCd == '20'}">
                         <button onclick="endNotice()" id="apply-btn" th:disabled="${jobNotice.jobNoticeStatus == '30'}">

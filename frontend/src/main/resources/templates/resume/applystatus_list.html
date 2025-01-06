@@ -155,7 +155,12 @@
                 <tbody>
                 <!-- applyStatusList를 반복하여 테이블에 데이터 표시 -->
                 <tr th:each="applyStatus : ${applyStatusList}">
-                    <td th:text="${applyStatus.jobNoticeTitle}">(주)준택물산</td> <!-- 지원 공고 -->
+                    <!--<td th:text="${applyStatus.jobNoticeTitle}"></td> 지원 공고 -->
+                    <td>
+                        <a th:href="@{/job-notice-detail/{jobNoticeNum}(jobNoticeNum=${applyStatus.jobNoticeNum})}">
+                            <span th:text="${applyStatus.jobNoticeTitle}"></span>
+                        </a>
+                    </td>
                     <td th:text="${applyStatus.resumeTitle}">1번이력서</td> <!-- 이력서 번호 -->
                     <td th:text="${applyStatus.instDt}"></td> <!-- 지원 날짜 -->
                     <td th:class="${applyStatus.applyGbnCd == '최종합격' ? 'status-final' : 'status-fail'}"
