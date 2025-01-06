@@ -3,6 +3,8 @@ package org.green.backend.service.headhunting;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.headhunting.InitialFiltersDto;
 import org.green.backend.dto.headhunting.CodeInfoDto2;
+import org.green.backend.dto.headhunting.JobNoticeDto;
+import org.green.backend.dto.headhunting.SearchFiltersDto;
 import org.green.backend.repository.dao.headhunting.HeadHuntingDao;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +24,10 @@ public class HeadHuntingServiceImpl {
         filtersDto.setCareerFilters(careerFilters);
 
         return filtersDto;
+    }
+
+    public List<JobNoticeDto> search(SearchFiltersDto filters) {
+        System.out.println("필터 조건: " + filters); // 필터 데이터 확인
+        return headHuntingDao.search(filters);
     }
 }
