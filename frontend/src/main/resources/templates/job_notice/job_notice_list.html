@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        main {
+            display: flex;
+        }
+
+        h3 {
+            margin: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3개씩 나열 */
+            gap: 20px; /* 항목 간 간격 */
+            padding: 20px; /* 전체 그리드 여백 */
+            justify-items: center; /* 항목을 가운데 정렬 */
+            align-items: start; /* 항목의 세로 정렬 */
+        }
+
+        .grid-item {
+            background-color: #f9f9f9; /* 배경색 */
+            border: 1px solid #ddd; /* 테두리 */
+            border-radius: 8px; /* 둥근 모서리 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            width: 100%; /* 부모 요소에 따라 크기 조정 */
+            max-width: 300px; /* 최대 너비 제한 */
+            padding: 15px; /* 내부 여백 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+
+        .grid-item img {
+            width: 100%; /* 이미지 너비를 그리드 아이템에 맞춤 */
+            height: auto; /* 비율 유지 */
+            border-radius: 8px; /* 이미지 모서리 둥글게 */
+            margin-bottom: 10px; /* 이미지 아래 여백 */
+        }
+
+        .job-title a {
+            font-size: 1.2em; /* 제목 크기 */
+            font-weight: bold; /* 제목 강조 */
+            margin-bottom: 8px; /* 제목 아래 여백 */
+            color: #333; /* 제목 색상 */
+        }
+
+        .job-company {
+            font-size: 1em;
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        .job-location {
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragment/header :: userHeader}"></div>
+<main>
+    <div th:replace="~{fragment/aside :: asideCompany}"></div>
+    <div class="job-notice-container">
+        <div class="job-notice">
+            <h3>채용중인 공고</h3>
+            <div class="grid-container">
+                <div class="grid-item" th:each="jobNotice : ${jobNoticeList}">
+                    <img alt="채용 공고 이미지" src="/static/img/default_image.png">
+                    <!--                th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"&ndash;&gt;-->
+                    <!--             onerror="this.src='/static/img/default_image.png'">-->
+                    <div class="job-title">
+                        <a th:href="@{/job-notice-detail/{jobNoticeNum}(jobNoticeNum=${jobNotice.jobNoticeNum})}"
+                           th:text="${jobNotice.jobNoticeTitle}"></a>
+                    </div>
+                    <div class="job-company" th:text="${jobNotice.companyName}"></div>
+                    <div class="job-location"
+                         th:text="${jobNotice.jobNoticeArea} +'&nbsp;|&nbsp;'+ ${jobNotice.careerName}"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="temp-job-notice">
+            <h3>임시 채용공고</h3>
+            <div class="grid-container">
+                <div class="grid-item" th:each="tempNotice : ${tempNoticeList}">
+                    <img alt="채용 공고 이미지" src="/static/img/default_image.png">
+                    <!--                th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"&ndash;&gt;-->
+                    <!--             onerror="this.src='/static/img/default_image.png'">-->
+                    <div class="job-title">
+                        <a th:href="@{/job-notice-detail/{jobNoticeNum}(jobNoticeNum=${tempNotice.jobNoticeNum})}"
+                           th:text="${tempNotice.jobNoticeTitle}"></a>
+                    </div>
+                    <div class="job-company" th:text="${tempNotice.companyName}"></div>
+                    <div class="job-location"
+                         th:text="${tempNotice.jobNoticeArea} +'&nbsp;|&nbsp;'+ ${tempNotice.careerName}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="end-job-notice">
+            <h3>마감된 채용공고</h3>
+            <div class="grid-container">
+                <div class="grid-item" th:each="endNotice : ${endNoticeList}">
+                    <img alt="채용 공고 이미지" src="/static/img/default_image.png">
+                    <!--                th:src="${jobNotice.fileUrl + jobNotice.fileNewName + jobNotice.fileExt}"&ndash;&gt;-->
+                    <!--             onerror="this.src='/static/img/default_image.png'">-->
+                    <div class="job-title">
+                        <a th:href="@{/job-notice-detail/{jobNoticeNum}(jobNoticeNum=${endNotice.jobNoticeNum})}"
+                           th:text="${endNotice.jobNoticeTitle}"></a>
+                    </div>
+                    <div class="job-company" th:text="${endNotice.companyName}"></div>
+                    <div class="job-location"
+                         th:text="${endNotice.jobNoticeArea} +'&nbsp;|&nbsp;'+ ${endNotice.careerName}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragment/footer :: footer}"></div>
+</body>
+</html>

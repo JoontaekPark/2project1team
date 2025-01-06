@@ -88,9 +88,7 @@
             phone = #{user.phone},
             zip_cd = #{user.zipCd},
             addr = #{user.addr},
-            addr_detail = #{user.addrDetail},
-            use_yn = #{user.useYn},
-            user_gbn_cd = #{user.userGbnCd}
+            addr_detail = #{user.addrDetail}
         WHERE id = #{user.id}
 
     </update>

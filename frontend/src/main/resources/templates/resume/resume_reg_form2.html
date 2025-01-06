@@ -19,6 +19,8 @@
             margin-bottom: 25px;
             cursor: pointer;
             transition: all 0.2s ease;
+            margin-top: 100px;
+            width: 300px;
 
         }
         .modal {
@@ -169,7 +171,7 @@
             gap: 10px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px;
             margin-top: 60px;
@@ -181,6 +183,10 @@
         .header {
             position: relative;
             margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
 
         .title-row {
@@ -488,6 +494,7 @@
     </style>
 </head>
 <body>
+<header th:replace="~{fragment/header :: userHeader}"></header>
 <div class="container">
     <div class="header">
         <div class="left-section">
@@ -502,6 +509,7 @@
                 <input type="text" id="area" name="area" placeholder="희망근무지역(필수)">
             </div>
 
+            <br><br>
             <div class="active-section">
                 <h3>활동사항</h3>
 
@@ -652,7 +660,7 @@
                             <option value="file">파일</option>
                         </select>
                         <input type="file" id="resumePrtfFile" hidden>
-                        <input type="text" id="resumePrtfUrl" placeholder="https://www.example.com" style="display: none;">
+                        <input type="text" id="resumePrtfUrl" placeholder="https://www.example.com">
                         <label for="startDate">작업 기간</label>
                         <input type="date" id="resumePrtfStrDate">
                         <input type="date" id="resumePrtfEndDate">
@@ -694,10 +702,11 @@
                 <input type="file" id="photo-input" hidden accept="image/*">
             </div>
         </div>
+        <button onclick="submitFormData()" class="save-btn">이력서 저장</button>
     </div>
+
 </div>
 
-<button onclick="submitFormData()" class="save-btn">이력서 저장</button>
 
 
 
@@ -705,7 +714,7 @@
 
 
 
-
+<footer th:replace="~{fragment/footer :: footer}"></footer>
 
 
 <script th:inline="javascript">
@@ -978,52 +987,6 @@
         }
     }
 
-    // 포트폴리오 폼 추가
-    //     function addPortfolioForm() {
-    //         portfolioCount++;
-    //         const container = document.getElementById('portfolio-forms-container');
-    //         const form = document.createElement('div');
-    //         form.className = 'form-container';
-    //         form.id = `portfolio-${portfolioCount}`;
-    //
-    //         form.innerHTML = `
-    //                 <div class="form-row">
-    //
-    //                     <input type="number" placeholder="작업인원수" name="prtfs[${educationCount}].resumePrtfCnt" style="flex: 1;">
-    //                 </div>
-    //                 <div class="form-row">
-    //                     <input type="text"
-    //                         placeholder="시작날짜"
-    //                         onfocus="(this.type='date')"
-    //                         onblur="if(!this.value) this.type='text'"
-    //                         name="prtfs[${educationCount}].resumePrtfStrDate">
-    //                     <input type="text"
-    //                         placeholder="종료날짜"
-    //                         onfocus="(this.type='date')"
-    //                         onblur="if(!this.value) this.type='text'"
-    //                         name="prtfs[${educationCount}].resumePrtfEndDate">
-    //                 </div>
-    // <!--                경림이 수정함-->
-    //                 <div class="form-row">
-    //                     <input type="file" name="prtfs[${portfolioCount}].resumePrtfFile">
-    //                 </div>
-    // <!--                경림이 수정 끝-->
-    //                 <div class="form-row">
-    //                     <input type="url" placeholder="URL (선택사항)" name="prtfs[${educationCount}].resumePrtfUrl" style="width: 100%;">
-    //                 </div>
-    //                 <div class="form-row">
-    //                     <textarea placeholder="작업내용" name="prtfs[${educationCount}].resumePrtfContent"
-    //                         style="width: 100%; min-height: 100px;"></textarea>
-    //                 </div>
-    //                 <div class="delete-btn-container">
-    //                     <button type="button" class="delete-career-btn" onclick="deleteForm('portfolio-${portfolioCount}')">삭제</button>
-    //                 </div>
-    //             `;
-    //
-    //         container.appendChild(form);
-    //     }
-
-
 
 
     // 자기소개 폼 추가
@@ -1165,6 +1128,8 @@
     function closePortfolioModal() {
         document.getElementById("portfolio-modal").style.display = "none";
     }
+
+
 
     // 업로드 형태에 따라 필드 표시 전환
     function toggleUploadField() {
@@ -1358,6 +1323,7 @@
             .then(response => {
                 console.log('데이터 전송 성공:', response.data);
                 alert('이력서가 성공적으로 저장되었습니다.');
+                window.location.href='/resume/resume-list';
             })
             .catch(error => {
                 console.error('데이터 전송 오류:', error);

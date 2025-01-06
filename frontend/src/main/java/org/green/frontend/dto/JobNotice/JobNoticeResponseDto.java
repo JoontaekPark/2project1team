@@ -34,10 +34,15 @@ public class JobNoticeResponseDto {
     private int vCnt;                         // 조회수
     private String instId;                    // 작성자 ID
     private LocalDateTime instDt;                      // 작성일시
+    private String jobNoticeStatus;
     private int likeYn;
 
     //파일
     private List<FileDto> fileList;
+    private String fileNewName;
+    private String fileOldName;
+    private String fileUrl;
+    private String fileExt;
 
     private List<String> stackList;   // 기술스택 리스트
     private List<String> stepList;     // 절차 리스트

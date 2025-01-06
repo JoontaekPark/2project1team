@@ -25,7 +25,7 @@ $(function () {
                         .then(res => {
                             if (data.body.userGbnCd === '20') location.href = "/company" //기업
                             else if (data.body.userGbnCd === '30') location.href = "/admin" //관리자
-                            else location.href = "/job-seeker" //관리자
+                            else location.href = "/" //구직자
                         })
                         .catch(error => {
                             console.error(error);

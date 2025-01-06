@@ -28,7 +28,16 @@ public class JobNoticeController {
     private JobNoticeImpl jobNoticeService;
 
     @Autowired
-    private CookieUtil cookikeUtil;
+    private CookieUtil cookieUtil;
+
+    // 리스트 조회
+    @GetMapping("job-notice-list")
+    public ResponseEntity<List<JobNoticeResponseDto>> getJobNoticeList(@RequestParam("jobNoticeStatus") String jobNoticeStatus, HttpServletRequest request){
+
+        String token = request.getHeader("Authorization");
+        List<JobNoticeResponseDto> list = jobNoticeService.getJobNoticeList(jobNoticeStatus, token);
+        return ResponseEntity.ok(list);
+    }
 
     //    조회
         @GetMapping("/job-notice")
@@ -36,7 +45,7 @@ public class JobNoticeController {
                                                                  HttpServletRequest request) {
 
             String token = request.getHeader("Authorization");
-            System.out.println("ssssssssssssssssssssssssssssss");
+//            System.out.println("ssssssssssssssssssssssssssssss");
             System.out.println(token);
             JobNoticeResponseDto dto = jobNoticeService.getJobNoticeDetails(jobNoticeNum, token);
             System.out.println("backController : "+dto.toString());
@@ -46,17 +55,19 @@ public class JobNoticeController {
 //    등록
     @PostMapping("/job-notice")
     public String createJobNotice(
-            @ModelAttribute JobNoticeRequestDto JobNoticeRequestDto)
+            @ModelAttribute JobNoticeRequestDto JobNoticeRequestDto, HttpServletRequest request)
             throws IOException {
+        String token = cookieUtil.getCookie(request, "Authorization");
         System.out.println("Received dto: " + JobNoticeRequestDto);
-        jobNoticeService.createJobNotice(JobNoticeRequestDto);
+        jobNoticeService.createJobNotice(JobNoticeRequestDto, token);
         return "등록완료";
     }
 
     //지원현황 조회
     @GetMapping("/status-list")
-    public ResponseEntity<List<ApplyStatusResponseDto>> getApplyList(@RequestParam("jobNoticeNum") int jobNoticeNum) {
-        List<ApplyStatusResponseDto> list = jobNoticeService.getApplyStatusList(jobNoticeNum);
+    public ResponseEntity<List<ApplyStatusResponseDto>> getApplyList(@RequestParam("jobNoticeNum") int jobNoticeNum,  HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        List<ApplyStatusResponseDto> list = jobNoticeService.getApplyStatusList(jobNoticeNum, token);
         System.out.println("backController : "+list.toString());
         return ResponseEntity.ok(list);
     }
@@ -72,5 +83,12 @@ public class JobNoticeController {
         jobNoticeService.updateStatus(dto);
         return "success";
     }
-    
+
+    //공고 마감처리
+    @PutMapping("/job-notice-status")
+    public String updateNoticeStatus(@RequestParam("jobNoticeNum")int jobNoticeNum) throws  IOException{
+        jobNoticeService.updateNoticeStatus(jobNoticeNum);
+        return "success";
+    }
+
 }
