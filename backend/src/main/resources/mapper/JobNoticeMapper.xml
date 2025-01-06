@@ -5,10 +5,15 @@
 <mapper namespace="org.green.backend.repository.dao.JobNoticeDao">
     <select id="getJobNoticeList" resultType="org.green.backend.dto.JobNotice.JobNoticeResponseDto">
         SELECT
+        jn.job_notice_num,
         c.name AS company_name,
         jn.job_notice_title,
         jn.job_notice_area,
         career.cd_nm AS career_name
+<!--        f.file_new_name,-->
+<!--        f.file_old_name,-->
+<!--        f.file_url,-->
+<!--        f.file_ext-->
 
         FROM tbl_job_notice jn
 
@@ -19,7 +24,8 @@
         JOIN tbl_user c
         ON jn.inst_id = c.id
 
-        WHERE inst_id = #{inst_id}
+        WHERE
+        jn.job_notice_status = #{jobNoticeStatus} AND jn.inst_id = #{instId};
     </select>
     <select id="getJobNoticeDetails" resultType="org.green.backend.dto.JobNotice.JobNoticeResponseDto">
         SELECT
@@ -42,6 +48,7 @@
         work.cd_nm AS work_name,
         career.cd_nm AS career_name,
         education.cd_nm AS education_name,
+        jn.job_notice_status,
         IF(e.target IS NULL, 0, 1) AS likeYn
 
         FROM tbl_job_notice jn
@@ -55,7 +62,7 @@
         <!-- 근무 형태-->
         LEFT JOIN tbl_codeinfo work
         ON jn.job_notice_work_gbn_cd = work.cd
-        AND work.up_cd='job_notice_work_gbn_cd'
+        AND work.up_cd = 'employment_type_gbn_cd'
 
         <!-- 경력 구분-->
         LEFT JOIN tbl_codeinfo career
@@ -115,6 +122,7 @@
         job_notice_caution,
         job_notice_str_date,
         job_notice_end_date,
+        job_notice_status,
         inst_id)
         VALUES
         (#{jobNoticeTitle},
@@ -130,6 +138,7 @@
         #{jobNoticeCaution},
         #{jobNoticeStrDate},
         #{jobNoticeEndDate},
+        #{jobNoticeStatus},
         #{instId});
     </insert>
 
@@ -169,12 +178,12 @@
         c.cd_nm AS apply_gbn_name,
         GROUP_CONCAT(ci.cd_nm LIMIT 3) AS stack_names
         FROM tbl_apply_status ap
-        JOIN tbl_resume r ON r.resume_id = ap.resume_id
-        JOIN tbl_user u ON u.id = r.inst_id
-        JOIN tbl_job_notice jb ON jb.job_notice_num = ap.job_notice_num
-        JOIN tbl_resume_stack rst ON rst.resume_id = ap.resume_id
-        JOIN tbl_codeinfo c ON ap.apply_gbn_cd = c.cd AND c.up_cd = 'apply_gbn_cd'
-        JOIN tbl_codeinfo ci ON rst.stack_cd = ci.cd and ci.up_cd IN (SELECT cd FROM tbl_codeinfo WHERE up_cd = 'stack_cd')
+        LEFT JOIN tbl_resume r ON r.resume_id = ap.resume_id
+        LEFT JOIN tbl_user u ON u.id = r.inst_id
+        LEFT JOIN tbl_job_notice jb ON jb.job_notice_num = ap.job_notice_num
+        LEFT JOIN tbl_resume_stack rst ON rst.resume_id = ap.resume_id
+        LEFT JOIN tbl_codeinfo c ON ap.apply_gbn_cd = c.cd AND c.up_cd = 'apply_gbn_cd'
+        LEFT JOIN tbl_codeinfo ci ON rst.stack_cd = ci.cd and ci.up_cd IN (SELECT cd FROM tbl_codeinfo WHERE up_cd = 'stack_cd')
         WHERE jb.job_notice_num = #{jobNoticeNum}
         GROUP BY r.resume_id, u.id, jb.job_notice_num, ap.inst_dt, apply_gbn_cd;
     </select>
@@ -184,5 +193,18 @@
         SET apply_gbn_cd = #{dto.applyGbnCd}
         WHERE job_notice_num = #{dto.jobNoticeNum}
         AND resume_id = #{dto.resumeId}
+    </update>
+
+<!--    공고 마감-->
+    <update id="updateNoticeStatus">
+        UPDATE tbl_job_notice
+        SET job_notice_status="30"
+        WHERE job_notice_num = #{jobNoticeNum}
+    </update>
+    <update id="updateNoticeApplyStatus">
+        UPDATE tbl_apply_status
+        SET apply_gbn_cd = "F"
+        WHERE job_notice_num = #{jobNoticeNum}
+        AND apply_gbn_cd = "N";
     </update>
 </mapper>

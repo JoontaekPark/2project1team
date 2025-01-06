@@ -337,8 +337,9 @@
         <br>
         <br>
         <div class="form" id="btn-form">
-            <button onclick="" id="temp-btn">임시저장</button>
-            <button onclick="regist()" id="regist-btn">작성하기</button>
+            <input type="hidden" id="jobNoticeStatus" value="10">
+            <button onclick="setJobNoticeStatus(10); regist();" id="temp-btn">임시저장</button>
+            <button onclick="setJobNoticeStatus(20); regist();" id="regist-btn">작성하기</button>
         </div>
     </div>
 </main>
@@ -398,6 +399,11 @@
         fileNamesField.value = fileNames || "선택된 파일이 없습니다.";
     }
 
+    // jobNoticeStatus 값을 설정하는 함수
+    function setJobNoticeStatus(status) {
+        $('#jobNoticeStatus').val(status);
+    }
+
     //<!--등록-->
     function regist() {
         let formData = new FormData();
@@ -417,6 +423,7 @@
         formData.append("jobNoticeCaution", $('#jobNoticeCaution').val());
         formData.append("jobNoticeStrDate", $('#jobNoticeStrDate').val());
         formData.append("jobNoticeEndDate", $('#jobNoticeEndDate').val());
+        formData.append("jobNoticeStatus", $('#jobNoticeStatus').val());
 
 // 스택, 채용절차, 복리후생 데이터 추가
         $('.stack-container .active').each(function () {
@@ -450,54 +457,24 @@
         }
 
 
-        // formData.append("jobNoticeData", jobNoticeData);
-
-        // 파일 추가
-
-        // for (let [key, value] of formData.entries()) {
-        //     console.log(`${key}: ${value}`);
-        // }
-
-        // api.post('/api/v1/job-notice', formData,
-        //     headers: {
-        //     'Content-Type': 'multipart/form-data'  }// 이 헤더는 axios가 자동으로 설정하지만, 명시적으로 설정할 수도 있습니다
-        // )
-        //     .then(data => {
-        //         console.log(data)
-        //         location.href = "/main";
-        //     })
-        //
-        //     .catch(error => {
-        //         console.error(error)
-        //         alert("오류 발생. 다시 시도해주세요.");
-        //     });
-
-
         axios({
             method: 'post',
             url: 'http://localhost:8080/api/v1/job-notice', // 서버의 정확한 URL
             data: formData,  // FormData 객체를 그대로 전송
+            withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data'  // 이 헤더는 axios가 자동으로 설정하지만, 명시적으로 설정할 수도 있습니다
             }
         })
             .then(response => {
                 alert('공고 등록이 완료되었습니다.');
-                location.href = "/main";
+                location.href = "/job-notice-list";
             })
             .catch(error => {
                 console.log("실패: " + error);
             });
 
 
-        /*    axios.post('http://localhost:8080/api/v1/job-notice', formData)
-                .then(response => {
-                    alert('공고 등록이 완료되었습니다.');
-                })
-                .catch(error => {
-                    console.log("실패: " + error);
-                });
-    */
 
     }
 

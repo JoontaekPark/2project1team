@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,10 +32,10 @@ public class JobNoticeImpl implements JobNoticeService {
 
     //채용공고 리스트 조회
     @Override
-    public List<JobNoticeResponseDto> getJobNoticeList(String token) {
+    public List<JobNoticeResponseDto> getJobNoticeList(String jobNoticeStatus, String token) {
         String instId = jwtUtil.getId(token);
-
-        List<JobNoticeResponseDto> list = jobNoticeDao.getJobNoticeList(instId);
+        List<JobNoticeResponseDto> list = jobNoticeDao.getJobNoticeList(jobNoticeStatus, instId);
+        System.out.println(jobNoticeStatus);
         return list;
     }
 
@@ -62,17 +63,27 @@ public class JobNoticeImpl implements JobNoticeService {
     //채용공고 등록
     @Override
     @Transactional
-    public void createJobNotice(JobNoticeRequestDto dto) throws IOException {
+    public void createJobNotice(JobNoticeRequestDto dto, String token) throws IOException {
+
+        String instId = "";
+
+        if (token != null) {
+            instId = jwtUtil.getId(token);
+        }
+
+        dto.setInstId(instId);
+
         // 1. 채용 공고 정보 등록
         jobNoticeDao.registJobNotice(dto);
 
         int jobNoticeNum = dto.getJobNoticeNum();
         System.out.println("jobNoticeNum : "+jobNoticeNum);
 
+
         // 파일 등록
         if (!dto.getFiles().isEmpty() && dto.getFiles().size() > 0) {
             for (MultipartFile file : dto.getFiles()) {
-                fileService.saveFile(file, "20", String.valueOf(jobNoticeNum), dto.getInstId());
+                fileService.saveFile(file, "20", String.valueOf(jobNoticeNum), instId);
             }
         }
         // 2. 기술 스택 등록
@@ -88,15 +99,25 @@ public class JobNoticeImpl implements JobNoticeService {
 
     //지원현황 조회
     @Override
-    public List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum) {
-        List<ApplyStatusResponseDto> list = jobNoticeDao.getApplyStatusList(jobNoticeNum);
+    public List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum, String token) {
+        List<ApplyStatusResponseDto> list = jobNoticeDao.getApplyStatusList(jobNoticeNum, token);
 
+//        String id = jwtUtil.getId(token);
 
         // stack 문자열 리스트로 변환
+//        for (ApplyStatusResponseDto dto : list) {
+//            String stackNames = dto.getStackNames();
+//                List<String> stackCdList = Arrays.asList(stackNames.split(","));
+//                dto.setStackCdList(stackCdList);
+//        }
         for (ApplyStatusResponseDto dto : list) {
             String stackNames = dto.getStackNames();
+            if (stackNames != null && !stackNames.isEmpty()) {
                 List<String> stackCdList = Arrays.asList(stackNames.split(","));
                 dto.setStackCdList(stackCdList);
+            } else {
+                dto.setStackCdList(Collections.emptyList()); // stackNames가 null이거나 비어있을 경우 빈 리스트 설정
+            }
         }
 
         //M/F 성별 변환
@@ -117,7 +138,10 @@ public class JobNoticeImpl implements JobNoticeService {
         jobNoticeDao.updateStatus(dto);
     }
 
-
-
+    @Override
+    public void updateNoticeStatus(int jobNoticeNum) throws IOException {
+        jobNoticeDao.updateNoticeStatus(jobNoticeNum);
+        jobNoticeDao.updateNoticeApplyStatus(jobNoticeNum);
+    }
 
 }

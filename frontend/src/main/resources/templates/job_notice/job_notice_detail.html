@@ -12,6 +12,7 @@
 <main>
 
     <div class="main-container">
+        <input type="hidden" id="jobNoticeNum" th:value="${jobNotice.jobNoticeNum}">
 
         <!--    이미지-->
         <div class="img-container">
@@ -30,7 +31,8 @@
         <div class="title-container">
             <div class="left-title">
                 <div class="top-left">
-                    <p th:text="${jobNotice.companyName}+'&nbsp;|&nbsp;'+${jobNotice.jobNoticeArea}+'&nbsp;|&nbsp;'+${jobNotice.careerName}"></p>
+                    <a th:href="@{'/company-info/' + ${jobNotice.instId}}" th:text="${jobNotice.companyName}"></a>
+                    <span th:text="'&nbsp;|&nbsp;'+${jobNotice.jobNoticeArea}+'&nbsp;|&nbsp;'+${jobNotice.careerName}"></span>
                 </div>
                 <div class="bottom-left">
                     <h3 th:text="${jobNotice.jobNoticeTitle}"></h3>
@@ -38,13 +40,13 @@
             </div>
             <div class="right-title">
                 <div class="top-right">
-                    <i id="like" th:class="${(jobNotice.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"
-                       style="font-size: 1.5rem;" th:data-jobNoticeNum="${jobNotice.jobNoticeNum}"></i>
                     <th:block th:if="${session.user.userGbnCd == '10'}">
+                        <i id="like" th:class="${(jobNotice.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"
+                           style="font-size: 1.5rem;" th:data-jobNoticeNum="${jobNotice.jobNoticeNum}"></i>
                         <button onclick="" id="apply-btn">지원하기</button>
                     </th:block>
                     <th:block th:if="${session.user.userGbnCd == '20'}">
-                        <button onclick="" id="apply-btn">마감하기</button>
+                        <button onclick="endNotice()" id="apply-btn" th:disabled="${jobNotice.jobNoticeStatus == '30'}">마감하기</button>
                     </th:block>
                 </div>
                 <div class="bottom-right">
@@ -139,18 +141,20 @@
         </div>
         <hr>
 
-        <div class="board">
+        <div class="board" th:if="${session.user.userGbnCd == '10'}">
             <div id="board-content">
                 <span>궁금하신 내용을 입력해주시면</span>
                 <span> 명확히 신속하게 전달 드리겠습니다. </span>
             </div>
-            <div id="board-icon">
-                <p>1:1 문의하기<i class="bi bi-arrow-up-right-circle"></i></p>
-                <!--                <i id="mailbox" class="bi bi-mailbox"></i>-->
-            </div>
+            <a href="/board-form">
+                <div id="board-icon">
+                    <p>1:1 문의하기<i class="bi bi-arrow-up-right-circle"></i></p>
+                    <!--                <i id="mailbox" class="bi bi-mailbox"></i>-->
+                </div>
+            </a>>
+            <hr>
         </div>
 
-        <hr>
 
         <div class="apply" th:if="${session.user.userGbnCd == '20' && session.user.id == jobNotice.instId}">
             <h3>지원현황</h3>
@@ -174,7 +178,8 @@
                     </div>
                     <div id="apply-check">
                         <select class="jobNoticeWorkGbnCd" th:data-jobNoticeNum="${applyStatus.jobNoticeNum}"
-                                th:data-resumeId="${applyStatus.resumeId}">
+                                th:data-resumeId="${applyStatus.resumeId}"
+                                th:disabled="${jobNotice.jobNoticeStatus == '30'}">
                             <th:block th:each="applyGbnCd : ${applyGbnCdList}">
                                 <option th:value="${applyGbnCd.cd}"
                                         th:text="${applyGbnCd.cdNm}"
@@ -242,6 +247,22 @@
         }
     });
 
+
+    //공고 채용종료
+    function endNotice(){
+        const jobNoticeNum = document.querySelector('#jobNoticeNum').value; // 공고 번호를 가져옴
+        console.log(jobNoticeNum);
+        api.put('/api/v1/job-notice-status?jobNoticeNum='+jobNoticeNum)
+            .then(response => {
+                console.log('공고 상태가 마감 처리되었습니다:', response.data);
+                alert('공고가 마감되었습니다.');
+                location.reload(); // 페이지 새로고침
+            })
+            .catch(error => {
+                console.error('오류 발생:', error);
+                alert('오류가 발생했습니다. 다시 시도해주세요.');
+            });
+    }
 
 </script>
 </html>
