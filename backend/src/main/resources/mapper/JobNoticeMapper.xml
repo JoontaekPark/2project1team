@@ -207,4 +207,11 @@
         WHERE job_notice_num = #{jobNoticeNum}
         AND apply_gbn_cd = "N";
     </update>
+
+<!--    준택이만듬-->
+    <insert id="applyResume">
+        INSERT INTO tbl_apply_status (job_notice_num,resume_id,apply_gbn_cd,inst_dt)
+        VALUES
+        (#{jobNoticeNum},#{resumeId},'N',NOW());
+    </insert>
 </mapper>

@@ -45,4 +45,8 @@ import java.util.List;
         //공고 마감
         void updateNoticeStatus(int jobNoticeNum);
         void updateNoticeApplyStatus(int jobNoticeNum);
+
+
+        //준택(이력서->공고 지원 로직)
+        public void applyResume(@Param("jobNoticeNum")int jobNoticeNum, @Param("resumeId")int resumeId);
 }

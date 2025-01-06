@@ -6,6 +6,7 @@ import org.green.backend.dto.JobNotice.ApplyStatusRequestDto;
 import org.green.backend.dto.JobNotice.ApplyStatusResponseDto;
 import org.green.backend.dto.JobNotice.JobNoticeRequestDto;
 import org.green.backend.dto.JobNotice.JobNoticeResponseDto;
+import org.green.backend.repository.dao.JobNoticeDao;
 import org.green.backend.service.JobNotice.JobNoticeImpl;
 import org.green.backend.utils.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class JobNoticeController {
 
     @Autowired
     private JobNoticeImpl jobNoticeService;
+
+    @Autowired
+    private JobNoticeDao jobNoticeDao;
 
     @Autowired
     private CookieUtil cookieUtil;
@@ -90,5 +94,16 @@ public class JobNoticeController {
         jobNoticeService.updateNoticeStatus(jobNoticeNum);
         return "success";
     }
+
+    //준택(지원하기 저장로직)
+    @PostMapping("/apply-resume")
+    public String applyResume(@RequestParam("jobNoticeNum")int jobNoticeNum, @RequestParam("resumeId")int resumeId){
+        System.out.println( "resumeId: " + resumeId);
+        System.out.println("jobNoticeNum: " + jobNoticeNum);
+        jobNoticeDao.applyResume(jobNoticeNum, resumeId);
+
+        return "";
+    }
+
 
 }

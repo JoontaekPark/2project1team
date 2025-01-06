@@ -548,6 +548,16 @@ SELECT DISTINCT
         WHERE b.inst_id = #{instId}
     </select>
 
+    <delete id="deleteResume">
+        DELETE FROM tbl_resume WHERE resume_id = #{resumeId}
+    </delete>
+
+    <update id="insertMemo">
+        UPDATE tbl_resume
+        SET resume_memo = #{memo}
+        WHERE resume_id = #{resumeId}
+    </update>
+
 
 
 
