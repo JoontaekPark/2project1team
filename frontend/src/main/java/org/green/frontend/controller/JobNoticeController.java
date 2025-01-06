@@ -63,6 +63,7 @@ public class JobNoticeController {
         model.addAttribute("resumes", resumes);
         System.out.println("frontController :" + resumes);
         //----------------------------------------준택끝---------------------
+
         //지원현황
         List<ApplyStatusResponseDto> applyStatusList = jobNoticeService.getApplyStatusList(jobNoticeNum);
         List<CodeInfoDto> applyGbnCdList = jobNoticeService.applyInfo();

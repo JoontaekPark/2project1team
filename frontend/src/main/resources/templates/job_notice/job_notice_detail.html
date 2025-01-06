@@ -10,18 +10,21 @@
 <body>
 <div th:replace="~{fragment/header :: userHeader}"></div>
 <main>
-    <div class="modal-container on">
+    <div class="modal-container">
         <div class="modal-step-one modal-wrap on">
             <div class="modal-title">
                 지원하기
             </div>
             <div class="modal-content">
-                <select id="resumes" th:each="resume:${resumes}" >
-                    <option th:value="${resume.resumeId}" th:text="${resume.resumeTitle}"></option>
+                <select id="resumes">
+                    <th:block th:each="resume:${resumes}">
+                        <option th:value="${resume.resumeId}" th:text="${resume.resumeTitle}"></option>
+                    </th:block>
                 </select>
             </div>
             <div class="modal-btn">
-                <button class="modal-close-btn">취소</button>
+                <button class="modal-save-btn" onclick="saveModal()">확인</button>
+                <button class="modal-close-btn" onclick="applyModal(false)">취소</button>
             </div>
         </div>
     </div>
@@ -283,13 +286,25 @@
 
     //공고 지원
     function applyModal(t) {
-        const jobNoticeNum = document.querySelector('#jobNoticeNum').value;
-
-
-        document.querySelector(".modal-container").classList.add("on");
-        document.querySelector(".modal-step-one").classList.remove("on");
-
+        if (t) {
+            document.querySelector(".modal-container").classList.add("on");
+        } else {
+            document.querySelector(".modal-container").classList.remove("on");
+        }
     }
+
+    function saveModal() {
+        const jobNoticeNum = document.querySelector('#jobNoticeNum').value;
+        const resumeId = document.querySelector('#resumes').value;
+        api.post('/api/v1/apply-resume?jobNoticeNum=' + jobNoticeNum + '&resumeId=' + resumeId)
+            .then(data => {
+                console.log(data)
+                alert('지원 완료');
+                applyModal(false);
+            })
+            .catch(error => console.error(error));
+    }
+
 
 </script>
 </html>
