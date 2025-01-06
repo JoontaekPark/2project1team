@@ -463,7 +463,7 @@
         LEFT JOIN
         tbl_file rf ON rp.resume_prtf_num = rf.file_ref_id
         WHERE
-        rp.resume_id = #{resumeId}
+        rp.resume_id = #{resumeId} AND rf.file_gbn_cd=40;
     </select>
 
     <select id="getResumeStackDto" resultType="org.green.backend.dto.resume.ResumeStackDto">

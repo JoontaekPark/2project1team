@@ -119,6 +119,7 @@ public class ResumeController {
         UserDto user = userResponse.getBody();
         model.addAttribute("user", user);
         model.addAttribute("resume", resumeInfo);
+        System.out.println(resumeInfo);
         return "/resume/resume_detail";
     }
 
@@ -136,11 +137,6 @@ public class ResumeController {
         ApiResponse<List> resumesInfo = webClientUtil.getApi("/resume/get-resumelist?instId=" + instId, List.class);
 
         List<ResumeDto> resumes = resumesInfo.getBody();
-
-        for (int i = 0; i < resumes.size(); i++) {
-            System.out.println(i + "번째 이력서 정보 : " + resumes.get(i));
-        }
-
 
         model.addAttribute("resumes", resumes);
 

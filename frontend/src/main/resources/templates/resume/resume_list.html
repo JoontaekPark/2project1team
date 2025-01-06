@@ -135,6 +135,57 @@
             background-color: #e1e1e1;
         }
 
+        .menu {
+            position: absolute;
+            top: 20px;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ddd;
+            padding: 10px;
+            display: none;
+            z-index: 10;
+        }
+
+        .menu button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .menu button:hover {
+            background-color: #e1e1e1;
+        }
+
+        /* 모달 */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .modal-content {
+            text-align: center;
+        }
+
+        .modal-content .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
 
     </style>
 </head>
@@ -177,6 +228,25 @@
 <!--                        <div class="dot">•</div>-->
 <!--                        <div class="dot">•</div>-->
 <!--                    </div>-->
+                    <div class="resumeSetting">
+                        <div class="dot" onclick="toggleMenu(this)">•</div>
+                        <div class="dot" onclick="toggleMenu(this)">•</div>
+                        <div class="dot" onclick="toggleMenu(this)">•</div>
+                        <div class="menu">
+                            <button onclick="deleteResume(this)" data-resume-id="[[${resume.resumeId}]]">삭제</button>
+                            <button onclick="openMemoModal(this)" data-resume-id="[[${resume.resumeId}]]">메모 작성</button>
+                        </div>
+                    </div>
+
+                    <!-- 모달 창 -->
+                    <div id="memoModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeMemoModal()">&times;</span>
+                            <h3>메모 작성</h3>
+                            <textarea id="memoText" placeholder="메모를 입력하세요"></textarea>
+                            <button onclick="saveMemo()">저장</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -194,7 +264,7 @@
     function updateMainResume(element) {
         const resumeId = element.getAttribute('data-resume-id');
 
-        // 확인용 로그
+
         console.log("Resume ID:", resumeId);
 
         axios.get(`http://localhost:8080/resume/update-mainresume`, {
@@ -202,7 +272,7 @@
         })
             .then(response => {
                 alert('대표 이력서가 변경되었습니다!');
-                // 성공 시 페이지 새로고침 또는 UI 업데이트
+
                 location.reload();
             })
             .catch(error => {
@@ -210,6 +280,67 @@
                 alert('대표 이력서 변경 중 오류가 발생했습니다.');
             });
     }
+
+    function toggleMenu(element) {
+        const menu = element.parentElement.querySelector('.menu');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+
+
+
+
+    // 메모 모달 열기
+    function openMemoModal(button) {
+        const resumeId = button.getAttribute('data-resume-id');
+        document.getElementById('memoModal').style.display = 'block';
+        document.getElementById('memoModal').setAttribute('data-resume-id', resumeId);
+    }
+
+    // 메모 모달 닫기
+    function closeMemoModal() {
+        document.getElementById('memoModal').style.display = 'none';
+        document.getElementById('memoText').value = '';
+    }
+
+    // 메모 저장
+    function saveMemo() {
+        const resumeId = document.getElementById('memoModal').getAttribute('data-resume-id');
+        const memo = document.getElementById('memoText').value;
+
+        axios.post('http://localhost:8080/resume/save-memo', {
+            resumeId: resumeId,
+            memo: memo
+        })
+            .then(response => {
+                alert('메모가 저장되었습니다!');
+                location.reload();
+            })
+            .catch(error => {
+                console.error('메모 저장 오류:', error);
+                alert('메모 저장 중 오류가 발생했습니다.');
+            });
+
+        closeMemoModal();
+    }
+
+
+    function deleteResume(button) {
+        const resumeId = button.getAttribute('data-resume-id');
+
+        if (confirm('이 이력서를 삭제하시겠습니까?')) {
+            axios.delete(`http://localhost:8080/resume/delete/${resumeId}`)
+                .then(response => {
+                    alert('이력서가 삭제되었습니다!');
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('삭제 오류:', error);
+                    alert('이력서 삭제 중 오류가 발생했습니다.');
+                });
+        }
+    }
+
 
 
 </script>

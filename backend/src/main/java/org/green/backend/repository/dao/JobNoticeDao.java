@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.JobNotice.*;
 import org.green.backend.dto.common.FileDto;
+import org.green.backend.dto.company.ResponseJobNoticeDto;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -15,7 +17,8 @@ import java.util.List;
     public interface JobNoticeDao {
 
         //채용공고 리스트 조회
-        public List<JobNoticeResponseDto> getJobNoticeList(String instId);
+//        public List<JobNoticeResponseDto> getJobNoticeList(String instId);
+        public List<JobNoticeResponseDto> getJobNoticeList(@Param("jobNoticeStatus")String jobNoticeStatus, @Param("instId")String instId);
 
         //채용공고 상세정보 조회
         public JobNoticeResponseDto getJobNoticeDetails(@Param("jobNoticeNum") int jobNoticeNum, @Param("Id") String Id);
@@ -34,8 +37,12 @@ import java.util.List;
         public void registWelfares(@Param("jobNoticeNum") int jobNoticeNum, @Param("welfareList") List<String> welfareList);
 
         // 지원현황 조회
-        public List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum);
+        public List<ApplyStatusResponseDto> getApplyStatusList(@Param("jobNoticeNum")int jobNoticeNum, @Param("Id") String Id);
 
         //지원 수정
         public void updateStatus(@Param("dto")ApplyStatusRequestDto dto);
-    }
+
+        //공고 마감
+        void updateNoticeStatus(int jobNoticeNum);
+        void updateNoticeApplyStatus(int jobNoticeNum);
+}

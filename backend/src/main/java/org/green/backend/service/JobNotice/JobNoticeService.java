@@ -16,18 +16,20 @@ import java.util.List;
 public interface JobNoticeService {
 
     //리스트
-    List<JobNoticeResponseDto> getJobNoticeList(String instId);
+    List<JobNoticeResponseDto> getJobNoticeList(String jobNoticeStatus, String token);
 
     //조회
-    JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum, String Id);
+    JobNoticeResponseDto getJobNoticeDetails(int jobNoticeNum, String token);
 
     //등록
-    void createJobNotice(JobNoticeRequestDto dto) throws IOException;
+    void createJobNotice(JobNoticeRequestDto dto, String token) throws IOException;
 
 
     //지원현황
-    List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum);
+    List<ApplyStatusResponseDto> getApplyStatusList(int jobNoticeNum, String token);
 
     void updateStatus(ApplyStatusRequestDto dto) throws IOException;
 
+    //공고 마감
+    void updateNoticeStatus(int jobNoticeNum) throws IOException;
 }
