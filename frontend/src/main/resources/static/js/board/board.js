@@ -1,8 +1,8 @@
 // 1:1 문의 등록
 function registerBoard() {
     const data = {
-        //boardTarget: document.getElementById("boardTarget").value, // 문의 대상
-        boardTarget: "넷플릭스2", // 임시 저장
+        boardTarget: document.getElementById("boardTarget").value, // 문의 대상
+        //boardTarget: "넷플릭스2", // 임시 저장
         boardTitle: document.getElementById("boardTitle").value,
         boardContent: document.getElementById("boardContent").value,
         boardGbnCd: "10",
