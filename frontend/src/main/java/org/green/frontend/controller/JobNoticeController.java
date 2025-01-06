@@ -1,11 +1,16 @@
 package org.green.frontend.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.green.frontend.dto.JobNotice.ApplyStatusRequestDto;
 import org.green.frontend.dto.JobNotice.ApplyStatusResponseDto;
 import org.green.frontend.dto.JobNotice.JobNoticeResponseDto;
 import org.green.frontend.dto.common.CodeInfoDto;
+import org.green.frontend.dto.common.SessionDto;
+import org.green.frontend.dto.resume.ResumeDto;
+import org.green.frontend.global.common.ApiResponse;
 import org.green.frontend.service.JobNotice.JobNoticeService;
+import org.green.frontend.utils.WebClientUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +30,7 @@ import java.util.stream.Collectors;
 public class JobNoticeController {
 
     private final JobNoticeService jobNoticeService;
+    private final WebClientUtil webClientUtil;
 
     //등록
     @GetMapping("/job-notice-form")
@@ -45,9 +51,18 @@ public class JobNoticeController {
 
     //조회
     @GetMapping("/job-notice-detail/{jobNoticeNum}")
-    public String jobNoticeDetail(@PathVariable("jobNoticeNum") int jobNoticeNum, Model model) throws Exception {
+    public String jobNoticeDetail(@PathVariable("jobNoticeNum") int jobNoticeNum, Model model, HttpSession session) throws Exception {
         JobNoticeResponseDto dto = jobNoticeService.getJobNoticeDetail(jobNoticeNum);
         System.out.println("frontController :" + dto);
+
+        //(준택) 로그인한 유저가 작성한 이력서 리스트 불러오기 위한 로직
+        SessionDto user = (SessionDto) session.getAttribute("user");
+        String instId = user.getId();
+        ApiResponse<List> resumesInfo = webClientUtil.getApi("/resume/get-resumelist?instId=" + instId, List.class);
+        List<ResumeDto> resumes = resumesInfo.getBody();
+        model.addAttribute("resumes", resumes);
+        System.out.println("frontController :" + resumes);
+        //----------------------------------------준택끝---------------------
 
         //지원현황
         List<ApplyStatusResponseDto> applyStatusList = jobNoticeService.getApplyStatusList(jobNoticeNum);
@@ -57,7 +72,11 @@ public class JobNoticeController {
         model.addAttribute("applyGbnCdList", applyGbnCdList);
         model.addAttribute("applyStatusList", applyStatusList);
 //        model.addAttribute("selectedStatus", selectedStatus);
-
+        
+        
+        
+        
+        
         return "job_notice/job_notice_detail";
     }
 
@@ -75,6 +94,8 @@ public class JobNoticeController {
         model.addAttribute("endNoticeList", endNoticeList);
         return "job_notice/job_notice_list";
     }
+
+
 
 
 }

@@ -76,5 +76,9 @@ public interface ResumeDao {
     public List<userApplyStatus> getApplyList(String instId);
 
     public GetCntApplyDto getCntApply(String instId);
+
+    public void deleteResume(int resumeId);
+
+    public void insertMemo(@Param("memo")String memo,@Param("resumeId") int resumeId);
 }
 

@@ -10,6 +10,24 @@
 <body>
 <div th:replace="~{fragment/header :: userHeader}"></div>
 <main>
+    <div class="modal-container">
+        <div class="modal-step-one modal-wrap on">
+            <div class="modal-title">
+                지원하기
+            </div>
+            <div class="modal-content">
+                <select id="resumes">
+                    <th:block th:each="resume:${resumes}">
+                        <option th:value="${resume.resumeId}" th:text="${resume.resumeTitle}"></option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="modal-btn">
+                <button class="modal-save-btn" onclick="saveModal()">확인</button>
+                <button class="modal-close-btn" onclick="applyModal(false)">취소</button>
+            </div>
+        </div>
+    </div>
 
     <div class="main-container">
         <input type="hidden" id="jobNoticeNum" th:value="${jobNotice.jobNoticeNum}">
@@ -43,10 +61,12 @@
                     <th:block th:if="${session.user.userGbnCd == '10'}">
                         <i id="like" th:class="${(jobNotice.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"
                            style="font-size: 1.5rem;" th:data-jobNoticeNum="${jobNotice.jobNoticeNum}"></i>
-                        <button onclick="" id="apply-btn">지원하기</button>
+                        <button onclick="applyModal(true)" id="apply-btn">지원하기</button>
                     </th:block>
                     <th:block th:if="${session.user.userGbnCd == '20'}">
-                        <button onclick="endNotice()" id="apply-btn" th:disabled="${jobNotice.jobNoticeStatus == '30'}">마감하기</button>
+                        <button onclick="endNotice()" id="apply-btn" th:disabled="${jobNotice.jobNoticeStatus == '30'}">
+                            마감하기
+                        </button>
                     </th:block>
                 </div>
                 <div class="bottom-right">
@@ -251,10 +271,10 @@
 
 
     //공고 채용종료
-    function endNotice(){
+    function endNotice() {
         const jobNoticeNum = document.querySelector('#jobNoticeNum').value; // 공고 번호를 가져옴
         console.log(jobNoticeNum);
-        api.put('/api/v1/job-notice-status?jobNoticeNum='+jobNoticeNum)
+        api.put('/api/v1/job-notice-status?jobNoticeNum=' + jobNoticeNum)
             .then(response => {
                 console.log('공고 상태가 마감 처리되었습니다:', response.data);
                 alert('공고가 마감되었습니다.');
@@ -265,6 +285,28 @@
                 alert('오류가 발생했습니다. 다시 시도해주세요.');
             });
     }
+
+    //공고 지원
+    function applyModal(t) {
+        if (t) {
+            document.querySelector(".modal-container").classList.add("on");
+        } else {
+            document.querySelector(".modal-container").classList.remove("on");
+        }
+    }
+
+    function saveModal() {
+        const jobNoticeNum = document.querySelector('#jobNoticeNum').value;
+        const resumeId = document.querySelector('#resumes').value;
+        api.post('/api/v1/apply-resume?jobNoticeNum=' + jobNoticeNum + '&resumeId=' + resumeId)
+            .then(data => {
+                console.log(data)
+                alert('지원 완료');
+                applyModal(false);
+            })
+            .catch(error => console.error(error));
+    }
+
 
 </script>
 </html>

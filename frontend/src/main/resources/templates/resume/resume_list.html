@@ -186,7 +186,10 @@
             font-size: 20px;
         }
 
-
+        .memoStyle{
+            color: black;
+            font-size:14px;
+        }
     </style>
 </head>
 <body>
@@ -220,8 +223,9 @@
                     <div class="title">
                         <a th:href="@{/resume/resume-detail/{resumeId}(resumeId=${resume.resumeId})}" class="resume-link" th:text="${resume.resumeTitle}"></a>
                     </div>
-
-                    <div th:text="${resume != null ? resume.resumeMemo : '메모를 입력하지 않았습니다.'}"></div>
+                    <br><br><br>
+                    <div th:text="${resume != null ? resume.resumeMemo : '메모를 입력하지 않았습니다.'}" class="memoStyle"></div>
+                    <br><br><br><br><br><br>
                     <p th:if="${resume != null}">  [[${resume.instDt}]]</p>
 <!--                    <div class="resumeSetting">-->
 <!--                        <div class="dot">•</div>-->
@@ -233,8 +237,8 @@
                         <div class="dot" onclick="toggleMenu(this)">•</div>
                         <div class="dot" onclick="toggleMenu(this)">•</div>
                         <div class="menu">
-                            <button onclick="deleteResume(this)" data-resume-id="[[${resume.resumeId}]]">삭제</button>
-                            <button onclick="openMemoModal(this)" data-resume-id="[[${resume.resumeId}]]">메모 작성</button>
+                            <button onclick="deleteResume(this)" th:data-resume-id="${resume.resumeId}" style="white-space:nowrap">삭제</button>
+                            <button onclick="openMemoModal(this)" th:data-resume-id="${resume.resumeId}" style="white-space:nowrap">메모 작성</button>
                         </div>
                     </div>
 
@@ -243,6 +247,7 @@
                         <div class="modal-content">
                             <span class="close" onclick="closeMemoModal()">&times;</span>
                             <h3>메모 작성</h3>
+                            <br>
                             <textarea id="memoText" placeholder="메모를 입력하세요"></textarea>
                             <button onclick="saveMemo()">저장</button>
                         </div>
@@ -308,6 +313,9 @@
         const resumeId = document.getElementById('memoModal').getAttribute('data-resume-id');
         const memo = document.getElementById('memoText').value;
 
+        console.log(memo);
+        console.log(resumeId);
+
         axios.post('http://localhost:8080/resume/save-memo', {
             resumeId: resumeId,
             memo: memo
@@ -327,9 +335,8 @@
 
     function deleteResume(button) {
         const resumeId = button.getAttribute('data-resume-id');
-
         if (confirm('이 이력서를 삭제하시겠습니까?')) {
-            axios.delete(`http://localhost:8080/resume/delete/${resumeId}`)
+            axios.delete(`http://localhost:8080/resume/delete-resume/${resumeId}`)
                 .then(response => {
                     alert('이력서가 삭제되었습니다!');
                     location.reload();
