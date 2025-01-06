@@ -22,7 +22,7 @@ public class UrlUtils {
     /**
      * 현재 요청의 Base URL 가져오기
      *
-     * @return Base URL (예: http://localhost:4000)
+     * @return Base URL (예: http://192.168.0.225:4000)
      */
     public static String getBaseUrl() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -32,7 +32,7 @@ public class UrlUtils {
         }
 
         String scheme = request.getScheme(); // http 또는 https
-        String serverName = request.getServerName(); // localhost 또는 도메인 이름
+        String serverName = request.getServerName(); // 192.168.0.225 또는 도메인 이름
         int serverPort = request.getServerPort(); // 4000 등 포트 번호
         String contextPath = request.getContextPath(); // 애플리케이션 컨텍스트 경로
 
@@ -51,7 +51,7 @@ public class UrlUtils {
         }
 
         String scheme = request.getScheme(); // http 또는 https
-        String serverName = request.getServerName(); // localhost 또는 도메인 이름
+        String serverName = request.getServerName(); // 192.168.0.225 또는 도메인 이름
         String contextPath = request.getContextPath(); // 애플리케이션 컨텍스트 경로
 
         // 기본 포트는 포트 번호를 생략

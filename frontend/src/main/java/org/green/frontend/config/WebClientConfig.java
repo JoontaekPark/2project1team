@@ -24,7 +24,7 @@ public class WebClientConfig implements WebMvcConfigurer {
     @Bean
     public WebClient webClient(WebClient.Builder builder) {
         return builder
-                .baseUrl("http://localhost:8080") // 백엔드 URL
+                .baseUrl("http://192.168.0.225:8080") // 백엔드 URL
                 .defaultHeader("Content-Type", "application/json") // 기본 Content-Type
                 .filter(addAuthHeaderFilter()) // JWT 추가 필터
                 .build();

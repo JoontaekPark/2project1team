@@ -216,7 +216,7 @@
             careers,
         };
 
-        axios.post('http://localhost:8080/resume/regProc', data)
+        axios.post('http://192.168.0.225:8080/resume/regProc', data)
             .then(response => {
                 console.log('성공:', response.data);
                 alert('저장 성공!');

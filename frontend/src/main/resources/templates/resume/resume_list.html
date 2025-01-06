@@ -272,7 +272,7 @@
 
         console.log("Resume ID:", resumeId);
 
-        axios.get(`http://localhost:8080/resume/update-mainresume`, {
+        axios.get(`http://192.168.0.225:8080/resume/update-mainresume`, {
             params: {resumeId: resumeId}
         })
             .then(response => {
@@ -316,7 +316,7 @@
         console.log(memo);
         console.log(resumeId);
 
-        axios.post('http://localhost:8080/resume/save-memo', {
+        axios.post('http://192.168.0.225:8080/resume/save-memo', {
             resumeId: resumeId,
             memo: memo
         })
@@ -336,7 +336,7 @@
     function deleteResume(button) {
         const resumeId = button.getAttribute('data-resume-id');
         if (confirm('이 이력서를 삭제하시겠습니까?')) {
-            axios.delete(`http://localhost:8080/resume/delete-resume/${resumeId}`)
+            axios.delete(`http://192.168.0.225:8080/resume/delete-resume/${resumeId}`)
                 .then(response => {
                     alert('이력서가 삭제되었습니다!');
                     location.reload();

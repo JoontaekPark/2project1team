@@ -35,7 +35,7 @@
  */
 
 class Api {
-    constructor(baseURL = 'http://localhost:8080', timeout = 5000) {
+    constructor(baseURL = 'http://192.168.0.225:8080', timeout = 5000) {
         this.client = axios.create({
             baseURL,
             timeout,
