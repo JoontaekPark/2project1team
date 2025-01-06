@@ -184,7 +184,7 @@
                 d.name
         FROM tbl_job_notice a
         LEFT JOIN tbl_codeinfo b ON a.job_notice_career_gbn_cd = b.cd AND b.up_cd = 'job_notice_career_gbn_cd'
-        LEFT JOIN tbl_file c ON a.job_notice_num = c.file_ref_id AND c.file_gbn_cd = '40'
+        LEFT JOIN tbl_file c ON a.job_notice_num = c.file_ref_id AND c.file_gbn_cd = '20'
         LEFT JOIN tbl_user d ON a.inst_id = d.id
         LEFT JOIN tbl_like e ON e.target = a.job_notice_num AND e.like_gbn_cd = '30' AND e.inst_id = #{id}
         WHERE a.inst_id = #{companyId}
