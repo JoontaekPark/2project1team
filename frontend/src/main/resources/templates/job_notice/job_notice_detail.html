@@ -148,7 +148,9 @@
             </div>
             <a href="/board-form">
                 <div id="board-icon">
-                    <p>1:1 문의하기<i class="bi bi-arrow-up-right-circle"></i></p>
+                    <p><a th:href="@{/board/board-form(boardTarget=${jobNotice.getCompanyName()})}">1:1 문의하기</a> <i class="bi bi-arrow-up-right-circle"></i></p>
+                    <a th:href="@{/board/board-form(boardTarget=${job.companyId})}">
+                    <a th:href="@{/resume/resume-detail/{resumeId}(resumeId=${resume.resumeId})}" class="resume-link" th:text="${resume.resumeTitle}">
                     <!--                <i id="mailbox" class="bi bi-mailbox"></i>-->
                 </div>
             </a>>

@@ -49,12 +49,13 @@ public class BoardController {
         System.out.println("boardDto 잘 들어왔니?" + boardDto);
         // JWT에서 사용자 ID 추출
         String token = cookieUtil.getCookie(request, "Authorization");
+
         String userId = jwtUtil.getId(token); // JWT에서 사용자 ID 추출
         System.out.println(userId);
         // 작성자 ID를 DTO에 설정
-//        boardDto.setInstId(userId);
+        boardDto.setInstId(userId);
 
-//        boardService.registerBoard(boardDto);
+      boardService.registerBoard(boardDto);
 
         return "redirect:/board/list";
     }
@@ -68,7 +69,7 @@ public class BoardController {
 
         String userId = jwtUtil.getId(token); // JWT에서 사용자 ID 추출
         String userGbnId = jwtUtil.getUserGbnCd(token); // JWT에서 사용자 구분 코드 추출
-
+        System.out.println("1:1 문의 : 기업/구직자 구분코드" +userGbnId);
         List<BoardListDto> boardList = boardService.getBoardList(userId, userGbnId);
         System.out.println("boardList: " + boardList);
         return ResponseEntity.ok(boardList);
