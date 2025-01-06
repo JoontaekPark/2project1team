@@ -34,7 +34,7 @@
                 <!--        기업용-->
                 <ul class="nav-content" th:if="${session?.user?.userGbnCd == '20'}">
                     <li>
-                        <a href="/">
+                        <a href="/company">
                             <img src="/static/img/logo.svg">
                         </a>
                     </li>
@@ -47,7 +47,7 @@
                 <!--                관리자-->
                 <ul class="nav-content" th:if="${session?.user?.userGbnCd == '30'}">
                     <li>
-                        <a href="/">
+                        <a href="/admin">
                             <img src="/static/img/logo.svg">
                         </a>
                     </li>
