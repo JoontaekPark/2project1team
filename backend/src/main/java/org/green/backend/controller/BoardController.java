@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.board.*;
 import org.green.backend.service.BoardServiceImpl;
+import org.green.backend.utils.CookieUtil;
 import org.green.backend.utils.JWTUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ public class BoardController {
 
     private final BoardServiceImpl boardService;
     private final JWTUtil jwtUtil;
+    private final CookieUtil cookieUtil;
 
     //1:1문의 등록
     @PostMapping("/regist")
@@ -46,13 +48,13 @@ public class BoardController {
         }
         System.out.println("boardDto 잘 들어왔니?" + boardDto);
         // JWT에서 사용자 ID 추출
-        String token = request.getHeader("Authorization");
+        String token = cookieUtil.getCookie(request, "Authorization");
         String userId = jwtUtil.getId(token); // JWT에서 사용자 ID 추출
         System.out.println(userId);
         // 작성자 ID를 DTO에 설정
-        boardDto.setInstId(userId);
+//        boardDto.setInstId(userId);
 
-        boardService.registerBoard(boardDto);
+//        boardService.registerBoard(boardDto);
 
         return "redirect:/board/list";
     }
@@ -62,7 +64,7 @@ public class BoardController {
     public ResponseEntity<List<BoardListDto>> getBoardList(
             HttpServletRequest request
     ) {
-        String token = request.getHeader("Authorization");
+        String token = cookieUtil.getCookie(request, "Authorization");
 
         String userId = jwtUtil.getId(token); // JWT에서 사용자 ID 추출
         String userGbnId = jwtUtil.getUserGbnCd(token); // JWT에서 사용자 구분 코드 추출
