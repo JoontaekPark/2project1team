@@ -146,7 +146,7 @@ hr {
 }
 
 /* 목록 버튼 */
-a[href="/board/list"] {
+.a[href="/board/list"] {
     display: block;
     width: 10%;
     background-color: #ff007f;

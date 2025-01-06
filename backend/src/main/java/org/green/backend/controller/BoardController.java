@@ -1,8 +1,11 @@
 package org.green.backend.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.green.backend.dto.board.*;
 import org.green.backend.service.BoardServiceImpl;
+import org.green.backend.utils.CookieUtil;
+import org.green.backend.utils.JWTUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,20 +31,31 @@ import java.util.List;
 public class BoardController {
 
     private final BoardServiceImpl boardService;
+    private final JWTUtil jwtUtil;
+    private final CookieUtil cookieUtil;
 
     //1:1문의 등록
     @PostMapping("/regist")
     public String registerBoard(
             @RequestBody BoardDto boardDto,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            HttpServletRequest request
     ) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "/board/boardForm";
         }
         System.out.println("boardDto 잘 들어왔니?" + boardDto);
-        boardService.registerBoard(boardDto);
+        // JWT에서 사용자 ID 추출
+        String token = cookieUtil.getCookie(request, "Authorization");
+
+        String userId = jwtUtil.getId(token); // JWT에서 사용자 ID 추출
+        System.out.println(userId);
+        // 작성자 ID를 DTO에 설정
+        boardDto.setInstId(userId);
+
+      boardService.registerBoard(boardDto);
 
         return "redirect:/board/list";
     }
@@ -49,10 +63,13 @@ public class BoardController {
     //1:1문의 리스트 조회
     @GetMapping("/list")
     public ResponseEntity<List<BoardListDto>> getBoardList(
-            @RequestParam("userId") String userId,
-            @RequestParam("userGbnId") String userGbnId
+            HttpServletRequest request
     ) {
-        System.out.println("userGbnId: " + userGbnId + ", userId: " + userId);
+        String token = cookieUtil.getCookie(request, "Authorization");
+
+        String userId = jwtUtil.getId(token); // JWT에서 사용자 ID 추출
+        String userGbnId = jwtUtil.getUserGbnCd(token); // JWT에서 사용자 구분 코드 추출
+        System.out.println("1:1 문의 : 기업/구직자 구분코드" +userGbnId);
         List<BoardListDto> boardList = boardService.getBoardList(userId, userGbnId);
         System.out.println("boardList: " + boardList);
         return ResponseEntity.ok(boardList);
@@ -74,9 +91,14 @@ public class BoardController {
     //1:1 문의 댓글 등록
     @PostMapping("/comment")
     public ResponseEntity<String> addReply(
-            @RequestBody CommentDto commentDto
+            @RequestBody CommentDto commentDto,
+            HttpServletRequest request
             ) {
+        String token = cookieUtil.getCookie(request, "Authorization");
 
+        String userId = jwtUtil.getId(token); // JWT에서 사용자 ID 추출
+        commentDto.setInstId(userId);
+        System.out.println("commentDto: " + commentDto);
         boardService.addReply(commentDto);
 
         return ResponseEntity.ok("댓글 등록 완료");

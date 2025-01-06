@@ -1,17 +1,21 @@
 // 1:1 문의 등록
 function registerBoard() {
     const data = {
-        boardTarget: "test", // 임시 저장
+        boardTarget: document.getElementById("boardTarget").value, // 문의 대상
+        //boardTarget: "넷플릭스2", // 임시 저장
         boardTitle: document.getElementById("boardTitle").value,
         boardContent: document.getElementById("boardContent").value,
         boardGbnCd: "10",
         boardStatusCd: "10",
-        instId: "tjsdud", // 임시 저장
+        //instId: "tjsdud", // 임시 저장
     };
+
+    console.log(data);
 
     api.post('/api/board/regist', data)
         .then(() => {
             alert("문의가 등록되었습니다.");
+            window.location.href = "/board/list"
         })
         .catch(error => {
             console.error("등록 실패:", error);
@@ -20,14 +24,34 @@ function registerBoard() {
 }
 
 // DOMContentLoaded 이벤트 핸들러
+// DOMContentLoaded 이벤트 핸들러
 document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
+
+    // boardTarget 처리
+    if (currentPath.includes('/board/board-form')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const boardTarget = urlParams.get("boardTarget");
+        console.log(boardTarget);
+        if (boardTarget) {
+            // boardTarget를 숨겨진 input 필드에 저장
+            const boardTargetInput = document.createElement("input");
+            boardTargetInput.type = "hidden";
+            boardTargetInput.id = "boardTarget";
+            boardTargetInput.name = "boardTarget";
+            boardTargetInput.value = boardTarget;
+            document.getElementById("boardForm").appendChild(boardTargetInput);
+        } else {
+            alert("문의 대상 정보가 없습니다.");
+        }
+    }
 
     if (currentPath.includes('/board/board-detail')) {
         fetchBoardDetail();
     } else if (currentPath.includes('/board/list')) {
         fetchBoardList();
     }
+
     const commentButton = document.getElementById("commentSubmitButton");
     if (commentButton) {
         commentButton.addEventListener("click", addReply);
@@ -36,20 +60,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 1:1 문의 리스트
 function fetchBoardList() {
-    const userId = 'tjsdud';
-    const userGbnCd = '10';
+    //const userId = 'tjsdud';
+    //const userGbnCd = '10';
 
-    api.get('/api/board/list', {userId, userGbnId: userGbnCd})
+    api.get('/api/board/list')
         .then(response => {
             console.log("리스트에서 응답을 받는지" + response.body); // 응답 데이터 출력
             console.log('Response as JSON:', JSON.stringify(response.body, null, 2)); // JSON
             const boardList = response.body;
-            renderBoardList(boardList, userGbnCd);
+            renderBoardList(boardList);
             console.log("상태 업데이트 응답 데이터:", response);
+            console.log("userGbnCd:", userGbnCd);
         })
         .catch(error => {
-            console.error("리스트 조회 실패:", error);
-            alert("리스트 조회에 실패했습니다.");
+
         });
 }
 
@@ -69,7 +93,7 @@ function renderBoardList(boardList, userGbnCd) {
 
         // 이름
         const nameCell = document.createElement('td');
-        nameCell.textContent = userGbnCd === '10' ? board.targetName : board.userName;
+        nameCell.textContent = board.boardGbnCd === '10' ? board.targetName : board.userName;
         row.appendChild(nameCell);
 
         // 제목

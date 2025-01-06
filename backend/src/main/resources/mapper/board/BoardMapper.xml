@@ -11,7 +11,7 @@
     </insert>
     <!-- 1:1 문의 구직자용 리스트 조회  -->
     <select id="getUserBoardList" resultType="org.green.backend.dto.board.BoardListDto">
-        SELECT b.board_num, u.name AS targetName, b.board_title, b.inst_dt, b.board_status_cd
+        SELECT b.board_num, u.name AS targetName, b.board_title, b.inst_dt, b.board_status_cd, b.board_gbn_cd
         FROM tbl_board b
         LEFT JOIN tbl_user u ON b.board_target = u.id
         WHERE
