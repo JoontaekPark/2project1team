@@ -91,9 +91,14 @@ public class BoardController {
     //1:1 문의 댓글 등록
     @PostMapping("/comment")
     public ResponseEntity<String> addReply(
-            @RequestBody CommentDto commentDto
+            @RequestBody CommentDto commentDto,
+            HttpServletRequest request
             ) {
+        String token = cookieUtil.getCookie(request, "Authorization");
 
+        String userId = jwtUtil.getId(token); // JWT에서 사용자 ID 추출
+        commentDto.setInstId(userId);
+        System.out.println("commentDto: " + commentDto);
         boardService.addReply(commentDto);
 
         return ResponseEntity.ok("댓글 등록 완료");

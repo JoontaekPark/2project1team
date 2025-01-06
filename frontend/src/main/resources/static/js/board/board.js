@@ -10,6 +10,8 @@ function registerBoard() {
         //instId: "tjsdud", // 임시 저장
     };
 
+    console.log(data);
+
     api.post('/api/board/regist', data)
         .then(() => {
             alert("문의가 등록되었습니다.");
@@ -30,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentPath.includes('/board/board-form')) {
         const urlParams = new URLSearchParams(window.location.search);
         const boardTarget = urlParams.get("boardTarget");
-
+        console.log(boardTarget);
         if (boardTarget) {
             // boardTarget를 숨겨진 input 필드에 저장
             const boardTargetInput = document.createElement("input");
