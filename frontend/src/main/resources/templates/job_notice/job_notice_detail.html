@@ -61,7 +61,7 @@
                     <th:block th:if="${session.user.userGbnCd == '10'}">
                         <i id="like" th:class="${(jobNotice.likeYn > 0 ? 'fas' : 'far') + ' fa-heart'}"
                            style="font-size: 1.5rem;" th:data-jobNoticeNum="${jobNotice.jobNoticeNum}"></i>
-                        <button onclick="applyModal(true)" id="apply-btn">지원하기</button>
+                        <button onclick="applyModal(true)" id="apply-btn" th:disabled="${jobNotice.jobNoticeStatus == '30'}">지원하기</button>
                     </th:block>
                     <th:block th:if="${session.user.userGbnCd == '20'}">
                         <button onclick="endNotice()" id="apply-btn" th:disabled="${jobNotice.jobNoticeStatus == '30'}">
