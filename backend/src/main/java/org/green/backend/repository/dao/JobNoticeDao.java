@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.green.backend.dto.JobNotice.*;
 import org.green.backend.dto.common.FileDto;
 import org.green.backend.dto.company.ResponseJobNoticeDto;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
         //채용공고 리스트 조회
 //        public List<JobNoticeResponseDto> getJobNoticeList(String instId);
-        public List<ResponseJobNoticeDto> getJobNoticeList(String Id);
+        public List<JobNoticeResponseDto> getJobNoticeList(@Param("jobNoticeStatus")String jobNoticeStatus, @Param("instId")String instId);
 
         //채용공고 상세정보 조회
         public JobNoticeResponseDto getJobNoticeDetails(@Param("jobNoticeNum") int jobNoticeNum, @Param("Id") String Id);

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,13 +32,10 @@ public class JobNoticeImpl implements JobNoticeService {
 
     //채용공고 리스트 조회
     @Override
-    public List<JobNoticeResponseDto> getJobNoticeList(String token) {
+    public List<JobNoticeResponseDto> getJobNoticeList(String jobNoticeStatus, String token) {
         String instId = jwtUtil.getId(token);
-
-        //사진 가져오기
-
-
-        List<JobNoticeResponseDto> list = jobNoticeDao.getJobNoticeList(instId);
+        List<JobNoticeResponseDto> list = jobNoticeDao.getJobNoticeList(jobNoticeStatus, instId);
+        System.out.println(jobNoticeStatus);
         return list;
     }
 
@@ -82,7 +80,6 @@ public class JobNoticeImpl implements JobNoticeService {
         System.out.println("jobNoticeNum : "+jobNoticeNum);
 
 
-
         // 파일 등록
         if (!dto.getFiles().isEmpty() && dto.getFiles().size() > 0) {
             for (MultipartFile file : dto.getFiles()) {
@@ -108,10 +105,19 @@ public class JobNoticeImpl implements JobNoticeService {
 //        String id = jwtUtil.getId(token);
 
         // stack 문자열 리스트로 변환
+//        for (ApplyStatusResponseDto dto : list) {
+//            String stackNames = dto.getStackNames();
+//                List<String> stackCdList = Arrays.asList(stackNames.split(","));
+//                dto.setStackCdList(stackCdList);
+//        }
         for (ApplyStatusResponseDto dto : list) {
             String stackNames = dto.getStackNames();
+            if (stackNames != null && !stackNames.isEmpty()) {
                 List<String> stackCdList = Arrays.asList(stackNames.split(","));
                 dto.setStackCdList(stackCdList);
+            } else {
+                dto.setStackCdList(Collections.emptyList()); // stackNames가 null이거나 비어있을 경우 빈 리스트 설정
+            }
         }
 
         //M/F 성별 변환

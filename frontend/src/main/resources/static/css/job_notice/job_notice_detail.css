@@ -287,5 +287,13 @@ a{
     color: black;
 }
 
+button:disabled{
+    background-color: #D4D4D4;
+    border: 1px solid #D4D4D4;
+}
+
+.default-step, .add-step, #str-btn, #end-btn{
+    cursor: default;
+}
 
 

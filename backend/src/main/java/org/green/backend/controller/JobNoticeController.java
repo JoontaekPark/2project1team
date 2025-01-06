@@ -32,10 +32,10 @@ public class JobNoticeController {
 
     // 리스트 조회
     @GetMapping("job-notice-list")
-    public ResponseEntity<List<JobNoticeResponseDto>> getJobNoticeList(HttpServletRequest request){
+    public ResponseEntity<List<JobNoticeResponseDto>> getJobNoticeList(@RequestParam("jobNoticeStatus") String jobNoticeStatus, HttpServletRequest request){
 
         String token = request.getHeader("Authorization");
-        List<JobNoticeResponseDto> list = jobNoticeService.getJobNoticeList(token);
+        List<JobNoticeResponseDto> list = jobNoticeService.getJobNoticeList(jobNoticeStatus, token);
         return ResponseEntity.ok(list);
     }
 
